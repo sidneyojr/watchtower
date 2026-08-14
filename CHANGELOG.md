@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Pin go 1.26.6 in pkg.go.dev refresh by @sidneyojr
 - Use go.mod for go version in pkg.go.dev refresh by @sidneyojr
 
 ## [1.21.0] - 2026-08-14
