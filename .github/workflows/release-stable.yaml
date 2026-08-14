@@ -44,3 +44,29 @@ jobs:
     permissions:
       contents: read
     uses: ./.github/workflows/update-go-docs.yaml
+
+  publish-docs:
+    name: Publish Documentation
+    needs: [build]
+    if: ${{ !inputs.DRY_RUN }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write # For dispatching the docs workflow
+      contents: read # For code checkout
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@b09bb98e06d4d774595224525879c09bc6e98c40 # v2.20.1
+        with:
+          egress-policy: audit
+
+      - name: Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Trigger Docs Publication
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ github.ref_name }}
+        run: |
+          gh workflow run publish-docs.yaml --ref master \
+            -f VERSION="${VERSION}" \
+            -f ALIASES="latest"

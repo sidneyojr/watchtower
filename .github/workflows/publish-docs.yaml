@@ -3,6 +3,15 @@ name: Publish Documentation
 
 on:
   workflow_dispatch:
+    inputs:
+      VERSION:
+        description: "Docs version to deploy (e.g. v1.21.1). Empty deploys 'dev'."
+        required: false
+        default: ""
+      ALIASES:
+        description: "Comma-separated aliases for this version (e.g. latest)."
+        required: false
+        default: ""
   push:
     branches: [master]
     paths:
@@ -81,10 +90,15 @@ jobs:
         id: mike
         env:
           TAG_NAME: ${{ github.event.release.tag_name }}
+          DISPATCH_VERSION: ${{ inputs.VERSION }}
+          DISPATCH_ALIASES: ${{ inputs.ALIASES }}
         run: |
           if [[ "${{ github.event_name }}" == "release" ]]; then
             echo "version=${TAG_NAME}" >> "$GITHUB_OUTPUT"
             echo "aliases=latest" >> "$GITHUB_OUTPUT"
+          elif [[ -n "${DISPATCH_VERSION}" ]]; then
+            echo "version=${DISPATCH_VERSION}" >> "$GITHUB_OUTPUT"
+            echo "aliases=${DISPATCH_ALIASES}" >> "$GITHUB_OUTPUT"
           else
             echo "version=dev" >> "$GITHUB_OUTPUT"
           fi
