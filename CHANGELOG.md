@@ -942,6 +942,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Gitignore fork planning document by @sidneyojr
 - Enforce conventional commits via .githooks by @sidneyojr
 - Rebrand module to github.com/sidneyojr/watchtower by @sidneyojr
 - Rebase fork onto nicholas-fedor base by @sidneyojr
@@ -2318,6 +2319,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Run lifecycle hooks only for stale containers by @sidneyojr
+- Fall back to image-name inspect when ID inspect fails by @sidneyojr
 - Fix make build and golangci-lint v2 config by @sidneyojr
 - Only warn about missing image info for monitored containers by @ncrosty58
 - Remove redundant type field from deprecation warnings by @nicholas-fedor
@@ -2651,7 +2654,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### New Contributors
 
 - @sidneyojr made their first contribution
-- @github-actions[bot] made their first contribution
+- @github-actions[bot] made their first contribution in [#1](https://github.com/sidneyojr/watchtower/pull/1)
 - @renovate[bot] made their first contribution
 - @nicholas-fedor made their first contribution
 - @ncrosty58 made their first contribution
