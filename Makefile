@@ -23,7 +23,7 @@ help: ## Show this help message
 .PHONY: build test mocks lint vet run install
 
 build: ## Build the application binary
-	$(GO) build -o bin/$(BINARY_NAME) ./...
+	$(GO) build -o bin/$(BINARY_NAME) .
 
 test: ## Run all tests
 	$(GO) test -timeout 30s -v -coverprofile coverage.out -covermode atomic ./...

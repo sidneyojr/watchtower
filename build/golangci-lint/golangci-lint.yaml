@@ -327,6 +327,7 @@ output:
       print-linter-name: true
       colors: true
   path-mode: abs
+  sort-results: true
   sort-order:
     - linter
     - severity
