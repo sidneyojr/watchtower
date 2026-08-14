@@ -1,0 +1,30 @@
+---
+name: Enforce PR Source
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read # Set default read-only permissions
+
+jobs:
+  check-source:
+    name: Enforce PR Source Branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden the Runner (Step Security)
+        uses: step-security/harden-runner@b09bb98e06d4d774595224525879c09bc6e98c40 # v2.20.1
+        with:
+          egress-policy: audit
+
+      - name: Require PR from develop
+        if: github.event.pull_request.base.ref == 'master' && github.event.pull_request.head.ref != 'develop'
+        run: |
+          echo "PRs targeting master must come from the develop branch."
+          echo "Found head branch: ${GITHUB_HEAD_REF}"
+          exit 1
+
+      - name: Source branch OK
+        run: echo "PR source branch is develop. OK."
