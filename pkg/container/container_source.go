@@ -253,6 +253,23 @@ func getSourceContainer(log *zerolog.Logger,
 
 	imageInfo, err := resolveImageInspect(ctx, api, containerInfo.Image, imageCache)
 	if err != nil {
+		// Fall back to the image name when inspecting by ID fails. Rootless
+		// Docker with BuildKit removes the previous image when a tag is
+		// rebuilt, even while a container still runs from it, so the ID is
+		// no longer resolvable even though the name points at the new image.
+		if containerInfo.Config != nil && containerInfo.Config.Image != "" &&
+			containerInfo.Config.Image != containerInfo.Image {
+			imageInfo, err = resolveImageInspect(ctx, api, containerInfo.Config.Image, imageCache)
+			if err == nil {
+				clog.Debug().
+					Str("container", util.NormalizeContainerName(containerInfo.Name)).
+					Str("image", containerInfo.Config.Image).
+					Msg("Retrieved image info by name after ID inspect failed")
+
+				return NewContainer(log, containerInfo, imageInfo), nil
+			}
+		}
+
 		clog.Debug().
 			Err(err).
 			Str("container", util.NormalizeContainerName(containerInfo.Name)).
