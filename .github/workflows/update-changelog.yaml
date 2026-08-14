@@ -4,7 +4,7 @@ name: Update Changelog
 on:
   push:
     branches:
-      - master
+      - develop
     paths-ignore:
       - CHANGELOG.md
   workflow_dispatch:
@@ -46,6 +46,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: docs/update-changelog
+          base: develop
           author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           sign-commits: true
@@ -54,9 +55,9 @@ jobs:
           body: "Automated changelog update"
           delete-branch: true
 
-      - name: Enable auto-merge
+      - name: Merge Changelog PR
         if: "${{ steps.create_pr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PULL_REQUEST_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
-        run: gh pr merge --auto --squash "${PULL_REQUEST_NUMBER}"
+        run: gh pr merge --squash "${PULL_REQUEST_NUMBER}"
