@@ -1,6 +1,13 @@
 # AGENTS.md
 
-Watchtower is a Go 1.26.6 app (module `github.com/sidneyojr/watchtower`) that monitors running Docker containers and recreates them when their image updates. This fork is based on the actively maintained `nicholas-fedor/watchtower` (upstream `containrrr/watchtower` is archived). Branches: `master` = stable/release, `develop` = integration. Push both.
+Watchtower is a Go 1.26.6 app (module `github.com/sidneyojr/watchtower`) that monitors running Docker containers and recreates them when their image updates. This fork is based on the actively maintained `nicholas-fedor/watchtower` (upstream `containrrr/watchtower` is archived). Branches: `master` = stable/release, `develop` = integration.
+
+## Git Flow
+- `develop` is the integration branch — all work (features, fixes, changelog) lands here first.
+- `master` only receives pull requests whose head branch is `develop` (enforced by `.github/workflows/enforce-pr-source.yaml` + the "Protect master (Git Flow)" ruleset). Direct pushes to `master` are rejected by the ruleset (PR required, no force-push/deletion).
+- Flow: commit on `develop` → push → open PR `develop`→`master` → enforcer check passes → squash-merge. Before opening a new PR, sync `develop` with `master` first (squash merges diverge the SHAs even when content is identical): `git checkout develop && git pull --ff-only origin develop && git merge --ff-only origin/master && git push origin develop`.
+- Releases: tag on `master` (`v*`) triggers `release-stable.yaml` → goreleaser publishes multi-arch images to `ghcr.io/sidneyojr/watchtower` with tags `latest`, `<major>`, `<major>.<minor>`, `<major>.<minor>.<patch>` (the exact image tag has NO `v` prefix). Remember to sync `develop` after tagging.
+- `gh` may resolve the wrong repo when both `origin` and `upstream` remotes exist — run `gh repo set-default sidneyojr/watchtower`. Push over HTTPS fails without credentials; `origin` uses SSH.
 
 ## Layout
 - `cmd/` — cobra CLI. Entry: `main.go` → `cmd.Execute()`. The whole app flow (flag wiring, scheduler, HTTP API, update loop) is in `cmd/root.go` (`PreRun`/`Run`); `cmd/notify-upgrade.go` is a subcommand.
@@ -46,4 +53,5 @@ Watchtower is a Go 1.26.6 app (module `github.com/sidneyojr/watchtower`) that mo
 - `docs/README.md` documents the docs-site workflow (mike versioning, publish-docs.yaml).
 
 ## CI/CD
-- GitHub Actions in `.github/workflows/` (no CircleCI): `test.yaml` and `lint-go.yaml` run on PRs touching Go code; `build.yaml` is a reusable workflow called by releases; `release-stable.yaml` on `v*` tags; `release-nightly.yaml` on a daily cron; `publish-docs.yaml` on `master`; plus `security.yaml`, `scorecard.yml`, `update-changelog.yaml`, `clean-cache.yaml`, `update-go-docs.yaml`, `lint-gh.yaml`. Branch filters target `master`/`develop`.
+- GitHub Actions in `.github/workflows/` (no CircleCI): `test.yaml` and `lint-go.yaml` run on PRs touching Go code; `build.yaml` is a reusable workflow called by releases; `release-stable.yaml` on `v*` tags; `release-nightly.yaml` on a daily cron; `publish-docs.yaml` on `master`; plus `security.yaml`, `scorecard.yml`, `update-changelog.yaml`, `clean-cache.yaml`, `update-go-docs.yaml`, `lint-gh.yaml`, and `enforce-pr-source.yaml` (blocks PRs into `master` whose head is not `develop`; this check is required by the "Protect master (Git Flow)" ruleset). Branch filters target `master`/`develop`.
+- `update-changelog.yaml` now targets `develop` (trigger on `develop` push, PR base `develop`, merged via `gh pr merge --squash` without `--auto`, since `--auto` requires branch protection that `develop` doesn't have). The changelog reaches `master` via the `develop`→`master` PR.
