@@ -113,6 +113,7 @@ jobs:
               --config-file build/mkdocs/mkdocs.yaml \
               --push \
               --update-aliases "${VERSION}" "${ALIASES}"
+            mike set-default --config-file build/mkdocs/mkdocs.yaml --push "${ALIASES%%,*}"
           else
             mike deploy \
               --config-file build/mkdocs/mkdocs.yaml \
