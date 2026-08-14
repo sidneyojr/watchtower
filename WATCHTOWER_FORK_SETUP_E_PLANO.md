@@ -122,11 +122,17 @@ docker run -d   --name watchtower   -v /var/run/docker.sock:/var/run/docker.sock
 - [x] Renomear `main` → `master` (GitHub UI)
 - [x] `git clone` do fork localmente
 - [x] Criar `develop` a partir de `master`
-- [x] Instalar dependências do Debian (Go + toolchain)  
-- [ ] Validar `go build` local
-- [ ] Criar `Makefile` e lint
-- [ ] Configurar CI
-- [ ] **Sincronizar com `nicholas-fedor/watchtower`**
+- [x] Instalar dependências do Debian (Go + toolchain)
+- [x] Validar `go build` local
+- [x] Instalar toolchain moderna sem sudo (Go 1.26.6 em `~/.local/go`, golangci-lint, mockery, goreleaser v2 em `~/go/bin`)
+- [x] **Sincronizar com `nicholas-fedor/watchtower`** (merge `--allow-unrelated-histories -X theirs upstream/main`, commit `b2884f4b`)
+- [x] **Rebrand do módulo** para `github.com/sidneyojr/watchtower` (commit `f113266b`; `tools/tplprev` vira módulo separado `github.com/sidneyojr/tplprev`)
+- [x] **CI/CD GHCR-only**: workflows, goreleaser (`stable.yaml`/`nightly.yaml`), Dockerfiles, mkdocs e issue templates apontam para `ghcr.io/sidneyojr/watchtower`; Docker Hub removido; `.circleci` removido (commits `91aa1a52`)
+- [x] **Hook Conventional Commits** versionado como `.githooks/commit-msg` + `git config core.hooksPath .githooks` (commit `cbe1f99d`)
+- [x] **Docs rebranded** para sidneyojr (README, docs/, exemplos, SECURITY, swagger, fixtures) (commit `4e5c3664`)
+- [ ] Merge `develop` → `master` e push dos dois branches (Fase 5)
+- [ ] Validar `make build` / `make lint` / `make vet` / `make test` (Fase 5)
+- [ ] Configurar proteção de branch em `master` (opcional, pós-push)
 - [ ] Testes, validação e release inicial
 - [ ] Só então: melhorias/novas features
 
