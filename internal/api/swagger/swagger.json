@@ -14,7 +14,7 @@
         "description": "Watchtower HTTP API for container update management, metrics, and health probes.",
         "title": "Watchtower HTTP API",
         "contact": {
-            "name": "Nicholas Fedor",
+            "name": "sidneyojr",
             "url": "https://github.com/sidneyojr/watchtower"
         },
         "license": {

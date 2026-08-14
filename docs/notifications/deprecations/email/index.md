@@ -28,7 +28,7 @@ Watchtower uses Shoutrrr's [SMTP service](https://shoutrrr.nickfedor.com/latest/
     ```yaml
     services:
     watchtower:
-        image: nickfedor/watchtower:latest
+        image: ghcr.io/sidneyojr/watchtower:latest
         environment:
         WATCHTOWER_NOTIFICATION_URL: smtp://user:secret@smtp.example.com:587/?fromaddress=sender@example.com&toaddresses=recipient@example.com
         volumes:
@@ -42,7 +42,7 @@ Watchtower uses Shoutrrr's [SMTP service](https://shoutrrr.nickfedor.com/latest/
     --name watchtower \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e WATCHTOWER_NOTIFICATION_URL="smtp://user:secret@smtp.example.com:587/?fromaddress=sender@example.com&toaddresses=recipient@example.com" \
-    nickfedor/watchtower
+    ghcr.io/sidneyojr/watchtower
     ```
 
 === "Docker CLI (Flags)"
@@ -51,7 +51,7 @@ Watchtower uses Shoutrrr's [SMTP service](https://shoutrrr.nickfedor.com/latest/
     docker run -d \
     --name watchtower \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    nickfedor/watchtower \
+    ghcr.io/sidneyojr/watchtower \
     --notification-url "smtp://user:secret@smtp.example.com:587/?fromaddress=sender@example.com&toaddresses=recipient@example.com"
     ```
 
@@ -65,7 +65,7 @@ Watchtower uses Shoutrrr's [SMTP service](https://shoutrrr.nickfedor.com/latest/
         ```yaml
         services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
             WATCHTOWER_NOTIFICATIONS: email
             WATCHTOWER_NOTIFICATION_EMAIL_FROM: sender@example.com
@@ -84,7 +84,7 @@ Watchtower uses Shoutrrr's [SMTP service](https://shoutrrr.nickfedor.com/latest/
         ```yaml
         services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
             WATCHTOWER_NOTIFICATIONS: email
             WATCHTOWER_NOTIFICATION_EMAIL_FROM: sender@example.com
@@ -119,7 +119,7 @@ Watchtower uses Shoutrrr's [SMTP service](https://shoutrrr.nickfedor.com/latest/
         -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=user \
         -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=secret \
         -e WATCHTOWER_NOTIFICATION_EMAIL_DELAY=10 \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
         ```
 
     === "Flags"
@@ -128,7 +128,7 @@ Watchtower uses Shoutrrr's [SMTP service](https://shoutrrr.nickfedor.com/latest/
         docker run -d \
         --name watchtower \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --notifications email \
         --notification-email-from sender@example.com \
         --notification-email-to recipient@example.com \
@@ -149,7 +149,7 @@ Watchtower uses Shoutrrr's [SMTP service](https://shoutrrr.nickfedor.com/latest/
         -e WATCHTOWER_NOTIFICATION_EMAIL_FROM=sender@example.com \
         -e WATCHTOWER_NOTIFICATION_EMAIL_TO=recipient@example.com \
         -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER=relay.example.com \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
         ```
 
     === "Flags (SMTP Relay)"
@@ -158,7 +158,7 @@ Watchtower uses Shoutrrr's [SMTP service](https://shoutrrr.nickfedor.com/latest/
         docker run -d \
         --name watchtower \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --notifications email \
         --notification-email-from sender@example.com \
         --notification-email-to recipient@example.com \

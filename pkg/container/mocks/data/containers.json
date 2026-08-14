@@ -2,7 +2,7 @@
   {
     "Id": "ae8964ba86c7cd7522cf84e09781343d88e0e3543281c747d88b27e246578b65",
     "Names": ["/watchtower-stopped"],
-    "Image": "nickfedor/watchtower:latest",
+    "Image": "sidneyojr/watchtower:latest",
     "ImageID": "sha256:4dbc5f9c07028a985e14d1393e849ea07f68804c4293050d5a641b138db72daa",
     "Command": "/watchtower",
     "Created": 1554925882,
@@ -48,7 +48,7 @@
   {
     "Id": "3d88e0e3543281c747d88b27e246578b65ae8964ba86c7cd7522cf84e0978134",
     "Names": ["/watchtower-running"],
-    "Image": "nickfedor/watchtower:latest",
+    "Image": "sidneyojr/watchtower:latest",
     "ImageID": "sha256:4dbc5f9c07028a985e14d1393e849ea07f68804c4293050d5a641b138db72daa",
     "Command": "/watchtower",
     "Created": 1554925882,

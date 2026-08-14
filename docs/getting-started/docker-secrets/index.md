@@ -43,7 +43,7 @@ Provide the [HTTP API Token](../../configuration/http-api/index.md#http_api_toke
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
             secrets:
@@ -72,7 +72,7 @@ Provide the [HTTP API Token](../../configuration/http-api/index.md#http_api_toke
         -e WATCHTOWER_HTTP_API_ENDPOINTS=metrics \
         -p 8080:8080 \
         --restart unless-stopped \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 
 ### HTTP API Events Token
@@ -84,7 +84,7 @@ Provide the [HTTP API Events Token](../../configuration/http-api/index.md#http_a
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
             secrets:
@@ -112,7 +112,7 @@ Provide the [HTTP API Events Token](../../configuration/http-api/index.md#http_a
         -e WATCHTOWER_HTTP_API_ENDPOINTS=events \
         -p 8080:8080 \
         --restart unless-stopped \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 
 ### Notification URL
@@ -124,7 +124,7 @@ Provide the [Notification URL](../../configuration/notifications/index.md#notifi
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
             secrets:
@@ -147,5 +147,5 @@ Provide the [Notification URL](../../configuration/notifications/index.md#notifi
         -v $(pwd)/secrets/notification_url.txt:/run/secrets/notification_url:ro \
         -e WATCHTOWER_NOTIFICATION_URL=/run/secrets/notification_url \
         --restart unless-stopped \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```

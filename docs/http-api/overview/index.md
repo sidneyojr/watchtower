@@ -50,7 +50,7 @@ The following endpoints can be enabled by using the[`http-api-endpoints`](../../
         ```yaml
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 volumes:
                     - /var/run/docker.sock:/var/run/docker.sock
                 environment:
@@ -70,7 +70,7 @@ The following endpoints can be enabled by using the[`http-api-endpoints`](../../
             -e WATCHTOWER_HTTP_API_TOKEN=your-secure-token \
             -p 8080:8080 \
             --restart unless-stopped \
-            nickfedor/watchtower
+            ghcr.io/sidneyojr/watchtower
         ```
 
 === "Enable Update Endpoint"
@@ -79,7 +79,7 @@ The following endpoints can be enabled by using the[`http-api-endpoints`](../../
         ```yaml
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 volumes:
                     - /var/run/docker.sock:/var/run/docker.sock
                 environment:
@@ -99,7 +99,7 @@ The following endpoints can be enabled by using the[`http-api-endpoints`](../../
             -e WATCHTOWER_HTTP_API_TOKEN=your-secure-token \
             -p 8080:8080 \
             --restart unless-stopped \
-            nickfedor/watchtower
+            ghcr.io/sidneyojr/watchtower
         ```
 
 === "Enable Swagger Endpoint"
@@ -109,7 +109,7 @@ The following endpoints can be enabled by using the[`http-api-endpoints`](../../
         ```yaml
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 volumes:
                     - /var/run/docker.sock:/var/run/docker.sock
                 environment:
@@ -130,7 +130,7 @@ The following endpoints can be enabled by using the[`http-api-endpoints`](../../
             -e WATCHTOWER_HTTP_API_TOKEN=your-secure-token \
             -p 8080:8080 \
             --restart unless-stopped \
-            nickfedor/watchtower
+            ghcr.io/sidneyojr/watchtower
         ```
 
 ## Security considerations

@@ -155,7 +155,7 @@ When provided, only containers matching at least one name are monitored.
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             command: nginx redis
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
@@ -165,7 +165,7 @@ When provided, only containers matching at least one name are monitored.
     docker run -d \
         --name watchtower \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         nginx redis
     ```
 <!-- markdownlint-restore -->
@@ -180,7 +180,7 @@ This supports comma- or space-separated values and regex patterns.
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_DISABLE_CONTAINERS=container1,container2
             volumes:
@@ -190,12 +190,12 @@ This supports comma- or space-separated values and regex patterns.
     ```bash
     docker run -d \
         -e WATCHTOWER_DISABLE_CONTAINERS="container1,container2" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --disable-containers container1,container2
     ```
 <!-- markdownlint-restore -->
@@ -213,7 +213,7 @@ Use the [enable containers by label](../../configuration/container-selection/ind
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_ENABLE_CONTAINERS_BY_LABEL=env=prod,team=platform
             volumes:
@@ -223,12 +223,12 @@ Use the [enable containers by label](../../configuration/container-selection/ind
     ```bash
     docker run -d \
         -e WATCHTOWER_ENABLE_CONTAINERS_BY_LABEL="env=prod,team=platform" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --enable-containers-by-label "env=prod,team=platform"
     ```
 <!-- markdownlint-restore -->
@@ -246,7 +246,7 @@ Use the [disable containers by label](../../configuration/container-selection/in
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_DISABLE_CONTAINERS_BY_LABEL=managed-by=external
             volumes:
@@ -256,12 +256,12 @@ Use the [disable containers by label](../../configuration/container-selection/in
     ```bash
     docker run -d \
         -e WATCHTOWER_DISABLE_CONTAINERS_BY_LABEL="managed-by=external" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --disable-containers-by-label "managed-by=external"
     ```
 <!-- markdownlint-restore -->
@@ -289,7 +289,7 @@ Use the [monitor image names](../../configuration/container-selection/index.md#m
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_MONITOR_IMAGE_NAMES=nginx:.*,redis:7.*
             volumes:
@@ -299,12 +299,12 @@ Use the [monitor image names](../../configuration/container-selection/index.md#m
     ```bash
     docker run -d \
         -e WATCHTOWER_MONITOR_IMAGE_NAMES="nginx:.*,redis:7.*" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --monitor-image-names "nginx:.*,redis:7.*"
     ```
 <!-- markdownlint-restore -->
@@ -318,7 +318,7 @@ Use the [skip image names](../../configuration/container-selection/index.md#skip
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_SKIP_IMAGE_NAMES=postgres:.*,mcr.microsoft.com/*
             volumes:
@@ -328,12 +328,12 @@ Use the [skip image names](../../configuration/container-selection/index.md#skip
     ```bash
     docker run -d \
         -e WATCHTOWER_SKIP_IMAGE_NAMES="postgres:.*,mcr.microsoft.com/*" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --skip-image-names "postgres:.*,mcr.microsoft.com/*"
     ```
 <!-- markdownlint-restore -->
@@ -358,7 +358,7 @@ Each instance manages only the containers within its scope.
 
       # Scoped Watchtower watching "production" scope
         watchtower-production:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_SCOPE=production
             labels:
@@ -371,7 +371,7 @@ Each instance manages only the containers within its scope.
     docker run -d \
         --name watchtower-production \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --scope production
     ```
 <!-- markdownlint-restore -->
@@ -424,7 +424,7 @@ Exclude all containers starting with a prefix:
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_DISABLE_CONTAINERS=web-.*
             volumes:
@@ -434,12 +434,12 @@ Exclude all containers starting with a prefix:
     ```bash
     docker run -d \
         -e WATCHTOWER_DISABLE_CONTAINERS="web-.*" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --disable-containers "web-.*"
     ```
 <!-- markdownlint-restore -->
@@ -451,15 +451,15 @@ Include only containers matching specific patterns:
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
-            command: ["nickfedor/watchtower", "db-.*", "cache-.*"]
+            image: ghcr.io/sidneyojr/watchtower:latest
+            command: ["ghcr.io/sidneyojr/watchtower", "db-.*", "cache-.*"]
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
     ```
 === "Docker CLI"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         "db-.*" "cache-.*"
     ```
 <!-- markdownlint-restore -->
@@ -471,7 +471,7 @@ Monitor only containers using nginx or redis images with any tag:
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_MONITOR_IMAGE_NAMES=nginx:.*,redis:.*
             volumes:
@@ -481,12 +481,12 @@ Monitor only containers using nginx or redis images with any tag:
     ```bash
     docker run -d \
         -e WATCHTOWER_MONITOR_IMAGE_NAMES="nginx:.*,redis:.*" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --monitor-image-names "nginx:.*,redis:.*"
     ```
 <!-- markdownlint-restore -->
@@ -549,7 +549,7 @@ Run one instance for production containers and another for development:
     ```yaml
     services:
         watchtower-prod:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             command: --scope production --interval 300
             labels:
                 - "com.centurylinklabs.watchtower.scope=production"
@@ -557,7 +557,7 @@ Run one instance for production containers and another for development:
                 - /var/run/docker.sock:/var/run/docker.sock
 
         watchtower-dev:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             command: --scope development --interval 30
             labels:
                 - "com.centurylinklabs.watchtower.scope=development"
@@ -569,13 +569,13 @@ Run one instance for production containers and another for development:
     docker run -d \
         --name watchtower-production \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --scope production --interval 300
 
     docker run -d \
         --name watchtower-development \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --scope development --interval 30
     ```
 <!-- markdownlint-restore -->
@@ -589,7 +589,7 @@ Exclude Watchtower itself and other infrastructure containers:
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_DISABLE_CONTAINERS=watchtower,traefik,portainer
             volumes:
@@ -599,12 +599,12 @@ Exclude Watchtower itself and other infrastructure containers:
     ```bash
     docker run -d \
         -e WATCHTOWER_DISABLE_CONTAINERS="watchtower,traefik,portainer" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --disable-containers "watchtower,traefik,portainer"
     ```
 <!-- markdownlint-restore -->
@@ -618,7 +618,7 @@ Exclude containers managed by third-party orchestrators using arbitrary labels:
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_DISABLE_CONTAINERS_BY_LABEL=managed-by=external
             volumes:
@@ -628,12 +628,12 @@ Exclude containers managed by third-party orchestrators using arbitrary labels:
     ```bash
     docker run -d \
         -e WATCHTOWER_DISABLE_CONTAINERS_BY_LABEL="managed-by=external" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --disable-containers-by-label "managed-by=external"
     ```
 <!-- markdownlint-restore -->
@@ -647,7 +647,7 @@ Only monitor containers with specific labels:
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_ENABLE_CONTAINERS_BY_LABEL=env=prod,team=platform
             volumes:
@@ -657,12 +657,12 @@ Only monitor containers with specific labels:
     ```bash
     docker run -d \
         -e WATCHTOWER_ENABLE_CONTAINERS_BY_LABEL="env=prod,team=platform" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --enable-containers-by-label "env=prod,team=platform"
     ```
 <!-- markdownlint-restore -->
@@ -676,7 +676,7 @@ Monitor only images from your private registry:
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_MONITOR_IMAGE_NAMES=registry.example.com/.*
             volumes:
@@ -686,12 +686,12 @@ Monitor only images from your private registry:
     ```bash
     docker run -d \
         -e WATCHTOWER_MONITOR_IMAGE_NAMES="registry.example.com/.*" \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 === "Docker CLI (Flags)"
     ```bash
     docker run -d \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --monitor-image-names "registry.example.com/.*"
     ```
 <!-- markdownlint-restore -->
@@ -705,7 +705,7 @@ Use [label enable](../../configuration/container-selection/index.md#enable_label
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 - WATCHTOWER_LABEL_ENABLE=true
             volumes:
@@ -721,7 +721,7 @@ Use [label enable](../../configuration/container-selection/index.md#enable_label
     # Start Watchtower with label filtering
     docker run -d \
         -e WATCHTOWER_LABEL_ENABLE=true \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
 
     # Only this container will be monitored
     docker run -d \

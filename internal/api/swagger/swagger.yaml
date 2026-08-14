@@ -4,7 +4,7 @@ consumes:
 host: localhost:8080
 info:
   contact:
-    name: Nicholas Fedor
+    name: sidneyojr
     url: https://github.com/sidneyojr/watchtower
   description: Watchtower HTTP API for container update management, metrics, and health
     probes.

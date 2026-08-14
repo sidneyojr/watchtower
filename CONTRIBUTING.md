@@ -1,6 +1,6 @@
 ## Prerequisites
 
-The nicholas-fedor/watchtower fork of Watchtower is intended to help renew efforts into maintaining and improving the Watchtower project.
+The sidneyojr/watchtower fork of Watchtower is a maintained continuation of the (archived) containrrr/watchtower project, based on the actively maintained nicholas-fedor/watchtower fork.
 
 ## Tools
 
@@ -122,14 +122,14 @@ GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=0 go build -o watchtower-armhf
 
 #### Using GoReleaser
 
-To build the Watchtower binary and archives for production releases, use GoReleaser with the `prod.yml` configuration. This handles cross-compilation, versioning, and packaging for multiple architectures (amd64, i386, armhf, arm64v8, riscv64) and OS (Linux, Windows).
+To build the Watchtower binary and archives for production releases, use GoReleaser with the `stable.yaml` configuration. This handles cross-compilation, versioning, and packaging for multiple architectures (amd64, i386, armhf, arm64v8, riscv64) and OS (Linux, macOS, Windows).
 
-Trigger the `release-prod.yaml` workflow manually via GitHub Actions or on a tag push (e.g., `v1.2.3`) for full builds with SBOM and provenance attestations.
+Trigger the `release-stable.yaml` workflow manually via GitHub Actions or on a tag push (e.g., `v1.2.3`) for full builds with SBOM and provenance attestations.
 
 For local testing, run GoReleaser in snapshot mode:
 
 ```bash
-goreleaser release --config build/goreleaser/prod.yml --snapshot --clean
+goreleaser release --config build/goreleaser/stable.yaml --snapshot --clean
 ```
 
 This produces binaries in `dist/` (e.g., `dist/watchtower_linux_amd64/watchtower`) and archives (e.g., `watchtower_linux_amd64_1.11.6.tar.gz` if versioned).
@@ -138,10 +138,10 @@ This produces binaries in `dist/` (e.g., `dist/watchtower_linux_amd64/watchtower
 
 To build Watchtower images, use GoReleaser for multi-architecture support with attestations.
 
-For dev images, trigger the `release-dev.yaml` workflow manually or on main pushes to core files. Locally:
+For dev images, trigger the `release-nightly.yaml` workflow manually or on schedule. Locally:
 
 ```bash
-goreleaser release --config build/goreleaser/dev.yml --snapshot --clean
+goreleaser release --config build/goreleaser/nightly.yaml --snapshot --clean
 ```
 
 To build a Watchtower image of your own, use the self-contained Dockerfiles in /build/docker/:
@@ -150,10 +150,10 @@ To build a Watchtower image of your own, use the self-contained Dockerfiles in /
 * `/build/docker/Dockerfile.self-github` will build an image based on current Watchtower's repository on GitHub.
 
 ```bash
-docker build . -f build/docker/Dockerfile.self-local -t nickfedor/watchtower # to build an image from local files
+docker build . -f build/docker/Dockerfile.self-local -t ghcr.io/sidneyojr/watchtower # to build an image from local files
 ```
 
-For multi-architecture dev images (amd64, i386, armhf, arm64v8, riscv64), use Docker Buildx after cross-compiling binaries to `dist/watchtower_linux_{GOARCH}/watchtower` (matching the dev workflow structure). Alternatively, trigger the `release-dev.yaml` workflow manually via GitHub Actions for dev image builds with SBOM and provenance attestations.
+For multi-architecture dev images (amd64, i386, armhf, arm64v8, riscv64), use Docker Buildx after cross-compiling binaries to `dist/watchtower_linux_{GOARCH}/watchtower` (matching the nightly workflow structure). Alternatively, trigger the `release-nightly.yaml` workflow manually via GitHub Actions for dev image builds with SBOM and provenance attestations.
 
 For prod images (with binaries/archives), use the prod config as above.
 
@@ -162,6 +162,9 @@ The shared `build/docker/Dockerfile` is used for both, with COPY watchtower /wat
 ## Submitting Pull Requests
 
 * Before submitting, ensure you have GPG signed your Git commits.
-* All commit messages are expected to follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) guidelines.
+* All commit messages are expected to follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) guidelines. This is enforced by a `commit-msg` hook, versioned in `.githooks/`; enable it locally with:
+  ```bash
+  git config core.hooksPath .githooks
+  ```
 * If the pull request is intended to address an issue from either this fork, another fork, or an upstream issue, please ensure to at least add a comment to reference it.
   GitHub automatically generates cross-references, which is incredibly helpful for anyone else maintaining forks of Watchtower or relying upon the upstream repository.

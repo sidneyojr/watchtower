@@ -403,7 +403,7 @@ var _ = ginkgo.Describe("the client", func() {
 				)
 				gomega.Expect(err).NotTo(gomega.HaveOccurred())
 				gomega.Expect(containers).
-					To(gomega.ConsistOf(withContainerImageName(gomega.Equal("nickfedor/watchtower:latest"))))
+					To(gomega.ConsistOf(withContainerImageName(gomega.Equal("sidneyojr/watchtower:latest"))))
 			})
 		})
 

@@ -20,7 +20,7 @@ Watchtower can use Shoutrrr's [Slack service](https://shoutrrr.nickfedor.com/lat
     ```yaml
     services:
       watchtower:
-        image: nickfedor/watchtower:latest
+        image: ghcr.io/sidneyojr/watchtower:latest
         environment:
           WATCHTOWER_NOTIFICATION_URL: "slack://hook:AAAA-BBBB-CCCC@webhook?botname=watchtower"
         volumes:
@@ -33,7 +33,7 @@ Watchtower can use Shoutrrr's [Slack service](https://shoutrrr.nickfedor.com/lat
     docker run -d \
       --name watchtower \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      nickfedor/watchtower \
+      ghcr.io/sidneyojr/watchtower \
       --notification-url "slack://hook:AAAA-BBBB-CCCC@webhook?botname=watchtower"
     ```
 
@@ -50,7 +50,7 @@ Watchtower can use Shoutrrr's [Slack service](https://shoutrrr.nickfedor.com/lat
       -e WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL="https://hooks.slack.com/services/xxx/yyyyyyyyyyyyyyy" \
       -e WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER=watchtower-server-1 \
       -e WATCHTOWER_NOTIFICATION_SLACK_CHANNEL=#my-custom-channel \
-      nickfedor/watchtower
+      ghcr.io/sidneyojr/watchtower
     ```
 
 === "Docker CLI (Flags)"
@@ -59,7 +59,7 @@ Watchtower can use Shoutrrr's [Slack service](https://shoutrrr.nickfedor.com/lat
     docker run -d \
       --name watchtower \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      nickfedor/watchtower \
+      ghcr.io/sidneyojr/watchtower \
       --notifications slack \
       --notification-slack-hook-url "https://hooks.slack.com/services/xxx/yyyyyyyyyyyyyyy" \
       --notification-slack-identifier watchtower-server-1 \
@@ -71,7 +71,7 @@ Watchtower can use Shoutrrr's [Slack service](https://shoutrrr.nickfedor.com/lat
     ```yaml
     services:
       watchtower:
-        image: nickfedor/watchtower:latest
+        image: ghcr.io/sidneyojr/watchtower:latest
         environment:
           WATCHTOWER_NOTIFICATIONS: slack
           WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: "https://hooks.slack.com/services/xxx/yyyyyyyyyyyyyyy"

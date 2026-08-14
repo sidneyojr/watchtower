@@ -40,7 +40,7 @@ Watchtower supports using multiple Shoutrrr URLs to send notifications to multip
 
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 volumes:
                     - /var/run/docker.sock:/var/run/docker.sock
                 secrets:
@@ -57,7 +57,7 @@ Watchtower supports using multiple Shoutrrr URLs to send notifications to multip
         ```yaml
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 environment:
                     WATCHTOWER_NOTIFICATION_URL: "discord://token@webhookid,telegram://token@telegram?chats=@channel"
                 volumes:
@@ -72,7 +72,7 @@ Watchtower supports using multiple Shoutrrr URLs to send notifications to multip
         ```yaml
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 environment:
                     WATCHTOWER_NOTIFICATION_URL: >
                         discord://token@webhookid,
@@ -104,7 +104,7 @@ Watchtower supports using multiple Shoutrrr URLs to send notifications to multip
             --name watchtower \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -e WATCHTOWER_NOTIFICATION_URL="discord://token@webhookid,telegram://token@telegram?chats=@channel" \
-            nickfedor/watchtower
+            ghcr.io/sidneyojr/watchtower
         ```
 
     === "Flags"
@@ -115,7 +115,7 @@ Watchtower supports using multiple Shoutrrr URLs to send notifications to multip
         docker run -d \
             --name watchtower \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            nickfedor/watchtower \
+            ghcr.io/sidneyojr/watchtower \
             --notification-url "discord://token@webhookid" \
             --notification-url "telegram://token@telegram?chats=@channel"
         ```

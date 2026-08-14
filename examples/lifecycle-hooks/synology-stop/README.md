@@ -6,7 +6,7 @@
 
 ## Overview
 
-This directory provides an example of a [pre-update lifecycle hook](https://watchtower.nickfedor.com/latest/advanced-features/lifecycle-hooks/) with a focus on providing container shutdown functionality for Synology devices via Synology's built-in tooling.
+This directory provides an example of a [pre-update lifecycle hook](https://sidneyojr.github.io/watchtower/latest/advanced-features/lifecycle-hooks/) with a focus on providing container shutdown functionality for Synology devices via Synology's built-in tooling.
 
 Both the shell script and Go implementations enable the **graceful shutdown** of Docker containers on **Synology DSM** using the DSM Web API, preventing abrupt `SIGKILL` signals, and allowing containers to shut down cleanly (e.g., saving state, closing connections, etc).
 
@@ -71,7 +71,7 @@ chmod +x synology-stop.sh
 ```yaml
 services:
     watchtower:
-        image: nicholas-fedor/watchtower
+        image: sidneyojr/watchtower
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         environment:
@@ -96,7 +96,7 @@ services:
 
 ### Watchtower
 
-- Runs [`pre-update hook`](https://watchtower.nickfedor.com/latest/advanced-features/lifecycle-hooks/) **before** update/stop.
+- Runs [`pre-update hook`](https://sidneyojr.github.io/watchtower/latest/advanced-features/lifecycle-hooks/) **before** update/stop.
 - Non-0 exit warns but continues.
 
 ### Synology DSM
@@ -120,7 +120,7 @@ services:
 3. Trigger or wait for scheduled update:
 
    ```bash
-   docker run --rm nicholas-fedor/watchtower --run-once nginx
+   docker run --rm sidneyojr/watchtower --run-once nginx
    ```
 
 4. Check logs (expect *"Container stopped gracefully"*):
@@ -168,6 +168,6 @@ services:
 
 ## References
 
-- [Watchtower Documentation](https://watchtower.nickfedor.com)
+- [Watchtower Documentation](https://sidneyojr.github.io/watchtower)
 - [Synology DSM Login Web API](DSM_Login_Web_API_Guide_enu.pdf)
 - [Synology Docker API](https://<your-nas>:5000/webman/login.cgi) (login, inspect Network → DSM Help).

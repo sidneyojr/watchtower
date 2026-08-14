@@ -99,7 +99,7 @@ Tokens can be provided to Watchtower using Docker Secrets, environment variables
         ```yaml
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 volumes:
                     - /var/run/docker.sock:/var/run/docker.sock
                 secrets:
@@ -122,7 +122,7 @@ Tokens can be provided to Watchtower using Docker Secrets, environment variables
         ```yaml
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 volumes:
                     - /var/run/docker.sock:/var/run/docker.sock
                 environment:
@@ -146,7 +146,7 @@ Tokens can be provided to Watchtower using Docker Secrets, environment variables
             -e WATCHTOWER_HTTP_API_ENDPOINTS=metrics \
             -p 8080:8080 \
             --restart unless-stopped \
-            nickfedor/watchtower
+            ghcr.io/sidneyojr/watchtower
         ```
 
     === "CLI Flags"
@@ -157,7 +157,7 @@ Tokens can be provided to Watchtower using Docker Secrets, environment variables
             -v /var/run/docker.sock:/var/run/docker.sock \
             -p 8080:8080 \
             --restart unless-stopped \
-            nickfedor/watchtower \
+            ghcr.io/sidneyojr/watchtower \
             --http-api-token=your-secure-token \
             --http-api-endpoints=metrics
         ```

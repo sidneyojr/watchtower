@@ -18,7 +18,7 @@ Watchtower can use Shoutrrr's [Teams service](https://shoutrrr.nickfedor.com/lat
     ```yaml
     services:
       watchtower:
-        image: nickfedor/watchtower:latest
+        image: ghcr.io/sidneyojr/watchtower:latest
         environment:
           WATCHTOWER_NOTIFICATION_URL: "teams://?host=https%3A%2F%2Fprod-00.westus.logic.azure.com%3A443%2Fworkflows%2Fabc123%2Ftriggers%2Fmanual%2Fpaths%2Finvoke%3Fapi-version%3D2016-06-00%26sp%3D%2Ftriggers%2Fmanual%2Frun%26sv%3D1.0%26sig%3DXXXXXXXX&title=Alert"
         volumes:
@@ -31,7 +31,7 @@ Watchtower can use Shoutrrr's [Teams service](https://shoutrrr.nickfedor.com/lat
     docker run -d \
       --name watchtower \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      nickfedor/watchtower \
+      ghcr.io/sidneyojr/watchtower \
       --notification-url "teams://?host=https%3A%2F%2Fprod-00.westus.logic.azure.com%3A443%2Fworkflows%2Fabc123%2Ftriggers%2Fmanual%2Fpaths%2Finvoke%3Fapi-version%3D2016-06-00%26sp%3D%2Ftriggers%2Fmanual%2Frun%26sv%3D1.0%26sig%3DXXXXXXXX&title=Alert"
     ```
 
@@ -43,7 +43,7 @@ Watchtower can use Shoutrrr's [Teams service](https://shoutrrr.nickfedor.com/lat
     ```yaml
     services:
       watchtower:
-        image: nickfedor/watchtower:latest
+        image: ghcr.io/sidneyojr/watchtower:latest
         environment:
           WATCHTOWER_NOTIFICATIONS: msteams
           WATCHTOWER_NOTIFICATION_MSTEAMS_HOOK_URL: "https://prod-00.westus.logic.azure.com:443/workflows/abc123/triggers/manual/paths/invoke?api-version=2016-06-00&sp=/triggers/manual/run&sv=1.0&sig=XXXXXXXX"
@@ -59,7 +59,7 @@ Watchtower can use Shoutrrr's [Teams service](https://shoutrrr.nickfedor.com/lat
       -v /var/run/docker.sock:/var/run/docker.sock \
       -e WATCHTOWER_NOTIFICATIONS=msteams \
       -e WATCHTOWER_NOTIFICATION_MSTEAMS_HOOK_URL="https://prod-00.westus.logic.azure.com:443/workflows/abc123/triggers/manual/paths/invoke?api-version=2016-06-00&sp=/triggers/manual/run&sv=1.0&sig=XXXXXXXX" \
-      nickfedor/watchtower
+      ghcr.io/sidneyojr/watchtower
     ```
 
 === "Docker CLI (Flags)"
@@ -68,7 +68,7 @@ Watchtower can use Shoutrrr's [Teams service](https://shoutrrr.nickfedor.com/lat
     docker run -d \
       --name watchtower \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      nickfedor/watchtower \
+      ghcr.io/sidneyojr/watchtower \
       --notifications msteams \
       --notification-msteams-hook "https://prod-00.westus.logic.azure.com:443/workflows/abc123/triggers/manual/paths/invoke?api-version=2016-06-00&sp=/triggers/manual/run&sv=1.0&sig=XXXXXXXX"
     ```

@@ -58,7 +58,7 @@ Enable the endpoint and start Watchtower:
         ```yaml
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 volumes:
                     - /var/run/docker.sock:/var/run/docker.sock
                 environment:
@@ -79,7 +79,7 @@ Enable the endpoint and start Watchtower:
             -e WATCHTOWER_HTTP_API_TOKEN=your-secure-token \
             -p 8080:8080 \
             --restart unless-stopped \
-            nickfedor/watchtower
+            ghcr.io/sidneyojr/watchtower
         ```
 
     Then open the Swagger UI in a web browser:
@@ -95,7 +95,7 @@ Enable the endpoint and start Watchtower:
         ```yaml
         services:
             watchtower:
-                image: nickfedor/watchtower:latest
+                image: ghcr.io/sidneyojr/watchtower:latest
                 volumes:
                     - /var/run/docker.sock:/var/run/docker.sock
                     - /opt/watchtower/certs:/certs:ro
@@ -122,7 +122,7 @@ Enable the endpoint and start Watchtower:
             -e WATCHTOWER_HTTP_API_TLS_KEY=/certs/watchtower.key \
             -p 8080:8080 \
             --restart unless-stopped \
-            nickfedor/watchtower
+            ghcr.io/sidneyojr/watchtower
         ```
 
     Then open the Swagger UI in a web browser:

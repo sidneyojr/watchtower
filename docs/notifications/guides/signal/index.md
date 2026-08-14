@@ -14,7 +14,7 @@ This is typically done using [signal-cli-rest-api](https://github.com/bbernhard/
     ```yaml
     services:
       watchtower:
-        image: nickfedor/watchtower:latest
+        image: ghcr.io/sidneyojr/watchtower:latest
         environment:
           WATCHTOWER_NOTIFICATION_URL: signal://localhost:8080/+1234567890/+0987654321
         volumes:
@@ -27,7 +27,7 @@ This is typically done using [signal-cli-rest-api](https://github.com/bbernhard/
     docker run -d \
       --name watchtower \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      nickfedor/watchtower \
+      ghcr.io/sidneyojr/watchtower \
       --notification-url "signal://localhost:8080/+1234567890/+0987654321"
     ```
 
@@ -38,7 +38,7 @@ This is typically done using [signal-cli-rest-api](https://github.com/bbernhard/
       --name watchtower \
       -v /var/run/docker.sock:/var/run/docker.sock \
       -e WATCHTOWER_NOTIFICATION_URL=signal://localhost:8080/+1234567890/+0987654321 \
-      nickfedor/watchtower
+      ghcr.io/sidneyojr/watchtower
     ```
 
 ## Setting up a Signal API Server

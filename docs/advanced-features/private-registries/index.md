@@ -62,7 +62,7 @@ echo -n 'username:password' | base64
 When the Watchtower Docker container is started, the created configuration file (`<PATH>/config.json` in this example) needs to be passed to the container:
 
 ```bash
-docker run [...] -v <PATH>/config.json:/config.json nickfedor/watchtower
+docker run [...] -v <PATH>/config.json:/config.json ghcr.io/sidneyojr/watchtower
 ```
 
 ## Sharing the Docker Configuration File
@@ -74,7 +74,7 @@ This configuration file can be directly used by Watchtower. In this case, the cr
 When the Docker container is started, pass the configuration file to Watchtower:
 
 ```bash
-docker run [...] -v <PATH_TO_HOME_DIR>/.docker/config.json:/config.json nickfedor/watchtower
+docker run [...] -v <PATH_TO_HOME_DIR>/.docker/config.json:/config.json ghcr.io/sidneyojr/watchtower
 ```
 
 When creating the Watchtower container via Docker Compose, use the following lines:
@@ -82,7 +82,7 @@ When creating the Watchtower container via Docker Compose, use the following lin
 ```yaml
 services:
   watchtower:
-    image: nickfedor/watchtower:latest
+    image: ghcr.io/sidneyojr/watchtower:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - <PATH_TO_HOME_DIR>/.docker/config.json:/config.json
@@ -99,7 +99,7 @@ For example:
 ```yaml
 services:
   watchtower:
-    image: nickfedor/watchtower
+    image: ghcr.io/sidneyojr/watchtower
     environment:
         DOCKER_CONFIG: /config
     volumes:
@@ -185,7 +185,7 @@ Use the Dockerfile below to build the `amazon-ecr-credential-helper` image in a 
      # Check for new images and restart things if a new image exists
      # for any of our containers.
      watchtower:
-       image: nickfedor/watchtower:latest
+       image: ghcr.io/sidneyojr/watchtower:latest
        volumes:
          - /var/run/docker.sock:/var/run/docker.sock
          - .docker/config.json:/config.json

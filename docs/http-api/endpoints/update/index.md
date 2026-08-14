@@ -289,7 +289,7 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
 
   watchtower:
-    image: nickfedor/watchtower
+    image: ghcr.io/sidneyojr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:

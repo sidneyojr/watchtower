@@ -26,7 +26,7 @@ To limit monitoring to specific containers, provide their names as arguments whe
     services:
         watchtower:
             command: nginx redis
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
     ```
@@ -38,7 +38,7 @@ To limit monitoring to specific containers, provide their names as arguments whe
         --name watchtower \
         -v /var/run/docker.sock:/var/run/docker.sock \
         --restart unless-stopped \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         nginx redis
     ```
 
@@ -54,7 +54,7 @@ To run a single update attempt and exit, use the [`run-once`](../scheduling/inde
             command: nginx redis
             environment:
                 WATCHTOWER_RUN_ONCE: true
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
     ```
@@ -64,7 +64,7 @@ To run a single update attempt and exit, use the [`run-once`](../scheduling/inde
     ```bash
     docker run --rm \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --run-once \
         nginx redis
     ```

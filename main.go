@@ -1,7 +1,7 @@
 // @title				Watchtower HTTP API
 // @version			1.0
 // @description		Watchtower HTTP API for container update management, metrics, and health probes.
-// @contact.name		Nicholas Fedor
+// @contact.name		sidneyojr
 // @contact.url		https://github.com/sidneyojr/watchtower
 // @license.name		MIT
 // @license.url		https://opensource.org/licenses/MIT

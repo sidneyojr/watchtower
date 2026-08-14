@@ -18,7 +18,7 @@ func TestWarnOnAPIConsumption(t *testing.T) {
 	}{
 		{
 			name:      "ghcr.io image",
-			imageName: "ghcr.io/nicholas-fedor/watchtower",
+			imageName: "ghcr.io/sidneyojr/watchtower",
 			want:      true,
 		},
 		{

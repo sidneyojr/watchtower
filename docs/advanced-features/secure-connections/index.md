@@ -86,27 +86,27 @@ Environment Variable: DOCKER_API_VERSION
     docker run -d \
       --name watchtower \
       -v /path/to/certs:/etc/ssl/docker:ro \
-      nickfedor/watchtower --host tcp://remote-host:2376 --cert-path /etc/ssl/docker --tlsverify
+      ghcr.io/sidneyojr/watchtower --host tcp://remote-host:2376 --cert-path /etc/ssl/docker --tlsverify
     ```
 
     | Parameter                              | Description                                                                            |
     |----------------------------------------|----------------------------------------------------------------------------------------|
     | `--name watchtower`                    | Assigns the name "watchtower" to the container for easy identification and management. |
     | `-v /path/to/certs:/etc/ssl/docker:ro` | Mounts the local certificate directory to the container's SSL directory as read-only.  |
-    | `nickfedor/watchtower`                 | Specifies the Docker image to run, which is the Watchtower container image.            |
+    | `ghcr.io/sidneyojr/watchtower`                 | Specifies the Docker image to run, which is the Watchtower container image.            |
     | `--host tcp://remote-host:2376`        | Sets the Docker host to connect to via TCP on port 2376.                               |
     | `--cert-path /etc/ssl/docker`          | Defines the path inside the container where TLS certificates are located.              |
     | `--tlsverify`                          | Enables TLS verification for secure connections to the Docker host.                    |
 
     !!! Tip
-        If using `-e` flags to pass environment variables, then remember to place them before the `nickfedor/watchtower` image reference.
+        If using `-e` flags to pass environment variables, then remember to place them before the `ghcr.io/sidneyojr/watchtower` image reference.
 
 === "Docker Compose"
 
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower
+            image: ghcr.io/sidneyojr/watchtower
             environment:
                 - DOCKER_HOST=tcp://remote-host:2376
                 - DOCKER_CERT_PATH=/etc/ssl/docker
@@ -118,7 +118,7 @@ Environment Variable: DOCKER_API_VERSION
 
     | Parameter                              | Description                                                                           |
     |----------------------------------------|---------------------------------------------------------------------------------------|
-    | `image: nickfedor/watchtower`          | Specifies the Docker image for the Watchtower service.                                |
+    | `image: ghcr.io/sidneyojr/watchtower`          | Specifies the Docker image for the Watchtower service.                                |
     | `- DOCKER_HOST=tcp://remote-host:2376` | Sets the Docker host connection URL.                                      |
     | `- DOCKER_CERT_PATH=/etc/ssl/docker`   | Specifies the path to the directory containing TLS certificates.                      |
     | `- DOCKER_TLS_VERIFY=1`                | Enables TLS verification for secure connections.                                      |
@@ -357,7 +357,7 @@ Generate self-signed certificates for testing (replace with proper certificates 
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower
+            image: ghcr.io/sidneyojr/watchtower
             environment:
                 - DOCKER_HOST=tcp://remote-host:2376
                 - DOCKER_CERT_PATH=/etc/ssl/docker
@@ -373,7 +373,7 @@ Generate self-signed certificates for testing (replace with proper certificates 
     docker run -d \
       --name watchtower \
       -v /path/to/certs:/etc/ssl/docker:ro \
-      nickfedor/watchtower --host tcp://remote-host:2376 --cert-path /etc/ssl/docker --tlsverify
+      ghcr.io/sidneyojr/watchtower --host tcp://remote-host:2376 --cert-path /etc/ssl/docker --tlsverify
     ```
 
 !!! Note "`remote-host` is used, but can be replaced with `localhost` for local testing."

@@ -25,7 +25,7 @@ Watchtower is designed to run as a Docker container. It only requires access to 
             ```yaml title="docker-compose.yaml"
             services:
                 watchtower:
-                    image: nickfedor/watchtower:latest
+                    image: ghcr.io/sidneyojr/watchtower:latest
                     restart: unless-stopped
                     volumes:
                        - /var/run/docker.sock:/var/run/docker.sock
@@ -34,13 +34,13 @@ Watchtower is designed to run as a Docker container. It only requires access to 
         === "Download via PowerShell (Windows)"
 
             ```powershell
-            iwr -Uri https://raw.githubusercontent.com/nicholas-fedor/watchtower/refs/heads/main/examples/default/docker-compose.yaml -OutFile docker-compose.yaml
+            iwr -Uri https://raw.githubusercontent.com/sidneyojr/watchtower/refs/heads/master/examples/default/docker-compose.yaml -OutFile docker-compose.yaml
             ```
 
         === "Download via Bash (Linux)"
 
             ```bash
-            curl -L https://raw.githubusercontent.com/nicholas-fedor/watchtower/refs/heads/main/examples/default/docker-compose.yaml -o docker-compose.yaml
+            curl -L https://raw.githubusercontent.com/sidneyojr/watchtower/refs/heads/master/examples/default/docker-compose.yaml -o docker-compose.yaml
             ```
 
     2. Run the Compose file:
@@ -58,7 +58,7 @@ Watchtower is designed to run as a Docker container. It only requires access to 
     --name watchtower \
     --restart unless-stopped \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    nickfedor/watchtower
+    ghcr.io/sidneyojr/watchtower
     ```
 
 ## Expected Behavior

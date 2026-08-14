@@ -16,7 +16,7 @@ const docTemplate = `{
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
         "contact": {
-            "name": "Nicholas Fedor",
+            "name": "sidneyojr",
             "url": "https://github.com/sidneyojr/watchtower"
         },
         "license": {

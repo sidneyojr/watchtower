@@ -30,7 +30,7 @@ Set the cooldown delay for all monitored containers using the [`cooldown-delay`]
     ```yaml title="docker-compose.yml"
     services:
         watchtower:
-            image: nickfedor/watchtower
+            image: ghcr.io/sidneyojr/watchtower
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
             environment:
@@ -44,7 +44,7 @@ Set the cooldown delay for all monitored containers using the [`cooldown-delay`]
         --name watchtower \
         -v /var/run/docker.sock:/var/run/docker.sock \
         --restart unless-stopped \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --cooldown-delay 24h
     ```
 
@@ -127,7 +127,7 @@ Units can be combined:
     ```yaml title="docker-compose.yml"
     services:
       watchtower:
-        image: nickfedor/watchtower
+        image: ghcr.io/sidneyojr/watchtower
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
         environment:
@@ -161,7 +161,7 @@ Units can be combined:
       --name watchtower \
       -e WATCHTOWER_COOLDOWN_DELAY=24h \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      nickfedor/watchtower
+      ghcr.io/sidneyojr/watchtower
     ```
 
     ```bash title="Monitor a container with a 72-hour per-container cooldown"
@@ -273,7 +273,7 @@ Docker Hub enforces pull rate limits per six-hour window:
 | Pro / Team / Business          | Unlimited                                    |
 
 Not all registry requests count as pulls.
-Verified behavior (tested against `nickfedor/watchtower` on Docker Hub):
+Verified behavior (tested against `ghcr.io/sidneyojr/watchtower` on Docker Hub):
 
 | Request Type                       | Counts as Pull? |
 |------------------------------------|-----------------|
@@ -340,17 +340,17 @@ The output varies depending on the outcome:
 === "Image age exceeds cooldown"
 
     ```
-    nickfedor/watchtower:latest created more than 24 hours ago - eligible for update
+    ghcr.io/sidneyojr/watchtower:latest created more than 24 hours ago - eligible for update
     ```
 
 === "Image within cooldown"
 
     ```
-    nickfedor/watchtower:latest created less than 24 hours ago - eligible in 18 hours, 23 minutes
+    ghcr.io/sidneyojr/watchtower:latest created less than 24 hours ago - eligible in 18 hours, 23 minutes
     ```
 
 === "Image age unavailable"
 
     ```
-    nickfedor/watchtower:latest creation time unavailable (cooldown: 24 hours) - deferring update for safety
+    ghcr.io/sidneyojr/watchtower:latest creation time unavailable (cooldown: 24 hours) - deferring update for safety
     ```

@@ -37,7 +37,7 @@ Create a template file named `custom-template.txt` with your desired template co
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             environment:
                 WATCHTOWER_NOTIFICATION_TEMPLATE_FILE: "/custom-template.txt"
             volumes:
@@ -53,7 +53,7 @@ Create a template file named `custom-template.txt` with your desired template co
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /path/to/custom-template.txt:/custom-template.txt \
     -e WATCHTOWER_NOTIFICATION_TEMPLATE_FILE="/custom-template.txt" \
-    nickfedor/watchtower:latest
+    ghcr.io/sidneyojr/watchtower:latest
     ```
 
 ### Notification Report
@@ -179,7 +179,7 @@ Logs:
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
             environment:

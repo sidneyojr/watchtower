@@ -7,7 +7,7 @@ When starting the Watchtower container you can specify a remote Docker endpoint 
 ```bash
 docker run -d \
   --name watchtower \
-  nickfedor/watchtower --host "tcp://10.0.1.2:2375"
+  ghcr.io/sidneyojr/watchtower --host "tcp://10.0.1.2:2375"
 ```
 
 or
@@ -16,7 +16,7 @@ or
 docker run -d \
   --name watchtower \
   -e DOCKER_HOST="tcp://10.0.1.2:2375" \
-  nickfedor/watchtower
+  ghcr.io/sidneyojr/watchtower
 ```
 
 Note in both of the examples above that it is unnecessary to mount the _/var/run/docker.sock_ into the Watchtower container.

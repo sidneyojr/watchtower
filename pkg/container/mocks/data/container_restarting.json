@@ -150,7 +150,7 @@
       "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     ],
     "Cmd": null,
-    "Image": "nickfedor/watchtower:latest",
+    "Image": "sidneyojr/watchtower:latest",
     "Volumes": null,
     "WorkingDir": "",
     "Entrypoint": ["/watchtower"],

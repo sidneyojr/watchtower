@@ -2,10 +2,10 @@
 
 ## Running Watchtower as a Docker Container
 
-Watchtower is released as a container image, which makes getting started as simple as pulling the `nickfedor/watchtower` image.
+Watchtower is released as a container image, which makes getting started as simple as pulling the `ghcr.io/sidneyojr/watchtower` image.
 
 !!! Note
-    If you are using an ARM-based system, then remember to pull the appropriate `nickfedor/watchtower:armhf-<tag>` image from [Docker Hub](https://hub.docker.com/r/nickfedor/watchtower/tags/){target="_blank" rel="noopener noreferrer"}.
+    If you are using an ARM-based system, then remember to pull the appropriate `ghcr.io/sidneyojr/watchtower:armhf-<tag>` image from [Docker Hub](https://github.com/sidneyojr/watchtower/pkgs/container/watchtower/tags/){target="_blank" rel="noopener noreferrer"}.
 
 ### Docker Socket Requirement
 
@@ -36,7 +36,7 @@ docker run -d \
   --name watchtower \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --restart unless-stopped \
-  nickfedor/watchtower
+  ghcr.io/sidneyojr/watchtower
 ```
 
 ### Private Registries
@@ -53,7 +53,7 @@ docker run -d \
   -e REPO_PASS=password \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --restart unless-stopped \
-  nickfedor/watchtower container_to_watch --debug
+  ghcr.io/sidneyojr/watchtower container_to_watch --debug
 ```
 
 Also check out [this Stack Overflow answer](https://stackoverflow.com/a/30494145/7872793) for more options on how to pass environment variables.
@@ -69,7 +69,7 @@ docker run -d \
   -v $HOME/.docker/config.json:/config.json \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --restart unless-stopped \
-  nickfedor/watchtower container_to_watch --debug
+  ghcr.io/sidneyojr/watchtower container_to_watch --debug
 ```
 
 !!! Note "Changes to config.json while running"
@@ -96,7 +96,7 @@ services:
       - "443:3443"
       - "80:3080"
   watchtower:
-    image: nickfedor/watchtower
+    image: ghcr.io/sidneyojr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json

@@ -20,7 +20,7 @@ Watchtower can use Shoutrrr's [Gotify service](https://shoutrrr.nickfedor.com/la
     ```yaml
     services:
       watchtower:
-        image: nickfedor/watchtower:latest
+        image: ghcr.io/sidneyojr/watchtower:latest
         environment:
           WATCHTOWER_NOTIFICATION_URL: "gotify://my.gotify.tld/SuperSecretToken"
         volumes:
@@ -33,7 +33,7 @@ Watchtower can use Shoutrrr's [Gotify service](https://shoutrrr.nickfedor.com/la
     docker run -d \
       --name watchtower \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      nickfedor/watchtower \
+      ghcr.io/sidneyojr/watchtower \
       --notification-url "gotify://my.gotify.tld/SuperSecretToken"
     ```
 
@@ -45,7 +45,7 @@ Watchtower can use Shoutrrr's [Gotify service](https://shoutrrr.nickfedor.com/la
     ```yaml
     services:
       watchtower:
-        image: nickfedor/watchtower:latest
+        image: ghcr.io/sidneyojr/watchtower:latest
         environment:
           WATCHTOWER_NOTIFICATIONS: gotify
           WATCHTOWER_NOTIFICATION_GOTIFY_URL: "https://my.gotify.tld/"
@@ -65,7 +65,7 @@ Watchtower can use Shoutrrr's [Gotify service](https://shoutrrr.nickfedor.com/la
       -e WATCHTOWER_NOTIFICATION_GOTIFY_URL="https://my.gotify.tld/" \
       -e WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN="SuperSecretToken" \
       -e WATCHTOWER_NOTIFICATION_GOTIFY_TLS_SKIP_VERIFY=true \
-      nickfedor/watchtower
+      ghcr.io/sidneyojr/watchtower
     ```
 
 === "Docker CLI (Flags)"
@@ -74,7 +74,7 @@ Watchtower can use Shoutrrr's [Gotify service](https://shoutrrr.nickfedor.com/la
     docker run -d \
       --name watchtower \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      nickfedor/watchtower \
+      ghcr.io/sidneyojr/watchtower \
       --notifications gotify \
       --notification-gotify-url "https://my.gotify.tld/" \
       --notification-gotify-token "SuperSecretToken" \

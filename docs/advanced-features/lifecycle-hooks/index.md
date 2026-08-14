@@ -571,7 +571,7 @@ Hook execution results are evaluated based on exit codes, with different behavio
               - "com.centurylinklabs.watchtower.lifecycle.post-update-timeout=15"
 
           watchtower:
-            image: nicholas-fedor/watchtower
+            image: sidneyojr/watchtower
             volumes:
               - /var/run/docker.sock:/var/run/docker.sock
             environment:
@@ -622,7 +622,7 @@ Hook execution results are evaluated based on exit codes, with different behavio
               - "com.centurylinklabs.watchtower.lifecycle.post-update-timeout=5"
 
           watchtower:
-            image: nicholas-fedor/watchtower
+            image: sidneyojr/watchtower
             volumes:
               - /var/run/docker.sock:/var/run/docker.sock
             environment:
@@ -662,7 +662,7 @@ Hook execution results are evaluated based on exit codes, with different behavio
               - "com.centurylinklabs.watchtower.lifecycle.pre-update=/usr/local/bin/notify.sh"
 
           watchtower:
-            image: nicholas-fedor/watchtower
+            image: sidneyojr/watchtower
             volumes:
               - /var/run/docker.sock:/var/run/docker.sock
             environment:

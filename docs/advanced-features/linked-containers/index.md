@@ -137,7 +137,7 @@ If you want to disable automatic dependency detection from the Docker Compose `d
     ```yaml
     services:
       watchtower:
-        image: nickfedor/watchtower
+        image: ghcr.io/sidneyojr/watchtower
         environment:
           - WATCHTOWER_USE_COMPOSE_DEPENDS_ON=false
     ```
@@ -146,7 +146,7 @@ If you want to disable automatic dependency detection from the Docker Compose `d
     docker run -d \
         --name watchtower \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        nickfedor/watchtower \
+        ghcr.io/sidneyojr/watchtower \
         --use-compose-depends-on=false
     ```
 <!-- markdownlint-enable MD046 -->
@@ -364,7 +364,7 @@ Enable verbose logging to inspect dependency detection:
 ```bash
 docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  nickfedor/watchtower \
+  ghcr.io/sidneyojr/watchtower \
   --debug \
   --run-once
 ```

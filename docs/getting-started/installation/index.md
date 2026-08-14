@@ -4,7 +4,7 @@
 
 ### Container Image
 
-- [Docker Hub](https://hub.docker.com/r/nickfedor/watchtower){target="_blank" rel="noopener noreferrer"}
+- [Docker Hub](https://github.com/sidneyojr/watchtower/pkgs/container/watchtower){target="_blank" rel="noopener noreferrer"}
 - [GitHub Container Registry](https://github.com/sidneyojr/watchtower/pkgs/container/watchtower){target="_blank" rel="noopener noreferrer"}
 
 ### Binary
@@ -18,13 +18,13 @@
 === "Docker Hub"
 
     ```bash
-    docker pull nickfedor/watchtower:latest
+    docker pull ghcr.io/sidneyojr/watchtower:latest
     ```
 
 === "GitHub"
 
     ```bash
-    docker pull ghcr.io/nicholas-fedor/watchtower:latest
+    docker pull ghcr.io/sidneyojr/watchtower:latest
     ```
 
 ### Downloading the Binary
@@ -34,19 +34,19 @@ The following will download and extract the binary to the current directory:
 === "Windows (amd64)"
 
     ```powershell title="PowerShell"
-    iwr (iwr https://api.github.com/repos/nicholas-fedor/watchtower/releases/latest | ConvertFrom-Json).assets.where({$_.name -like "*windows_amd64*.zip"}).browser_download_url -OutFile watchtower.zip; Add-Type -AssemblyName System.IO.Compression.FileSystem; $zip = [System.IO.Compression.ZipFile]::OpenRead("$PWD\watchtower.zip"); $zip.Entries | Where-Object {$_.Name -eq 'watchtower.exe'} | ForEach-Object {[System.IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$PWD\watchtower.exe", $true)}; $zip.Dispose(); Remove-Item watchtower.zip; if (Test-Path ".\watchtower.exe") { Write-Host "Successfully installed watchtower.exe to current directory" } else { Write-Host "Failed to install watchtower.exe" }
+    iwr (iwr https://api.github.com/repos/sidneyojr/watchtower/releases/latest | ConvertFrom-Json).assets.where({$_.name -like "*windows_amd64*.zip"}).browser_download_url -OutFile watchtower.zip; Add-Type -AssemblyName System.IO.Compression.FileSystem; $zip = [System.IO.Compression.ZipFile]::OpenRead("$PWD\watchtower.zip"); $zip.Entries | Where-Object {$_.Name -eq 'watchtower.exe'} | ForEach-Object {[System.IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$PWD\watchtower.exe", $true)}; $zip.Dispose(); Remove-Item watchtower.zip; if (Test-Path ".\watchtower.exe") { Write-Host "Successfully installed watchtower.exe to current directory" } else { Write-Host "Failed to install watchtower.exe" }
     ```
 
 === "Linux (amd64)"
 
     ```bash title="Bash"
-    curl -L $(curl -s https://api.github.com/repos/nicholas-fedor/watchtower/releases/latest | grep -o 'https://[^"]*linux_amd64[^"]*\.tar\.gz') | tar -xz -C . watchtower && if [ -f ./watchtower ]; then echo "Successfully installed watchtower to current directory"; else echo "Failed to install watchtower"; fi
+    curl -L $(curl -s https://api.github.com/repos/sidneyojr/watchtower/releases/latest | grep -o 'https://[^"]*linux_amd64[^"]*\.tar\.gz') | tar -xz -C . watchtower && if [ -f ./watchtower ]; then echo "Successfully installed watchtower to current directory"; else echo "Failed to install watchtower"; fi
     ```
 
 === "macOS (amd64)"
 
     ```bash title="Bash"
-    curl -L $(curl -s https://api.github.com/repos/nicholas-fedor/watchtower/releases/latest | grep -o 'https://[^"]*darwin_amd64[^"]*\.tar\.gz') | tar -xz -C . watchtower && if [ -f ./watchtower ]; then echo "Successfully installed watchtower to current directory"; else echo "Failed to install watchtower"; fi
+    curl -L $(curl -s https://api.github.com/repos/sidneyojr/watchtower/releases/latest | grep -o 'https://[^"]*darwin_amd64[^"]*\.tar\.gz') | tar -xz -C . watchtower && if [ -f ./watchtower ]; then echo "Successfully installed watchtower to current directory"; else echo "Failed to install watchtower"; fi
     ```
 
 !!! Note

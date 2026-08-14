@@ -1,7 +1,7 @@
 # Watchtower Documentation Website Setup
 
-[![Documentation](https://img.shields.io/badge/docs-live-blue)](https://nicholas-fedor.github.io/watchtower/)
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/nicholas-fedor/watchtower/publish-docs.yaml)](https://github.com/sidneyojr/watchtower/actions)
+[![Documentation](https://img.shields.io/badge/docs-live-blue)](https://sidneyojr.github.io/watchtower/)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/sidneyojr/watchtower/publish-docs.yaml)](https://github.com/sidneyojr/watchtower/actions)
 
 ## Table of Contents
 
@@ -341,7 +341,7 @@ This setup allows you to develop with `mkdocs serve`, deploy versions locally wi
 #### Version Types
 
 - **Latest**: Points to the most recent stable release
-- **Dev**: Development version built from main branch
+- **Dev**: Development version built from master branch
 - **Tagged Releases**: Specific version tags (e.g., v1.2.3)
 
 #### Alias System
@@ -354,7 +354,7 @@ This setup allows you to develop with `mkdocs serve`, deploy versions locally wi
 Versions are deployed automatically via GitHub Actions:
 
 - Release events create new versioned documentation
-- Main branch pushes update the `dev` version
+- Master branch pushes update the `dev` version
 - Aliases are managed to ensure `latest` always points to the newest release
 
 [Back to top](#table-of-contents)
@@ -426,7 +426,7 @@ The template preview is integrated into `docs/notifications/template-preview/ind
 #### Workflow Triggers
 
 - Manual dispatch
-- Pushes to main branch affecting `docs/` directory
+- Pushes to master branch affecting `docs/` directory
 - Release publications
 
 #### Workflow Process
@@ -442,7 +442,7 @@ The template preview is integrated into `docs/notifications/template-preview/ind
 #### Version Logic
 
 - Releases: Uses tag name as version, sets `latest` alias
-- Main branch: Deploys as `dev` version
+- Master branch: Deploys as `dev` version
 - Manual: Deploys as `dev` version
 
 [Back to top](#table-of-contents)
@@ -506,7 +506,7 @@ The documentation is automatically deployed via GitHub Actions. Manual deploymen
 
 **For Maintainers**:
 
-- Documentation changes are deployed on merge to main
+- Documentation changes are deployed on merge to master
 - New releases automatically create versioned docs
 - Version aliases are managed automatically
 - Manual deployments can be triggered for testing

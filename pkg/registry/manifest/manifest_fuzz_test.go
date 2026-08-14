@@ -17,8 +17,8 @@ import (
 // crashes and unexpected behavior during manifest URL construction.
 func FuzzBuildManifestURL(f *testing.F) {
 	// Seed with valid image references
-	f.Add("ghcr.io/nicholas-fedor/watchtower:mytag")
-	f.Add("nickfedor/watchtower:latest")
+	f.Add("ghcr.io/sidneyojr/watchtower:mytag")
+	f.Add("sidneyojr/watchtower:latest")
 	f.Add("nginx:latest")
 	f.Add("localhost:5000/repo/image:tag")
 	f.Add("docker.io/library/alpine:v3.14")

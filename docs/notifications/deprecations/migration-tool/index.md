@@ -40,7 +40,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
         ```yaml
         services:
           watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             command: notify-upgrade
             environment:
               WATCHTOWER_NOTIFICATIONS: email
@@ -65,7 +65,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
           -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=secret \
           -e WATCHTOWER_NOTIFICATION_EMAIL_FROM=sender@example.com \
           -e WATCHTOWER_NOTIFICATION_EMAIL_TO=recipient@example.com \
-          nickfedor/watchtower \
+          ghcr.io/sidneyojr/watchtower \
           notify-upgrade
         ```
     === "Docker CLI (Flags)"
@@ -73,7 +73,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
         docker run --rm \
           --name watchtower-notify-upgrade \
           -v /var/run/docker.sock:/var/run/docker.sock \
-          nickfedor/watchtower \
+          ghcr.io/sidneyojr/watchtower \
           notify-upgrade \
           --notifications email \
           --notification-email-server smtp.example.com \
@@ -90,7 +90,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
         ```yaml
         services:
           watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             command: notify-upgrade
             environment:
               WATCHTOWER_NOTIFICATIONS: gotify
@@ -109,7 +109,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
           -e WATCHTOWER_NOTIFICATION_GOTIFY_URL="https://my.gotify.tld/" \
           -e WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN="SuperSecretToken" \
           -e WATCHTOWER_NOTIFICATION_GOTIFY_TLS_SKIP_VERIFY=true \
-          nickfedor/watchtower \
+          ghcr.io/sidneyojr/watchtower \
           notify-upgrade
         ```
     === "Docker CLI (Flags)"
@@ -117,7 +117,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
         docker run --rm \
           --name watchtower-notify-upgrade \
           -v /var/run/docker.sock:/var/run/docker.sock \
-          nickfedor/watchtower \
+          ghcr.io/sidneyojr/watchtower \
           notify-upgrade \
           --notifications gotify \
           --notification-gotify-url "https://my.gotify.tld/" \
@@ -131,7 +131,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
         ```yaml
         services:
           watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             command: notify-upgrade
             environment:
               WATCHTOWER_NOTIFICATIONS: slack
@@ -148,7 +148,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
           -e WATCHTOWER_NOTIFICATIONS=slack \
           -e WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL="https://hooks.slack.com/services/AAA/BBB/CCC" \
           -e WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER=watchtower-server-1 \
-          nickfedor/watchtower \
+          ghcr.io/sidneyojr/watchtower \
           notify-upgrade
         ```
     === "Docker CLI (Flags)"
@@ -156,7 +156,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
         docker run --rm \
           --name watchtower-notify-upgrade \
           -v /var/run/docker.sock:/var/run/docker.sock \
-          nickfedor/watchtower \
+          ghcr.io/sidneyojr/watchtower \
           notify-upgrade \
           --notifications slack \
           --notification-slack-hook-url "https://hooks.slack.com/services/AAA/BBB/CCC" \
@@ -169,7 +169,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
         ```yaml
         services:
           watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             command: notify-upgrade
             environment:
               WATCHTOWER_NOTIFICATIONS: msteams
@@ -184,7 +184,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
           -v /var/run/docker.sock:/var/run/docker.sock \
           -e WATCHTOWER_NOTIFICATIONS=msteams \
           -e WATCHTOWER_NOTIFICATION_MSTEAMS_HOOK_URL="https://prod-00.westus.logic.azure.com:443/workflows/abc123/triggers/manual/paths/invoke?api-version=2016-06-00&sp=/triggers/manual/run&sv=1.0&sig=XXXXXXXX" \
-          nickfedor/watchtower \
+          ghcr.io/sidneyojr/watchtower \
           notify-upgrade
         ```
     === "Docker CLI (Flags)"
@@ -192,7 +192,7 @@ If you have not yet deployed Watchtower or if you want to run `notify-upgrade` a
         docker run --rm \
           --name watchtower-notify-upgrade \
           -v /var/run/docker.sock:/var/run/docker.sock \
-          nickfedor/watchtower \
+          ghcr.io/sidneyojr/watchtower \
           notify-upgrade \
           --notifications msteams \
           --notification-msteams-hook "https://prod-00.westus.logic.azure.com:443/workflows/abc123/triggers/manual/paths/invoke?api-version=2016-06-00&sp=/triggers/manual/run&sv=1.0&sig=XXXXXXXX"
@@ -233,7 +233,7 @@ Select the tab that matches your legacy notification service.
             ```yaml
             services:
                 watchtower:
-                    image: nickfedor/watchtower:latest
+                    image: ghcr.io/sidneyojr/watchtower:latest
                     environment:
                         WATCHTOWER_NOTIFICATIONS: email
                         WATCHTOWER_NOTIFICATION_EMAIL_SERVER: smtp.example.com
@@ -257,14 +257,14 @@ Select the tab that matches your legacy notification service.
               -e WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=secret \
               -e WATCHTOWER_NOTIFICATION_EMAIL_FROM=sender@example.com \
               -e WATCHTOWER_NOTIFICATION_EMAIL_TO=recipient@example.com \
-              nickfedor/watchtower
+              ghcr.io/sidneyojr/watchtower
             ```
         === "Docker CLI (Flags)"
             ```bash
             docker run -d \
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              nickfedor/watchtower \
+              ghcr.io/sidneyojr/watchtower \
               --notifications email \
               --notification-email-server smtp.example.com \
               --notification-email-server-port 587 \
@@ -298,7 +298,7 @@ Select the tab that matches your legacy notification service.
             ```yaml
             services:
                 watchtower:
-                    image: nickfedor/watchtower:latest
+                    image: ghcr.io/sidneyojr/watchtower:latest
                     environment:
                         WATCHTOWER_NOTIFICATION_URL: smtp://user@example.com:secret@smtp.example.com:587/?fromaddress=sender@example.com&toaddresses=recipient@example.com&encryption=ExplicitTLS&usestarttls=yes
                         WATCHTOWER_NOTIFICATIONS_DELAY: "10"
@@ -314,14 +314,14 @@ Select the tab that matches your legacy notification service.
               -e "WATCHTOWER_NOTIFICATION_URL=smtp://user@example.com:secret@smtp.example.com:587/?fromaddress=sender@example.com&toaddresses=recipient@example.com&encryption=ExplicitTLS&usestarttls=yes" \
               -e WATCHTOWER_NOTIFICATIONS_DELAY=10 \
               -e WATCHTOWER_NOTIFICATION_TITLE_TAG=Watchtower \
-              nickfedor/watchtower
+              ghcr.io/sidneyojr/watchtower
             ```
         === "Docker CLI (Flags)"
             ```bash
             docker run -d \
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              nickfedor/watchtower \
+              ghcr.io/sidneyojr/watchtower \
               --notification-url "smtp://user@example.com:secret@smtp.example.com:587/?fromaddress=sender@example.com&toaddresses=recipient@example.com&encryption=ExplicitTLS&usestarttls=yes" \
               --notifications-delay 10 \
               --notification-title-tag Watchtower
@@ -339,7 +339,7 @@ Select the tab that matches your legacy notification service.
             ```yaml
             services:
                 watchtower:
-                    image: nickfedor/watchtower:latest
+                    image: ghcr.io/sidneyojr/watchtower:latest
                     environment:
                         WATCHTOWER_NOTIFICATIONS: gotify
                         WATCHTOWER_NOTIFICATION_GOTIFY_URL: "https://my.gotify.tld/"
@@ -357,14 +357,14 @@ Select the tab that matches your legacy notification service.
               -e WATCHTOWER_NOTIFICATION_GOTIFY_URL="https://my.gotify.tld/" \
               -e WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN="SuperSecretToken" \
               -e WATCHTOWER_NOTIFICATION_GOTIFY_TLS_SKIP_VERIFY=true \
-              nickfedor/watchtower
+              ghcr.io/sidneyojr/watchtower
             ```
         === "Docker CLI (Flags)"
             ```bash
             docker run -d \
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              nickfedor/watchtower \
+              ghcr.io/sidneyojr/watchtower \
               --notifications gotify \
               --notification-gotify-url "https://my.gotify.tld/" \
               --notification-gotify-token "SuperSecretToken" \
@@ -395,7 +395,7 @@ Select the tab that matches your legacy notification service.
             ```yaml
             services:
                 watchtower:
-                    image: nickfedor/watchtower:latest
+                    image: ghcr.io/sidneyojr/watchtower:latest
                     environment:
                         WATCHTOWER_NOTIFICATION_URL: "gotify://my.gotify.tld/SuperSecretToken?title="
                     volumes:
@@ -407,14 +407,14 @@ Select the tab that matches your legacy notification service.
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
               -e WATCHTOWER_NOTIFICATION_URL="gotify://my.gotify.tld/SuperSecretToken?title=" \
-              nickfedor/watchtower
+              ghcr.io/sidneyojr/watchtower
             ```
         === "Docker CLI (Flags)"
             ```bash
             docker run -d \
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              nickfedor/watchtower \
+              ghcr.io/sidneyojr/watchtower \
               --notification-url "gotify://my.gotify.tld/SuperSecretToken?title="
             ```
 
@@ -426,7 +426,7 @@ Select the tab that matches your legacy notification service.
             ```yaml
             services:
                 watchtower:
-                    image: nickfedor/watchtower:latest
+                    image: ghcr.io/sidneyojr/watchtower:latest
                     environment:
                         WATCHTOWER_NOTIFICATIONS: slack
                         WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: "https://hooks.slack.com/services/AAA/BBB/CCC"
@@ -442,14 +442,14 @@ Select the tab that matches your legacy notification service.
               -e WATCHTOWER_NOTIFICATIONS=slack \
           -e WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL="https://hooks.slack.com/services/AAA/BBB/CCC" \
           -e WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER=watchtower-server-1 \
-              nickfedor/watchtower
+              ghcr.io/sidneyojr/watchtower
             ```
         === "Docker CLI (Flags)"
             ```bash
             docker run -d \
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              nickfedor/watchtower \
+              ghcr.io/sidneyojr/watchtower \
               --notifications slack \
               --notification-slack-hook-url "https://hooks.slack.com/services/AAA/BBB/CCC" \
           --notification-slack-identifier watchtower-server-1 \
@@ -479,7 +479,7 @@ Select the tab that matches your legacy notification service.
             ```yaml
             services:
                 watchtower:
-                    image: nickfedor/watchtower:latest
+                    image: ghcr.io/sidneyojr/watchtower:latest
                     environment:
                         WATCHTOWER_NOTIFICATION_URL: "slack://hook:AAA-BBB-CCC@webhook?botname=watchtower&color=%23406170"
                     volumes:
@@ -491,14 +491,14 @@ Select the tab that matches your legacy notification service.
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
               -e WATCHTOWER_NOTIFICATION_URL="slack://hook:AAA-BBB-CCC@webhook?botname=watchtower&color=%23406170" \
-              nickfedor/watchtower
+              ghcr.io/sidneyojr/watchtower
             ```
         === "Docker CLI (Flags)"
             ```bash
             docker run -d \
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              nickfedor/watchtower \
+              ghcr.io/sidneyojr/watchtower \
               --notification-url "slack://hook:AAA-BBB-CCC@webhook?botname=watchtower&color=%23406170"
             ```
 
@@ -510,7 +510,7 @@ Select the tab that matches your legacy notification service.
             ```yaml
             services:
                 watchtower:
-                    image: nickfedor/watchtower:latest
+                    image: ghcr.io/sidneyojr/watchtower:latest
                     environment:
                         WATCHTOWER_NOTIFICATIONS: msteams
                         WATCHTOWER_NOTIFICATION_MSTEAMS_HOOK_URL: "https://prod-00.westus.logic.azure.com:443/workflows/abc123/triggers/manual/paths/invoke?api-version=2016-06-00&sp=/triggers/manual/run&sv=1.0&sig=XXXXXXXX"
@@ -524,14 +524,14 @@ Select the tab that matches your legacy notification service.
               -v /var/run/docker.sock:/var/run/docker.sock \
               -e WATCHTOWER_NOTIFICATIONS=msteams \
               -e WATCHTOWER_NOTIFICATION_MSTEAMS_HOOK_URL="https://prod-00.westus.logic.azure.com:443/workflows/abc123/triggers/manual/paths/invoke?api-version=2016-06-00&sp=/triggers/manual/run&sv=1.0&sig=XXXXXXXX" \
-              nickfedor/watchtower
+              ghcr.io/sidneyojr/watchtower
             ```
         === "Docker CLI (Flags)"
             ```bash
             docker run -d \
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              nickfedor/watchtower \
+              ghcr.io/sidneyojr/watchtower \
               --notifications msteams \
               --notification-msteams-hook "https://prod-00.westus.logic.azure.com:443/workflows/abc123/triggers/manual/paths/invoke?api-version=2016-06-00&sp=/triggers/manual/run&sv=1.0&sig=XXXXXXXX"
             ```
@@ -560,7 +560,7 @@ Select the tab that matches your legacy notification service.
             ```yaml
             services:
                 watchtower:
-                    image: nickfedor/watchtower:latest
+                    image: ghcr.io/sidneyojr/watchtower:latest
                     environment:
                         WATCHTOWER_NOTIFICATION_URL: "teams://?host=https%3A%2F%2Fprod-00.westus.logic.azure.com%3A443%2Fworkflows%2Fabc123%2Ftriggers%2Fmanual%2Fpaths%2Finvoke%3Fapi-version%3D2016-06-00%26sp%3D%2Ftriggers%2Fmanual%2Frun%26sv%3D1.0%26sig%3DXXXXXXXX&color=%23406170"
                     volumes:
@@ -572,14 +572,14 @@ Select the tab that matches your legacy notification service.
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
               -e WATCHTOWER_NOTIFICATION_URL="teams://?host=https%3A%2F%2Fprod-00.westus.logic.azure.com%3A443%2Fworkflows%2Fabc123%2Ftriggers%2Fmanual%2Fpaths%2Finvoke%3Fapi-version%3D2016-06-00%26sp%3D%2Ftriggers%2Fmanual%2Frun%26sv%3D1.0%26sig%3DXXXXXXXX&color=%23406170" \
-              nickfedor/watchtower
+              ghcr.io/sidneyojr/watchtower
             ```
         === "Docker CLI (Flags)"
             ```bash
             docker run -d \
               --name watchtower \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              nickfedor/watchtower \
+              ghcr.io/sidneyojr/watchtower \
               --notification-url "teams://?host=https%3A%2F%2Fprod-00.westus.logic.azure.com%3A443%2Fworkflows%2Fabc123%2Ftriggers%2Fmanual%2Fpaths%2Finvoke%3Fapi-version%3D2016-06-00%26sp%3D%2Ftriggers%2Fmanual%2Frun%26sv%3D1.0%26sig%3DXXXXXXXX&color=%23406170"
             ```
 

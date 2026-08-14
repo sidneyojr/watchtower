@@ -19,7 +19,7 @@ services:
         labels: [ "com.centurylinklabs.watchtower.scope=myscope" ]
 
     scoped-watchtower:
-        image: nickfedor/watchtower
+        image: ghcr.io/sidneyojr/watchtower
         volumes: [ "/var/run/docker.sock:/var/run/docker.sock" ]
         command: --interval 30 --scope myscope
         labels: [ "com.centurylinklabs.watchtower.scope=myscope" ]
@@ -36,7 +36,7 @@ services:
         labels: [ "com.centurylinklabs.watchtower.scope=" ]
 
     unscoped-watchtower:
-        image: nickfedor/watchtower
+        image: ghcr.io/sidneyojr/watchtower
         volumes: [ "/var/run/docker.sock:/var/run/docker.sock" ]
         command: --interval 30 --scope none
 ```

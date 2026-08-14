@@ -76,7 +76,7 @@ Mount the certificate directory into the container, enable the metrics API (prov
     ```yaml
     services:
         watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
                 - /opt/watchtower/certs:/certs:ro
@@ -104,7 +104,7 @@ Mount the certificate directory into the container, enable the metrics API (prov
         -e WATCHTOWER_HTTP_API_TLS_KEY=/certs/watchtower.key \
         -p 8080:8080 \
         --restart unless-stopped \
-        nickfedor/watchtower
+        ghcr.io/sidneyojr/watchtower
     ```
 
 ### Step 4: Connect Using HTTPS

@@ -29,8 +29,8 @@ var _ = ginkgo.BeforeEach(func() {
 var _ = ginkgo.Describe("the manifest module", func() {
 	ginkgo.Describe("BuildManifestURL", func() {
 		ginkgo.It("should return a valid url given a fully qualified image", func() {
-			imageRef := "ghcr.io/nicholas-fedor/watchtower:mytag"
-			expected := "https://ghcr.io/v2/nicholas-fedor/watchtower/manifests/mytag"
+			imageRef := "ghcr.io/sidneyojr/watchtower:mytag"
+			expected := "https://ghcr.io/v2/sidneyojr/watchtower/manifests/mytag"
 
 			URL, err := buildMockContainerManifestURL(imageRef)
 			gomega.Expect(err).NotTo(gomega.HaveOccurred())
@@ -38,8 +38,8 @@ var _ = ginkgo.Describe("the manifest module", func() {
 		})
 
 		ginkgo.It("should assume Docker Hub for image refs with no explicit registry", func() {
-			imageRef := "nickfedor/watchtower:latest"
-			expected := "https://index.docker.io/v2/nickfedor/watchtower/manifests/latest"
+			imageRef := "sidneyojr/watchtower:latest"
+			expected := "https://index.docker.io/v2/sidneyojr/watchtower/manifests/latest"
 
 			URL, err := buildMockContainerManifestURL(imageRef)
 			gomega.Expect(err).NotTo(gomega.HaveOccurred())
@@ -47,8 +47,8 @@ var _ = ginkgo.Describe("the manifest module", func() {
 		})
 
 		ginkgo.It("should assume latest for image refs with no explicit tag", func() {
-			imageRef := "nickfedor/watchtower"
-			expected := "https://index.docker.io/v2/nickfedor/watchtower/manifests/latest"
+			imageRef := "sidneyojr/watchtower"
+			expected := "https://index.docker.io/v2/sidneyojr/watchtower/manifests/latest"
 
 			URL, err := buildMockContainerManifestURL(imageRef)
 			gomega.Expect(err).NotTo(gomega.HaveOccurred())
@@ -106,8 +106,8 @@ var _ = ginkgo.Describe("the manifest module", func() {
 			viper.Set("WATCHTOWER_REGISTRY_TLS_SKIP", true)
 			defer viper.Set("WATCHTOWER_REGISTRY_TLS_SKIP", false)
 
-			imageRef := "ghcr.io/nicholas-fedor/watchtower:mytag"
-			expected := "http://ghcr.io/v2/nicholas-fedor/watchtower/manifests/mytag"
+			imageRef := "ghcr.io/sidneyojr/watchtower:mytag"
+			expected := "http://ghcr.io/v2/sidneyojr/watchtower/manifests/mytag"
 
 			URL, err := buildMockContainerManifestURL(imageRef)
 			gomega.Expect(err).NotTo(gomega.HaveOccurred())

@@ -91,7 +91,7 @@ Run Watchtower with automatic CPU compatibility:
 docker run -d \
     --name watchtower \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    nickfedor/watchtower \
+    ghcr.io/sidneyojr/watchtower \
     --cpu-copy-mode auto
 ```
 
@@ -101,7 +101,7 @@ Force full CPU copying (Docker-only environments):
 docker run -d \
     --name watchtower \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    nickfedor/watchtower \
+    ghcr.io/sidneyojr/watchtower \
     --cpu-copy-mode full
 ```
 
@@ -111,6 +111,6 @@ Strip all CPU limits:
 docker run -d \
     --name watchtower \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    nickfedor/watchtower \
+    ghcr.io/sidneyojr/watchtower \
     --cpu-copy-mode none
 ```
