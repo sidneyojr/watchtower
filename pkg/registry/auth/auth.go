@@ -12,8 +12,8 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 
-	"github.com/nicholas-fedor/watchtower/internal/meta"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/meta"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // Errors for auth operations.

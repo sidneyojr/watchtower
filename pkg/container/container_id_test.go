@@ -11,9 +11,9 @@ import (
 	dockerContainer "github.com/moby/moby/api/types/container"
 	dockerImage "github.com/moby/moby/api/types/image"
 
-	mockContainer "github.com/nicholas-fedor/watchtower/pkg/container/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
-	mockTypes "github.com/nicholas-fedor/watchtower/pkg/types/mocks"
+	mockContainer "github.com/sidneyojr/watchtower/pkg/container/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
+	mockTypes "github.com/sidneyojr/watchtower/pkg/types/mocks"
 )
 
 const testHostname = "test-hostname"

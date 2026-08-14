@@ -5,7 +5,7 @@ host: localhost:8080
 info:
   contact:
     name: Nicholas Fedor
-    url: https://github.com/nicholas-fedor/watchtower
+    url: https://github.com/sidneyojr/watchtower
   description: Watchtower HTTP API for container update management, metrics, and health
     probes.
   license:

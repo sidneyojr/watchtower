@@ -3,19 +3,19 @@ package flags
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags/api"
-	"github.com/nicholas-fedor/watchtower/internal/flags/client"
-	"github.com/nicholas-fedor/watchtower/internal/flags/compat"
-	"github.com/nicholas-fedor/watchtower/internal/flags/docker"
-	"github.com/nicholas-fedor/watchtower/internal/flags/filter"
-	"github.com/nicholas-fedor/watchtower/internal/flags/lifecycle"
-	"github.com/nicholas-fedor/watchtower/internal/flags/logging"
-	"github.com/nicholas-fedor/watchtower/internal/flags/mode"
-	"github.com/nicholas-fedor/watchtower/internal/flags/notify"
-	"github.com/nicholas-fedor/watchtower/internal/flags/registry"
-	"github.com/nicholas-fedor/watchtower/internal/flags/schedule"
-	"github.com/nicholas-fedor/watchtower/internal/flags/spec"
-	"github.com/nicholas-fedor/watchtower/internal/flags/update"
+	"github.com/sidneyojr/watchtower/internal/flags/api"
+	"github.com/sidneyojr/watchtower/internal/flags/client"
+	"github.com/sidneyojr/watchtower/internal/flags/compat"
+	"github.com/sidneyojr/watchtower/internal/flags/docker"
+	"github.com/sidneyojr/watchtower/internal/flags/filter"
+	"github.com/sidneyojr/watchtower/internal/flags/lifecycle"
+	"github.com/sidneyojr/watchtower/internal/flags/logging"
+	"github.com/sidneyojr/watchtower/internal/flags/mode"
+	"github.com/sidneyojr/watchtower/internal/flags/notify"
+	"github.com/sidneyojr/watchtower/internal/flags/registry"
+	"github.com/sidneyojr/watchtower/internal/flags/schedule"
+	"github.com/sidneyojr/watchtower/internal/flags/spec"
+	"github.com/sidneyojr/watchtower/internal/flags/update"
 )
 
 // RegisterAll registers every domain's flags on the root command.

@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/metrics"
+	"github.com/sidneyojr/watchtower/internal/metrics"
 )
 
 // FuzzExtractImagesHandler fuzzes the image-name parsing logic through the

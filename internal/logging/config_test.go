@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/internal/logging"
 )
 
 func TestConfigureWriter_JSON(t *testing.T) {

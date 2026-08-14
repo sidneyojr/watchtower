@@ -9,8 +9,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/tplprev/internal/notify"
-	"github.com/nicholas-fedor/tplprev/internal/templates"
+	"github.com/sidneyojr/tplprev/internal/notify"
+	"github.com/sidneyojr/tplprev/internal/templates"
 )
 
 func TestRenderDefaultReport(t *testing.T) {

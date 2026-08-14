@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/nicholas-fedor/watchtower/pkg/container"
+	"github.com/sidneyojr/watchtower/pkg/container"
 )
 
 // ClientOptions builds container.ClientOptions from the resolved Config.

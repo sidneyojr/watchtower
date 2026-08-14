@@ -7,9 +7,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	apiConfig "github.com/nicholas-fedor/watchtower/internal/api/config"
-	"github.com/nicholas-fedor/watchtower/internal/logging"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	apiConfig "github.com/sidneyojr/watchtower/internal/api/config"
+	"github.com/sidneyojr/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // errInvalidAPIHost indicates http-api-host is neither empty nor a valid IP.

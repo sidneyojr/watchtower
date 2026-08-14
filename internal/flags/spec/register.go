@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/pflag"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags/utils"
+	"github.com/sidneyojr/watchtower/internal/flags/utils"
 )
 
 // ErrUnsupportedFlagKind indicates a FlagSpec kind is not supported for registration.

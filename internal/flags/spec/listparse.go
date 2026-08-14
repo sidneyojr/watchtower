@@ -1,6 +1,6 @@
 package spec
 
-import "github.com/nicholas-fedor/watchtower/internal/flags/utils"
+import "github.com/sidneyojr/watchtower/internal/flags/utils"
 
 // ParseList splits a raw list string using the FlagSpec ListParse strategy.
 //

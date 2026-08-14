@@ -12,9 +12,9 @@ import (
 	dockerContainer "github.com/moby/moby/api/types/container"
 	dockerNetwork "github.com/moby/moby/api/types/network"
 
-	"github.com/nicholas-fedor/watchtower/internal/actions"
-	mockActions "github.com/nicholas-fedor/watchtower/internal/actions/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/actions"
+	mockActions "github.com/sidneyojr/watchtower/internal/actions/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // testLogger returns a discarded zerolog logger for tests that do not assert on logs.

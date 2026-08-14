@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	mockTypes "github.com/nicholas-fedor/watchtower/pkg/types/mocks"
+	mockTypes "github.com/sidneyojr/watchtower/pkg/types/mocks"
 )
 
 // TestWarnOnAPIConsumption verifies that WarnOnAPIConsumption returns true for

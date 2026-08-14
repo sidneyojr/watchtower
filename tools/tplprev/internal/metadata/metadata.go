@@ -4,9 +4,9 @@ package metadata
 // These values are populated via ldflags from scripts/build-tplprev.sh
 // and scripts/build-tplprev.ps1:
 //
-//	-X github.com/nicholas-fedor/tplprev/internal/metadata.Version=<version>
-//	-X github.com/nicholas-fedor/tplprev/internal/metadata.Commit=<commit>
-//	-X github.com/nicholas-fedor/tplprev/internal/metadata.Date=<date>
+//	-X github.com/sidneyojr/tplprev/internal/metadata.Version=<version>
+//	-X github.com/sidneyojr/tplprev/internal/metadata.Commit=<commit>
+//	-X github.com/sidneyojr/tplprev/internal/metadata.Date=<date>
 var (
 	Version = "dev"
 	Commit  = "none"

@@ -12,7 +12,7 @@ import (
 
 	dockerContainer "github.com/moby/moby/api/types/container"
 
-	"github.com/nicholas-fedor/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/internal/logging"
 )
 
 // testLog returns a discarded zerolog logger for tests that do not assert on output.

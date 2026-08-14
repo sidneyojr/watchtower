@@ -11,9 +11,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/config"
-	"github.com/nicholas-fedor/watchtower/internal/flags"
-	"github.com/nicholas-fedor/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/internal/config"
+	"github.com/sidneyojr/watchtower/internal/flags"
+	"github.com/sidneyojr/watchtower/internal/logging"
 )
 
 // testLogger returns a discarded zerolog logger for tests that do not assert on logs.

@@ -7,8 +7,8 @@ import (
 
 	"github.com/rs/zerolog"
 
-	"github.com/nicholas-fedor/watchtower/pkg/container"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/container"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // checkCommandTimeout is the timeout in minutes for check commands (pre/post check hooks).

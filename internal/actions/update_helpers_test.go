@@ -7,8 +7,8 @@ import (
 	dockerImage "github.com/moby/moby/api/types/image"
 	dockerNetwork "github.com/moby/moby/api/types/network"
 
-	mockActions "github.com/nicholas-fedor/watchtower/internal/actions/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	mockActions "github.com/sidneyojr/watchtower/internal/actions/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 func getCommonTestData() *mockActions.TestData {

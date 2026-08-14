@@ -20,11 +20,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
-	"github.com/nicholas-fedor/watchtower/internal/api/handlers/events"
-	"github.com/nicholas-fedor/watchtower/internal/metrics"
-	mockContainer "github.com/nicholas-fedor/watchtower/pkg/container/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/api/config"
+	"github.com/sidneyojr/watchtower/internal/api/handlers/events"
+	"github.com/sidneyojr/watchtower/internal/metrics"
+	mockContainer "github.com/sidneyojr/watchtower/pkg/container/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 var testMetrics = metrics.Default()

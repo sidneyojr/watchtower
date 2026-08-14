@@ -1,18 +1,18 @@
 package config
 
 import (
-	"github.com/nicholas-fedor/watchtower/internal/config/api"
-	"github.com/nicholas-fedor/watchtower/internal/config/client"
-	"github.com/nicholas-fedor/watchtower/internal/config/compatibility"
-	"github.com/nicholas-fedor/watchtower/internal/config/docker"
-	"github.com/nicholas-fedor/watchtower/internal/config/filter"
-	"github.com/nicholas-fedor/watchtower/internal/config/lifecycle"
-	"github.com/nicholas-fedor/watchtower/internal/config/logging"
-	"github.com/nicholas-fedor/watchtower/internal/config/mode"
-	"github.com/nicholas-fedor/watchtower/internal/config/notify"
-	"github.com/nicholas-fedor/watchtower/internal/config/registry"
-	"github.com/nicholas-fedor/watchtower/internal/config/schedule"
-	"github.com/nicholas-fedor/watchtower/internal/config/update"
+	"github.com/sidneyojr/watchtower/internal/config/api"
+	"github.com/sidneyojr/watchtower/internal/config/client"
+	"github.com/sidneyojr/watchtower/internal/config/compatibility"
+	"github.com/sidneyojr/watchtower/internal/config/docker"
+	"github.com/sidneyojr/watchtower/internal/config/filter"
+	"github.com/sidneyojr/watchtower/internal/config/lifecycle"
+	"github.com/sidneyojr/watchtower/internal/config/logging"
+	"github.com/sidneyojr/watchtower/internal/config/mode"
+	"github.com/sidneyojr/watchtower/internal/config/notify"
+	"github.com/sidneyojr/watchtower/internal/config/registry"
+	"github.com/sidneyojr/watchtower/internal/config/schedule"
+	"github.com/sidneyojr/watchtower/internal/config/update"
 )
 
 // Config is the immutable process configuration snapshot produced by Load.

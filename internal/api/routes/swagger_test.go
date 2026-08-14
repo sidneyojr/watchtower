@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
-	_ "github.com/nicholas-fedor/watchtower/internal/api/swagger"
+	"github.com/sidneyojr/watchtower/internal/api/config"
+	_ "github.com/sidneyojr/watchtower/internal/api/swagger"
 )
 
 func TestRewriteSwaggerDocHost(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
+	"github.com/sidneyojr/watchtower/internal/api/config"
 )
 
 func TestRegisterConfigRoute(t *testing.T) {

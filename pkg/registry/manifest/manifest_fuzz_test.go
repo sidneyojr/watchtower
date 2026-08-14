@@ -7,9 +7,9 @@ import (
 
 	dockerImageType "github.com/moby/moby/api/types/image"
 
-	mockActions "github.com/nicholas-fedor/watchtower/internal/actions/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/registry/manifest"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	mockActions "github.com/sidneyojr/watchtower/internal/actions/mocks"
+	"github.com/sidneyojr/watchtower/pkg/registry/manifest"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // FuzzBuildManifestURL fuzzes the BuildManifestURL function with various image reference strings

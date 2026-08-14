@@ -12,12 +12,12 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/spf13/cobra"
 
-	appConfig "github.com/nicholas-fedor/watchtower/internal/config"
-	"github.com/nicholas-fedor/watchtower/internal/flags"
-	"github.com/nicholas-fedor/watchtower/internal/logging"
-	"github.com/nicholas-fedor/watchtower/pkg/container"
-	"github.com/nicholas-fedor/watchtower/pkg/notifications"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	appConfig "github.com/sidneyojr/watchtower/internal/config"
+	"github.com/sidneyojr/watchtower/internal/flags"
+	"github.com/sidneyojr/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/pkg/container"
+	"github.com/sidneyojr/watchtower/pkg/notifications"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // cleanupTimeout defines the duration after which the temporary notification file is removed.

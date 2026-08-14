@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/nicholas-fedor/tplprev/internal/notify"
-	"github.com/nicholas-fedor/tplprev/internal/report"
+	"github.com/sidneyojr/tplprev/internal/notify"
+	"github.com/sidneyojr/tplprev/internal/report"
 )
 
 // PreviewData represents a generator for preview data, including container statuses and log entries.

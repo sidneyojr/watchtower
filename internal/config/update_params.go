@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // UpdateParams builds a complete types.UpdateParams from Config and per-run overrides.

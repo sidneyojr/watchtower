@@ -17,7 +17,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "contact": {
             "name": "Nicholas Fedor",
-            "url": "https://github.com/nicholas-fedor/watchtower"
+            "url": "https://github.com/sidneyojr/watchtower"
         },
         "license": {
             "name": "MIT",

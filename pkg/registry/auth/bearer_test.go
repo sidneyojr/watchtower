@@ -16,8 +16,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	mockAuth "github.com/nicholas-fedor/watchtower/pkg/registry/auth/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	mockAuth "github.com/sidneyojr/watchtower/pkg/registry/auth/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 func Test_tokenExpiryCalculator_ExpireAfterCreate(t *testing.T) {

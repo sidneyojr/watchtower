@@ -8,7 +8,7 @@ RUN apk add --no-cache ca-certificates tzdata git alpine-sdk
 WORKDIR /watchtower
 
 ARG WATCHTOWER_VERSION=main
-RUN git clone --branch "${WATCHTOWER_VERSION}" https://github.com/nicholas-fedor/watchtower.git .
+RUN git clone --branch "${WATCHTOWER_VERSION}" https://github.com/sidneyojr/watchtower.git .
 
 
 RUN CGO_ENABLED=0 GOOS=linux go build \
@@ -16,7 +16,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build \
     -a \
     -ldflags "\
     -s -w \
-    -X github.com/nicholas-fedor/watchtower/internal/meta.Version=$(git describe --tags --always) \
+    -X github.com/sidneyojr/watchtower/internal/meta.Version=$(git describe --tags --always) \
     " \
     -o ./bin/watchtower \
     .
@@ -28,7 +28,7 @@ LABEL \
     "com.centurylinklabs.watchtower"="true" \
     "org.opencontainers.image.url"="https://watchtower.nickfedor.com" \
     "org.opencontainers.image.documentation"="https://watchtower.nickfedor.com" \
-    "org.opencontainers.image.source"="https://github.com/nicholas-fedor/watchtower" \
+    "org.opencontainers.image.source"="https://github.com/sidneyojr/watchtower" \
     "org.opencontainers.image.licenses"="Apache-2.0" \
     "org.opencontainers.image.title"="Watchtower" \
     "org.opencontainers.image.description"="Automate Docker container updates."

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // ErrCircularReference indicates a circular dependency between containers.

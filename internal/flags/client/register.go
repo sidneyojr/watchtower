@@ -4,7 +4,7 @@ package client
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags/spec"
+	"github.com/sidneyojr/watchtower/internal/flags/spec"
 )
 
 // Specs returns client domain flag metadata with static defaults.

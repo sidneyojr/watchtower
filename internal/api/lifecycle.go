@@ -13,8 +13,8 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/rs/zerolog"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
-	"github.com/nicholas-fedor/watchtower/internal/api/routes"
+	"github.com/sidneyojr/watchtower/internal/api/config"
+	"github.com/sidneyojr/watchtower/internal/api/routes"
 )
 
 // Server defines the interface for Watchtower's HTTP API server.

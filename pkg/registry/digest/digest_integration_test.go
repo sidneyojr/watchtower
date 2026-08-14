@@ -21,12 +21,12 @@ import (
 
 	dockerImage "github.com/moby/moby/api/types/image"
 
-	mockActions "github.com/nicholas-fedor/watchtower/internal/actions/mocks"
-	"github.com/nicholas-fedor/watchtower/internal/meta"
-	"github.com/nicholas-fedor/watchtower/pkg/registry/auth"
-	"github.com/nicholas-fedor/watchtower/pkg/registry/digest"
-	"github.com/nicholas-fedor/watchtower/pkg/registry/manifest"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	mockActions "github.com/sidneyojr/watchtower/internal/actions/mocks"
+	"github.com/sidneyojr/watchtower/internal/meta"
+	"github.com/sidneyojr/watchtower/pkg/registry/auth"
+	"github.com/sidneyojr/watchtower/pkg/registry/digest"
+	"github.com/sidneyojr/watchtower/pkg/registry/manifest"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 const (

@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/nicholas-fedor/tplprev/internal/metadata"
-	"github.com/nicholas-fedor/tplprev/internal/preview"
-	"github.com/nicholas-fedor/tplprev/internal/templates"
+	"github.com/sidneyojr/tplprev/internal/metadata"
+	"github.com/sidneyojr/tplprev/internal/preview"
+	"github.com/sidneyojr/tplprev/internal/templates"
 )
 
 func main() {

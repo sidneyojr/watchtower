@@ -7,8 +7,8 @@ import (
 
 	"github.com/distribution/reference"
 
-	"github.com/nicholas-fedor/watchtower/pkg/container"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/container"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // ImageStatus describes a tracked image and its current state.

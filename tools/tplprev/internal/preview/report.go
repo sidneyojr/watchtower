@@ -3,7 +3,7 @@ package preview
 import (
 	"sort"
 
-	"github.com/nicholas-fedor/tplprev/internal/report"
+	"github.com/sidneyojr/tplprev/internal/report"
 )
 
 // State is the outcome of a container in a session report.

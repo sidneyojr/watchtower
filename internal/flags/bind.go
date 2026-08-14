@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags/spec"
+	"github.com/sidneyojr/watchtower/internal/flags/spec"
 )
 
 var (

@@ -10,7 +10,7 @@ import (
 
 	"github.com/distribution/reference"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // mockClient is a mock implementation of the Client interface for fuzz testing.

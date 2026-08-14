@@ -16,13 +16,13 @@ import (
 
 	cerrdefs "github.com/containerd/errdefs"
 
-	"github.com/nicholas-fedor/watchtower/pkg/compose"
-	"github.com/nicholas-fedor/watchtower/pkg/container"
-	"github.com/nicholas-fedor/watchtower/pkg/filters"
-	"github.com/nicholas-fedor/watchtower/pkg/lifecycle"
-	"github.com/nicholas-fedor/watchtower/pkg/session"
-	"github.com/nicholas-fedor/watchtower/pkg/sorter"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/compose"
+	"github.com/sidneyojr/watchtower/pkg/container"
+	"github.com/sidneyojr/watchtower/pkg/filters"
+	"github.com/sidneyojr/watchtower/pkg/lifecycle"
+	"github.com/sidneyojr/watchtower/pkg/session"
+	"github.com/sidneyojr/watchtower/pkg/sorter"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 const (

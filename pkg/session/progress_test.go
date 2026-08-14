@@ -11,8 +11,8 @@ import (
 
 	testifyMock "github.com/stretchr/testify/mock"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
-	mockTypes "github.com/nicholas-fedor/watchtower/pkg/types/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
+	mockTypes "github.com/sidneyojr/watchtower/pkg/types/mocks"
 )
 
 func testLog() *zerolog.Logger {

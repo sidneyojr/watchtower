@@ -7,10 +7,10 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/timeout"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
-	"github.com/nicholas-fedor/watchtower/internal/api/handlers/update"
-	mt "github.com/nicholas-fedor/watchtower/internal/metrics"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/api/config"
+	"github.com/sidneyojr/watchtower/internal/api/handlers/update"
+	mt "github.com/sidneyojr/watchtower/internal/metrics"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 func registerUpdateRoute(ctx context.Context, app *fiber.App, auth fiber.Handler, opts config.Options) {

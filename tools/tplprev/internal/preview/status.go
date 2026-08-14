@@ -1,6 +1,6 @@
 package preview
 
-import "github.com/nicholas-fedor/tplprev/internal/report"
+import "github.com/sidneyojr/tplprev/internal/report"
 
 var _ report.ContainerReport = (*containerStatus)(nil)
 

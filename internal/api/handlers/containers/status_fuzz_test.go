@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/nicholas-fedor/watchtower/pkg/container"
+	"github.com/sidneyojr/watchtower/pkg/container"
 )
 
 // FuzzExtractDigest verifies that ExtractImageDigest never panics and correctly

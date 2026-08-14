@@ -9,8 +9,8 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/rs/zerolog"
 
-	"github.com/nicholas-fedor/watchtower/pkg/container"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/container"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // ContainerCheck holds the update availability result for a single container.

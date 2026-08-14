@@ -12,8 +12,8 @@ import (
 
 	dto "github.com/prometheus/client_model/go"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
-	mockTypes "github.com/nicholas-fedor/watchtower/pkg/types/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
+	mockTypes "github.com/sidneyojr/watchtower/pkg/types/mocks"
 )
 
 func TestNewMetric(t *testing.T) {

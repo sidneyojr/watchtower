@@ -9,8 +9,8 @@ import (
 	"github.com/gofiber/fiber/v3/extractors"
 	"github.com/gofiber/fiber/v3/middleware/keyauth"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
-	"github.com/nicholas-fedor/watchtower/internal/api/handlers/events"
+	"github.com/sidneyojr/watchtower/internal/api/config"
+	"github.com/sidneyojr/watchtower/internal/api/handlers/events"
 )
 
 func registerEventsRoute(app *fiber.App, opts config.Options) {

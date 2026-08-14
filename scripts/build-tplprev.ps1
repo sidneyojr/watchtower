@@ -35,7 +35,7 @@ $commit = git rev-parse HEAD 2>$null
 if (-not $commit) { $commit = "none" }
 $date = git log -1 --format=%cI 2>$null
 if (-not $date) { $date = [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ") }
-$ldflags = "-X github.com/nicholas-fedor/tplprev/internal/metadata.Version=$version -X github.com/nicholas-fedor/tplprev/internal/metadata.Commit=$commit -X github.com/nicholas-fedor/tplprev/internal/metadata.Date=$date"
+$ldflags = "-X github.com/sidneyojr/tplprev/internal/metadata.Version=$version -X github.com/sidneyojr/tplprev/internal/metadata.Commit=$commit -X github.com/sidneyojr/tplprev/internal/metadata.Date=$date"
 $env:GOARCH = "wasm"
 $env:GOOS = "js"
 go -C ./tools/tplprev build -ldflags $ldflags -o ../../docs/assets/tplprev.wasm .

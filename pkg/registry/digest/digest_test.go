@@ -21,9 +21,9 @@ import (
 	dockerContainer "github.com/moby/moby/api/types/container"
 	dockerImage "github.com/moby/moby/api/types/image"
 
-	"github.com/nicholas-fedor/watchtower/internal/logging"
-	mockAuth "github.com/nicholas-fedor/watchtower/pkg/registry/auth/mocks"
-	mockTypes "github.com/nicholas-fedor/watchtower/pkg/types/mocks"
+	"github.com/sidneyojr/watchtower/internal/logging"
+	mockAuth "github.com/sidneyojr/watchtower/pkg/registry/auth/mocks"
+	mockTypes "github.com/sidneyojr/watchtower/pkg/types/mocks"
 )
 
 func testLog() *zerolog.Logger {

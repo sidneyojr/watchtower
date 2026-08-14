@@ -1,7 +1,7 @@
 // Package filter holds container selection inputs and the resolved filter.
 package filter
 
-import "github.com/nicholas-fedor/watchtower/pkg/types"
+import "github.com/sidneyojr/watchtower/pkg/types"
 
 // Filter holds raw filter inputs and the resolved predicate.
 type Filter struct {

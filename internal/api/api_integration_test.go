@@ -16,16 +16,16 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/api"
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
-	"github.com/nicholas-fedor/watchtower/internal/api/handlers/events"
-	mockAPI "github.com/nicholas-fedor/watchtower/internal/api/mocks"
-	"github.com/nicholas-fedor/watchtower/internal/api/routes"
-	"github.com/nicholas-fedor/watchtower/internal/logging"
-	"github.com/nicholas-fedor/watchtower/internal/metrics"
-	"github.com/nicholas-fedor/watchtower/internal/scheduling"
-	mockContainer "github.com/nicholas-fedor/watchtower/pkg/container/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/api"
+	"github.com/sidneyojr/watchtower/internal/api/config"
+	"github.com/sidneyojr/watchtower/internal/api/handlers/events"
+	mockAPI "github.com/sidneyojr/watchtower/internal/api/mocks"
+	"github.com/sidneyojr/watchtower/internal/api/routes"
+	"github.com/sidneyojr/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/internal/metrics"
+	"github.com/sidneyojr/watchtower/internal/scheduling"
+	mockContainer "github.com/sidneyojr/watchtower/pkg/container/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 var helperMetrics = metrics.Default()

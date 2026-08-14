@@ -13,7 +13,7 @@ import (
 
 	dockerClient "github.com/moby/moby/client"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 var _ = ginkgo.Describe("CooldownError", func() {

@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags/spec"
+	"github.com/sidneyojr/watchtower/internal/flags/spec"
 )
 
 // Specs returns Docker domain flag metadata with static defaults.

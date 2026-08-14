@@ -11,9 +11,9 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
-	notifyConfig "github.com/nicholas-fedor/watchtower/internal/config/notify"
-	"github.com/nicholas-fedor/watchtower/internal/logging"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	notifyConfig "github.com/sidneyojr/watchtower/internal/config/notify"
+	"github.com/sidneyojr/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // ColorHex is the default notification color used for services that support it

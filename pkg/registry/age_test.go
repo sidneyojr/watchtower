@@ -18,8 +18,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/logging"
-	mockTypes "github.com/nicholas-fedor/watchtower/pkg/types/mocks"
+	"github.com/sidneyojr/watchtower/internal/logging"
+	mockTypes "github.com/sidneyojr/watchtower/pkg/types/mocks"
 )
 
 func testLog() *zerolog.Logger {

@@ -1,6 +1,6 @@
 package config
 
-import "github.com/nicholas-fedor/watchtower/pkg/types"
+import "github.com/sidneyojr/watchtower/pkg/types"
 
 // RunOverrides holds per-invocation deltas applied on top of process-wide Config.
 //

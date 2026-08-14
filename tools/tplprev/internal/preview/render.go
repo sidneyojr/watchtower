@@ -5,8 +5,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/nicholas-fedor/tplprev/internal/notify"
-	"github.com/nicholas-fedor/tplprev/internal/templates"
+	"github.com/sidneyojr/tplprev/internal/notify"
+	"github.com/sidneyojr/tplprev/internal/templates"
 )
 
 // Render generates a preview string from a template, states, and log levels.

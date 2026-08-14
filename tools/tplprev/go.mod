@@ -1,4 +1,4 @@
-module github.com/nicholas-fedor/tplprev
+module github.com/sidneyojr/tplprev
 
 go 1.26.6
 

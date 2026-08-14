@@ -8,16 +8,16 @@ body:
         ### Thank you for suggesting a new feature!
 
         Before submitting, please:
-        - Search [existing issues](https://github.com/nicholas-fedor/watchtower/issues) and [discussions](https://github.com/nicholas-fedor/watchtower/discussions).
-        - For support, use [Discussions](https://github.com/nicholas-fedor/watchtower/discussions).
-        - See [Contributing](https://github.com/nicholas-fedor/watchtower?tab=contributing-ov-file) for guidelines.
+        - Search [existing issues](https://github.com/sidneyojr/watchtower/issues) and [discussions](https://github.com/sidneyojr/watchtower/discussions).
+        - For support, use [Discussions](https://github.com/sidneyojr/watchtower/discussions).
+        - See [Contributing](https://github.com/sidneyojr/watchtower?tab=contributing-ov-file) for guidelines.
 
   - type: checkboxes
     id: checklist
     attributes:
       label: Feature Request Checklist
       options:
-        - label: I checked [existing issues](https://github.com/nicholas-fedor/watchtower/issues) and [discussions](https://github.com/nicholas-fedor/watchtower/discussions) for duplicates.
+        - label: I checked [existing issues](https://github.com/sidneyojr/watchtower/issues) and [discussions](https://github.com/sidneyojr/watchtower/discussions) for duplicates.
           required: true
         - label: This is a feature request, not a support question.
           required: true

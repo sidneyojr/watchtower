@@ -3,7 +3,7 @@ package notify
 import (
 	"time"
 
-	"github.com/nicholas-fedor/tplprev/internal/report"
+	"github.com/sidneyojr/tplprev/internal/report"
 )
 
 // StaticData is the part of the notification template data model set upon initialization.

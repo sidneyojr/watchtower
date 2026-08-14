@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/healthcheck"
 
-	"github.com/nicholas-fedor/watchtower/pkg/container"
+	"github.com/sidneyojr/watchtower/pkg/container"
 )
 
 const readinessProbeTimeout = 5 * time.Second

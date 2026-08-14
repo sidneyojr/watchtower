@@ -9,7 +9,7 @@ import (
 
 	swaggo "github.com/gofiber/contrib/v3/swaggo"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
+	"github.com/sidneyojr/watchtower/internal/api/config"
 )
 
 // registerSwaggerRoute mounts Swagger UI under /swagger/* without API auth.

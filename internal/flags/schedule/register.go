@@ -4,7 +4,7 @@ package schedule
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags/spec"
+	"github.com/sidneyojr/watchtower/internal/flags/spec"
 )
 
 // DefaultPollIntervalSeconds is the static default poll interval (24 hours).

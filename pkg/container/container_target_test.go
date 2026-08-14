@@ -17,9 +17,9 @@ import (
 	dockerClient "github.com/moby/moby/client"
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags"
-	"github.com/nicholas-fedor/watchtower/internal/logging"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/flags"
+	"github.com/sidneyojr/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // WithCPUSettings configures CPU settings for the mock container.

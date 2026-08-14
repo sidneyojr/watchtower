@@ -12,11 +12,11 @@ import (
 
 	dockerContainer "github.com/moby/moby/api/types/container"
 
-	mockActions "github.com/nicholas-fedor/watchtower/internal/actions/mocks"
-	"github.com/nicholas-fedor/watchtower/internal/metrics"
-	"github.com/nicholas-fedor/watchtower/pkg/filters"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
-	mockTypes "github.com/nicholas-fedor/watchtower/pkg/types/mocks"
+	mockActions "github.com/sidneyojr/watchtower/internal/actions/mocks"
+	"github.com/sidneyojr/watchtower/internal/metrics"
+	"github.com/sidneyojr/watchtower/pkg/filters"
+	"github.com/sidneyojr/watchtower/pkg/types"
+	mockTypes "github.com/sidneyojr/watchtower/pkg/types/mocks"
 )
 
 // defaultTestUpdateParams returns a complete UpdateParams snapshot for tests.

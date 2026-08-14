@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"syscall/js"
 
-	"github.com/nicholas-fedor/tplprev/internal/metadata"
-	"github.com/nicholas-fedor/tplprev/internal/preview"
+	"github.com/sidneyojr/tplprev/internal/metadata"
+	"github.com/sidneyojr/tplprev/internal/preview"
 )
 
 // errInvalidJSArg is returned when a WASM argument is not a string or collection.

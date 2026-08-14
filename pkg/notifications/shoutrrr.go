@@ -21,8 +21,8 @@ import (
 	shoutrrrTypes "github.com/nicholas-fedor/shoutrrr/pkg/types"
 	stdlog "log"
 
-	"github.com/nicholas-fedor/watchtower/pkg/session"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/session"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // shoutrrrType is the identifier for Shoutrrr notifications.

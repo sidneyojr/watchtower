@@ -7,8 +7,8 @@ import (
 
 	dockerContainer "github.com/moby/moby/api/types/container"
 
-	mockSorter "github.com/nicholas-fedor/watchtower/pkg/sorter/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	mockSorter "github.com/sidneyojr/watchtower/pkg/sorter/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 func BenchmarkTimeSorterSort(b *testing.B) {

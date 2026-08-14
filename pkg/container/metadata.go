@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/nicholas-fedor/watchtower/internal/util"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/util"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // Watchtower-specific labels identify containers managed by Watchtower and their configurations.

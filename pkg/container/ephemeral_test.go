@@ -16,8 +16,8 @@ import (
 	dockerClient "github.com/moby/moby/client"
 	mock "github.com/stretchr/testify/mock"
 
-	mockContainer "github.com/nicholas-fedor/watchtower/pkg/container/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	mockContainer "github.com/sidneyojr/watchtower/pkg/container/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 func nopLogger() *zerolog.Logger {

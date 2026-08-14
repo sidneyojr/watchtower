@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 func TestContainerStatus_ID(t *testing.T) {

@@ -15,9 +15,9 @@ import (
 	dockerImage "github.com/moby/moby/api/types/image"
 	dockerNetwork "github.com/moby/moby/api/types/network"
 
-	"github.com/nicholas-fedor/watchtower/pkg/container"
-	mockContainer "github.com/nicholas-fedor/watchtower/pkg/container/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/container"
+	mockContainer "github.com/sidneyojr/watchtower/pkg/container/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 var _ = ginkgo.Describe("CheckForMultipleWatchtowerInstances", func() {

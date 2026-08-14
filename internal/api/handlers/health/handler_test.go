@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	mockContainer "github.com/nicholas-fedor/watchtower/pkg/container/mocks"
+	mockContainer "github.com/sidneyojr/watchtower/pkg/container/mocks"
 )
 
 func TestNewLivenessHandler(t *testing.T) {

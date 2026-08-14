@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags/spec"
+	"github.com/sidneyojr/watchtower/internal/flags/spec"
 )
 
 // TestStringSliceValue_ChangedFlagWinsOverEnv verifies that stringSliceValue

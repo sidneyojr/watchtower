@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/metrics"
+	"github.com/sidneyojr/watchtower/internal/metrics"
 )
 
 // FuzzStatusHandlerHandle verifies that StatusHandler.Handle never panics and

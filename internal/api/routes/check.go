@@ -6,11 +6,11 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/timeout"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
-	"github.com/nicholas-fedor/watchtower/internal/api/handlers/check"
-	"github.com/nicholas-fedor/watchtower/internal/api/handlers/events"
-	"github.com/nicholas-fedor/watchtower/internal/api/handlers/update"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/api/config"
+	"github.com/sidneyojr/watchtower/internal/api/handlers/check"
+	"github.com/sidneyojr/watchtower/internal/api/handlers/events"
+	"github.com/sidneyojr/watchtower/internal/api/handlers/update"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 func registerCheckRoute(app *fiber.App, auth fiber.Handler, opts config.Options) {

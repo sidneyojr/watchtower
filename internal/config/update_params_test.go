@@ -8,15 +8,15 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/config"
-	"github.com/nicholas-fedor/watchtower/internal/config/client"
-	"github.com/nicholas-fedor/watchtower/internal/config/compatibility"
-	"github.com/nicholas-fedor/watchtower/internal/config/filter"
-	"github.com/nicholas-fedor/watchtower/internal/config/lifecycle"
-	"github.com/nicholas-fedor/watchtower/internal/config/mode"
-	"github.com/nicholas-fedor/watchtower/internal/config/update"
-	"github.com/nicholas-fedor/watchtower/pkg/filters"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/config"
+	"github.com/sidneyojr/watchtower/internal/config/client"
+	"github.com/sidneyojr/watchtower/internal/config/compatibility"
+	"github.com/sidneyojr/watchtower/internal/config/filter"
+	"github.com/sidneyojr/watchtower/internal/config/lifecycle"
+	"github.com/sidneyojr/watchtower/internal/config/mode"
+	"github.com/sidneyojr/watchtower/internal/config/update"
+	"github.com/sidneyojr/watchtower/pkg/filters"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // TestUpdateParamsAssignsEveryField ensures UpdateParams sets every exported

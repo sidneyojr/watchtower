@@ -8,9 +8,9 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/rs/zerolog"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/handlers/events"
-	"github.com/nicholas-fedor/watchtower/pkg/notifications"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/api/handlers/events"
+	"github.com/sidneyojr/watchtower/pkg/notifications"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // Handler serves the /v1/check endpoint.

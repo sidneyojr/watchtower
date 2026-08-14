@@ -9,10 +9,10 @@ import (
 
 	dockerContainer "github.com/moby/moby/api/types/container"
 
-	"github.com/nicholas-fedor/watchtower/internal/util"
-	"github.com/nicholas-fedor/watchtower/pkg/container"
-	mockSorter "github.com/nicholas-fedor/watchtower/pkg/sorter/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/util"
+	"github.com/sidneyojr/watchtower/pkg/container"
+	mockSorter "github.com/sidneyojr/watchtower/pkg/sorter/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // FuzzDependencySort fuzz tests the dependency sorting algorithm with random inputs.

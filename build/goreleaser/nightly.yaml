@@ -3,7 +3,7 @@
 #                 GoReleaser OSS Nightly Release Configuration                 #
 #                                                                              #
 # Project: Watchtower                                                          #
-# Repository: https://github.com/nicholas-fedor/watchtower/                    #
+# Repository: https://github.com/sidneyojr/watchtower/                    #
 #                                                                              #
 # GoReleaser URL: https://goreleaser.com/                                      #
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json      #
@@ -37,7 +37,7 @@ builds:
       - -X main.version={{ .Version }}
       - -X main.commit={{ .Commit }}
       - -X main.date={{ .CommitDate }}
-      - -X github.com/nicholas-fedor/watchtower/internal/meta.Version={{ .Version }}
+      - -X github.com/sidneyojr/watchtower/internal/meta.Version={{ .Version }}
     env:
       - CGO_ENABLED=0
     goos:
@@ -108,7 +108,7 @@ dockers_v2:
       org.opencontainers.image.source: "{{ .GitURL }}"
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
-      org.opencontainers.image.url: "https://github.com/nicholas-fedor/watchtower"
+      org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
       org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
       com.centurylinklabs.watchtower: "true"
 
@@ -133,7 +133,7 @@ dockers_v2:
       org.opencontainers.image.source: "{{ .GitURL }}"
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
-      org.opencontainers.image.url: "https://github.com/nicholas-fedor/watchtower"
+      org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
       org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
       com.centurylinklabs.watchtower: "true"
 
@@ -155,7 +155,7 @@ dockers_v2:
       org.opencontainers.image.source: "{{ .GitURL }}"
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
-      org.opencontainers.image.url: "https://github.com/nicholas-fedor/watchtower"
+      org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
       org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
       com.centurylinklabs.watchtower: "true"
 
@@ -177,7 +177,7 @@ dockers_v2:
       org.opencontainers.image.source: "{{ .GitURL }}"
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
-      org.opencontainers.image.url: "https://github.com/nicholas-fedor/watchtower"
+      org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
       org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
       com.centurylinklabs.watchtower: "true"
 
@@ -199,7 +199,7 @@ dockers_v2:
       org.opencontainers.image.source: "{{ .GitURL }}"
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
-      org.opencontainers.image.url: "https://github.com/nicholas-fedor/watchtower"
+      org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
       org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
       com.centurylinklabs.watchtower: "true"
 
@@ -221,7 +221,7 @@ dockers_v2:
       org.opencontainers.image.source: "{{ .GitURL }}"
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
-      org.opencontainers.image.url: "https://github.com/nicholas-fedor/watchtower"
+      org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
       org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
       com.centurylinklabs.watchtower: "true"
 

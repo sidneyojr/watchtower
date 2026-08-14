@@ -7,8 +7,8 @@ import (
 
 	"github.com/gofiber/fiber/v3"
 
-	"github.com/nicholas-fedor/watchtower/internal/api/config"
-	_ "github.com/nicholas-fedor/watchtower/internal/api/swagger"
+	"github.com/sidneyojr/watchtower/internal/api/config"
+	_ "github.com/sidneyojr/watchtower/internal/api/swagger"
 )
 
 var (

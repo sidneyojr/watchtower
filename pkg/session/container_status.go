@@ -3,7 +3,7 @@ package session
 import (
 	"time"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // State enum values.

@@ -1,7 +1,7 @@
 # Watchtower Documentation Website Setup
 
 [![Documentation](https://img.shields.io/badge/docs-live-blue)](https://nicholas-fedor.github.io/watchtower/)
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/nicholas-fedor/watchtower/publish-docs.yaml)](https://github.com/nicholas-fedor/watchtower/actions)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/nicholas-fedor/watchtower/publish-docs.yaml)](https://github.com/sidneyojr/watchtower/actions)
 
 ## Table of Contents
 
@@ -380,7 +380,7 @@ Versions are deployed automatically via GitHub Actions:
 
 #### Core Components
 
-- `tools/tplprev/`: Nested `github.com/nicholas-fedor/tplprev` module (CLI + WASM)
+- `tools/tplprev/`: Nested `github.com/sidneyojr/tplprev` module (CLI + WASM)
 - `scripts/build-tplprev.sh`: Build script for WASM compilation
 
 #### Build Process
@@ -470,7 +470,7 @@ The template preview is integrated into `docs/notifications/template-preview/ind
 1. **Clone Repository**:
 
     ```bash
-    git clone https://github.com/nicholas-fedor/watchtower.git
+    git clone https://github.com/sidneyojr/watchtower.git
     cd watchtower
     ```
 

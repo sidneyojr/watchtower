@@ -24,8 +24,8 @@ import (
 	dockerClient "github.com/moby/moby/client"
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 
-	"github.com/nicholas-fedor/watchtower/pkg/filters"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/filters"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 const (

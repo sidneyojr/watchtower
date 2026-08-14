@@ -5,7 +5,7 @@
 package mocks
 
 import (
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 	"github.com/rs/zerolog"
 	mock "github.com/stretchr/testify/mock"
 )

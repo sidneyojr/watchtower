@@ -16,9 +16,9 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 
-	"github.com/nicholas-fedor/watchtower/internal/meta"
-	"github.com/nicholas-fedor/watchtower/pkg/registry/auth"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/internal/meta"
+	"github.com/sidneyojr/watchtower/pkg/registry/auth"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // Errors for image age retrieval operations.

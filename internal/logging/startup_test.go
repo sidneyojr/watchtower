@@ -9,8 +9,8 @@ import (
 	"github.com/onsi/gomega"
 	"github.com/rs/zerolog"
 
-	mockActions "github.com/nicholas-fedor/watchtower/internal/actions/mocks"
-	"github.com/nicholas-fedor/watchtower/internal/logging"
+	mockActions "github.com/sidneyojr/watchtower/internal/actions/mocks"
+	"github.com/sidneyojr/watchtower/internal/logging"
 )
 
 // TestStartupLogging runs the Ginkgo test suite for the internal logging startup package.

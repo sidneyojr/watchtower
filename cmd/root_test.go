@@ -25,19 +25,19 @@ import (
 
 	dockerContainer "github.com/moby/moby/api/types/container"
 
-	"github.com/nicholas-fedor/watchtower/internal/actions"
-	"github.com/nicholas-fedor/watchtower/internal/api"
-	"github.com/nicholas-fedor/watchtower/internal/api/handlers/update"
-	appconfig "github.com/nicholas-fedor/watchtower/internal/config"
-	"github.com/nicholas-fedor/watchtower/internal/flags"
-	"github.com/nicholas-fedor/watchtower/internal/logging"
-	"github.com/nicholas-fedor/watchtower/internal/metrics"
-	"github.com/nicholas-fedor/watchtower/internal/scheduling"
-	"github.com/nicholas-fedor/watchtower/internal/util"
-	"github.com/nicholas-fedor/watchtower/pkg/container"
-	mockContainer "github.com/nicholas-fedor/watchtower/pkg/container/mocks"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
-	mockTypes "github.com/nicholas-fedor/watchtower/pkg/types/mocks"
+	"github.com/sidneyojr/watchtower/internal/actions"
+	"github.com/sidneyojr/watchtower/internal/api"
+	"github.com/sidneyojr/watchtower/internal/api/handlers/update"
+	appconfig "github.com/sidneyojr/watchtower/internal/config"
+	"github.com/sidneyojr/watchtower/internal/flags"
+	"github.com/sidneyojr/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/internal/metrics"
+	"github.com/sidneyojr/watchtower/internal/scheduling"
+	"github.com/sidneyojr/watchtower/internal/util"
+	"github.com/sidneyojr/watchtower/pkg/container"
+	mockContainer "github.com/sidneyojr/watchtower/pkg/container/mocks"
+	"github.com/sidneyojr/watchtower/pkg/types"
+	mockTypes "github.com/sidneyojr/watchtower/pkg/types/mocks"
 )
 
 // testLogger returns a discarded zerolog logger for tests that do not assert on logs.

@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 func BenchmarkAllFromSlices(b *testing.B) {

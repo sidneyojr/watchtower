@@ -4,7 +4,7 @@ package notify
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags/spec"
+	"github.com/sidneyojr/watchtower/internal/flags/spec"
 )
 
 // DefaultEmailServerPort is the static default SMTP port.

@@ -1,4 +1,4 @@
-module github.com/nicholas-fedor/watchtower
+module github.com/sidneyojr/watchtower
 
 go 1.26.6
 

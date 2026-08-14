@@ -10,8 +10,8 @@ import (
 
 	"github.com/spf13/pflag"
 
-	"github.com/nicholas-fedor/watchtower/internal/flags/spec"
-	"github.com/nicholas-fedor/watchtower/internal/flags/utils"
+	"github.com/sidneyojr/watchtower/internal/flags/spec"
+	"github.com/sidneyojr/watchtower/internal/flags/utils"
 )
 
 // ApplyEnvToFlags copies bound environment values onto flags that were not set on the CLI.

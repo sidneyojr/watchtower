@@ -25,10 +25,10 @@ import (
 
 	shoutrrrTypes "github.com/nicholas-fedor/shoutrrr/pkg/types"
 
-	mockActions "github.com/nicholas-fedor/watchtower/internal/actions/mocks"
-	"github.com/nicholas-fedor/watchtower/internal/flags"
-	"github.com/nicholas-fedor/watchtower/pkg/session"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	mockActions "github.com/sidneyojr/watchtower/internal/actions/mocks"
+	"github.com/sidneyojr/watchtower/internal/flags"
+	"github.com/sidneyojr/watchtower/pkg/session"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 var allButTrace = zerolog.DebugLevel

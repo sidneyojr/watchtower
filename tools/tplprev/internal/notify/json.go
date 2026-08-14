@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nicholas-fedor/tplprev/internal/report"
+	"github.com/sidneyojr/tplprev/internal/report"
 )
 
 var _ json.Marshaler = &Data{}

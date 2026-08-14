@@ -35,9 +35,9 @@ echo "Building tplprev.wasm..."
 VERSION="$(git describe --tags --always --dirty 2>/dev/null || echo dev)"
 COMMIT="$(git rev-parse HEAD 2>/dev/null || echo none)"
 DATE="$(git log -1 --format=%cI 2>/dev/null || date -u +%Y-%m-%dT%H:%M:%SZ)"
-LDFLAGS="-X github.com/nicholas-fedor/tplprev/internal/metadata.Version=${VERSION}"
-LDFLAGS="${LDFLAGS} -X github.com/nicholas-fedor/tplprev/internal/metadata.Commit=${COMMIT}"
-LDFLAGS="${LDFLAGS} -X github.com/nicholas-fedor/tplprev/internal/metadata.Date=${DATE}"
+LDFLAGS="-X github.com/sidneyojr/tplprev/internal/metadata.Version=${VERSION}"
+LDFLAGS="${LDFLAGS} -X github.com/sidneyojr/tplprev/internal/metadata.Commit=${COMMIT}"
+LDFLAGS="${LDFLAGS} -X github.com/sidneyojr/tplprev/internal/metadata.Date=${DATE}"
 GOARCH=wasm GOOS=js go -C ./tools/tplprev build -ldflags "${LDFLAGS}" -o ../../docs/assets/tplprev.wasm .
 
 # Verify output

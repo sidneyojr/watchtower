@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nicholas-fedor/watchtower/pkg/container"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/container"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // Status describes a single watched container's current image identity.

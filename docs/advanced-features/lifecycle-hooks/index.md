@@ -690,9 +690,9 @@ Hook execution results are evaluated based on exit codes, with different behavio
 
 There is a well-known issue with Synology devices sending warning notifications when containers are stopped by anything other than the Synology's Docker service. This can be problematic when using tools like Watchtower that stop and restart containers.
 
-The [examples/lifecycle-hooks/synology-stop](https://github.com/nicholas-fedor/watchtower/tree/main/examples/lifecycle-hooks/synology-stop){target="_blank" rel="noopener noreferrer"} directory provides examples for implementing graceful shutdowns using Synology's DSM Web API. This includes both shell script and Go implementations that authenticate with DSM, stop containers gracefully, and handle session management.
+The [examples/lifecycle-hooks/synology-stop](https://github.com/sidneyojr/watchtower/tree/main/examples/lifecycle-hooks/synology-stop){target="_blank" rel="noopener noreferrer"} directory provides examples for implementing graceful shutdowns using Synology's DSM Web API. This includes both shell script and Go implementations that authenticate with DSM, stop containers gracefully, and handle session management.
 
-See the [synology-stop README](https://github.com/nicholas-fedor/watchtower/blob/main/examples/lifecycle-hooks/synology-stop/README.md){target="_blank" rel="noopener noreferrer"} for detailed setup instructions, environment variables, and deployment examples using docker-compose.
+See the [synology-stop README](https://github.com/sidneyojr/watchtower/blob/main/examples/lifecycle-hooks/synology-stop/README.md){target="_blank" rel="noopener noreferrer"} for detailed setup instructions, environment variables, and deployment examples using docker-compose.
 
 ## Troubleshooting
 

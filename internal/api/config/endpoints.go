@@ -6,7 +6,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // Canonical HTTP API endpoint names corresponding to

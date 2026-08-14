@@ -11,7 +11,7 @@ import (
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 
-	"github.com/nicholas-fedor/tplprev/internal/report"
+	"github.com/sidneyojr/tplprev/internal/report"
 )
 
 // Funcs defines a set of utility functions for use in notification templates.

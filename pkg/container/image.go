@@ -15,9 +15,9 @@ import (
 	dockerImage "github.com/moby/moby/api/types/image"
 	dockerClient "github.com/moby/moby/client"
 
-	"github.com/nicholas-fedor/watchtower/pkg/registry"
-	"github.com/nicholas-fedor/watchtower/pkg/registry/digest"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/registry"
+	"github.com/sidneyojr/watchtower/pkg/registry/digest"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // Warning strategies for HEAD request failures.

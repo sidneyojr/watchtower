@@ -43,7 +43,7 @@ The Swagger 2.0 specification is generated from annotions in the codebase using 
 
 Then, Fiber v3's [`gofiber/contrib/v3/swaggo`](https://docs.gofiber.io/contrib/v3_swaggo_v1.x.x/swaggo/){target="_blank" rel="noopener noreferrer"} middleware package is used to serve the bundled [Swagger UI](https://swagger.io/docs/open-source-tools/swagger-ui/){target="_blank" rel="noopener noreferrer"} assets and generated specification.
 
-The generated files (`docs.go`, `swagger.json`, `swagger.yaml`) can be found in the repository at  [https://github.com/nicholas-fedor/watchtower/tree/main/internal/api/swagger](https://github.com/nicholas-fedor/watchtower/tree/main/internal/api/swagger){target="_blank" rel="noopener noreferrer"}.
+The generated files (`docs.go`, `swagger.json`, `swagger.yaml`) can be found in the repository at  [https://github.com/sidneyojr/watchtower/tree/main/internal/api/swagger](https://github.com/sidneyojr/watchtower/tree/main/internal/api/swagger){target="_blank" rel="noopener noreferrer"}.
 
 ## Using the Swagger UI
 

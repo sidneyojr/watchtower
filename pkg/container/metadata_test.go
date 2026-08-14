@@ -9,7 +9,7 @@ import (
 
 	dockerContainer "github.com/moby/moby/api/types/container"
 
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 func TestContainer_GetLifecyclePreCheckCommand(t *testing.T) {

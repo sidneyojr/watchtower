@@ -11,9 +11,9 @@ body:
       value: |
         ### Thank you for reporting a bug!
 
-        - Check [existing issues](https://github.com/nicholas-fedor/watchtower/issues) to avoid duplicates!
-        - For support, [start a discussion](https://github.com/nicholas-fedor/watchtower/discussions/new?category=support).
-        - For features, use the [feature request form](https://github.com/nicholas-fedor/watchtower/issues/new?template=feature_request.yml).
+        - Check [existing issues](https://github.com/sidneyojr/watchtower/issues) to avoid duplicates!
+        - For support, [start a discussion](https://github.com/sidneyojr/watchtower/discussions/new?category=support).
+        - For features, use the [feature request form](https://github.com/sidneyojr/watchtower/issues/new?template=feature_request.yml).
         - If you have additional items to share, such as debug log files or screenshots, then you may attach them in subsequent messages.
 
         ⚠️ Do NOT submit sensitive information in logs, screenshots, etc that could lead to system/account compromise.
@@ -24,7 +24,7 @@ body:
     attributes:
       label: Bug Report Checklist
       options:
-        - label: I checked [existing issues](https://github.com/nicholas-fedor/watchtower/issues) and found no duplicates.
+        - label: I checked [existing issues](https://github.com/sidneyojr/watchtower/issues) and found no duplicates.
           required: true
         - label: I have reviewed Watchtower's [documentation](https://watchtower.nickfedor.com/latest/) and confirmed compliance with documented configuration specifications.
           required: true

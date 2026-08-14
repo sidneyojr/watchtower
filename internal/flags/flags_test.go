@@ -20,7 +20,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nicholas-fedor/watchtower/internal/logging"
+	"github.com/sidneyojr/watchtower/internal/logging"
 )
 
 // processFlagAliasesHelperEnv selects a ProcessFlagAliases fatal case when the

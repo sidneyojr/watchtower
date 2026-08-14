@@ -5,8 +5,8 @@ import (
 	"errors"
 	"github.com/rs/zerolog"
 
-	"github.com/nicholas-fedor/watchtower/pkg/session"
-	"github.com/nicholas-fedor/watchtower/pkg/types"
+	"github.com/sidneyojr/watchtower/pkg/session"
+	"github.com/sidneyojr/watchtower/pkg/types"
 )
 
 // errMockSkipped is a static error indicating a mock container was skipped.
