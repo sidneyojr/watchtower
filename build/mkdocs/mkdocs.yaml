@@ -4,14 +4,14 @@
 # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#repository-name
 site_name: Watchtower
 # https://www.mkdocs.org/user-guide/configuration/#site_url
-site_url: https://watchtower.nickfedor.com/
+site_url: https://sidneyojr.github.io/watchtower/
 # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#repository
 repo_url: https://github.com/sidneyojr/watchtower/
 
 # Path from repo_url to the docs directory for direct editing links.
 # Set to main branch.
 # https://www.mkdocs.org/user-guide/configuration/#edit_uri
-edit_uri: edit/main/docs/
+edit_uri: edit/master/docs/
 
 # Description for meta tags in HTML header.
 # https://www.mkdocs.org/user-guide/configuration/#site_description
@@ -21,7 +21,7 @@ site_description: >
 
 # Copyright information displayed in the documentation footer (Material theme).
 # https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#copyright-notice
-copyright: Copyright © 2025 Nicholas Fedor
+copyright: Copyright © 2026 sidneyojr
 
 # Theme Configuration: https://www.mkdocs.org/user-guide/configuration/#theme
 theme:
@@ -149,7 +149,7 @@ markdown_extensions:
       # The provider to use for repository shorthand syntax and shortener
       provider: github
       # The default user name to use for the specified provider
-      user: nicholas-fedor
+      user: sidneyojr
       # The default repository name to use for the specified user and provider
       repo: watchtower
   # https://facelessuser.github.io/pymdown-extensions/extensions/saneheaders/

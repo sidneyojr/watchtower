@@ -130,8 +130,7 @@ dockers_v2:
   - id: "watchtower-manifest"
     ids: ["watchtower-binary"]
     images:
-      - "nickfedor/watchtower"
-      - "ghcr.io/nicholas-fedor/watchtower"
+      - "ghcr.io/sidneyojr/watchtower"
     tags:
       - "{{ .Major }}"
       - "{{ .Major }}.{{ .Minor }}"
@@ -153,7 +152,7 @@ dockers_v2:
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
       org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
-      org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
+      org.opencontainers.image.documentation: "https://github.com/sidneyojr/watchtower"
       com.centurylinklabs.watchtower: "true"
 
   ##############################################################################
@@ -162,8 +161,7 @@ dockers_v2:
   - id: "watchtower-amd64"
     ids: ["watchtower-binary"]
     images:
-      - "nickfedor/watchtower"
-      - "ghcr.io/nicholas-fedor/watchtower"
+      - "ghcr.io/sidneyojr/watchtower"
     tags:
       - "amd64-{{ .Major }}"
       - "amd64-{{ .Major }}.{{ .Minor }}"
@@ -181,14 +179,13 @@ dockers_v2:
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
       org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
-      org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
+      org.opencontainers.image.documentation: "https://github.com/sidneyojr/watchtower"
       com.centurylinklabs.watchtower: "true"
 
   - id: "watchtower-i386"
     ids: ["watchtower-binary"]
     images:
-      - "nickfedor/watchtower"
-      - "ghcr.io/nicholas-fedor/watchtower"
+      - "ghcr.io/sidneyojr/watchtower"
     tags:
       - "i386-{{ .Major }}"
       - "i386-{{ .Major }}.{{ .Minor }}"
@@ -206,14 +203,13 @@ dockers_v2:
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
       org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
-      org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
+      org.opencontainers.image.documentation: "https://github.com/sidneyojr/watchtower"
       com.centurylinklabs.watchtower: "true"
 
   - id: "watchtower-armhf"
     ids: ["watchtower-binary"]
     images:
-      - "nickfedor/watchtower"
-      - "ghcr.io/nicholas-fedor/watchtower"
+      - "ghcr.io/sidneyojr/watchtower"
     tags:
       - "armhf-{{ .Major }}"
       - "armhf-{{ .Major }}.{{ .Minor }}"
@@ -231,14 +227,13 @@ dockers_v2:
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
       org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
-      org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
+      org.opencontainers.image.documentation: "https://github.com/sidneyojr/watchtower"
       com.centurylinklabs.watchtower: "true"
 
   - id: "watchtower-arm64v8"
     ids: ["watchtower-binary"]
     images:
-      - "nickfedor/watchtower"
-      - "ghcr.io/nicholas-fedor/watchtower"
+      - "ghcr.io/sidneyojr/watchtower"
     tags:
       - "arm64v8-{{ .Major }}"
       - "arm64v8-{{ .Major }}.{{ .Minor }}"
@@ -256,14 +251,13 @@ dockers_v2:
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
       org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
-      org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
+      org.opencontainers.image.documentation: "https://github.com/sidneyojr/watchtower"
       com.centurylinklabs.watchtower: "true"
 
   - id: "watchtower-riscv64"
     ids: ["watchtower-binary"]
     images:
-      - "nickfedor/watchtower"
-      - "ghcr.io/nicholas-fedor/watchtower"
+      - "ghcr.io/sidneyojr/watchtower"
     tags:
       - "riscv64-{{ .Major }}"
       - "riscv64-{{ .Major }}.{{ .Minor }}"
@@ -281,7 +275,7 @@ dockers_v2:
       org.opencontainers.image.description: "Automate Docker container updates."
       org.opencontainers.image.licenses: "Apache-2.0"
       org.opencontainers.image.url: "https://github.com/sidneyojr/watchtower"
-      org.opencontainers.image.documentation: "https://watchtower.nickfedor.com"
+      org.opencontainers.image.documentation: "https://github.com/sidneyojr/watchtower"
       com.centurylinklabs.watchtower: "true"
 
 ################################################################################

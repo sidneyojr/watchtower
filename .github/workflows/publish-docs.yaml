@@ -4,7 +4,7 @@ name: Publish Documentation
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - docs/**
       - build/mkdocs/**

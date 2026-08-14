@@ -1,9 +1,9 @@
 name: 🐛 Bug report
 description: Report a bug or issue with Watchtower.
 title: "[Bug]:"
-assignees: "nicholas-fedor"
+assignees: "sidneyojr"
 labels: "bug"
-projects: "nicholas-fedor/3"
+projects: "sidneyojr/3"
 
 body:
   - type: markdown
@@ -26,7 +26,7 @@ body:
       options:
         - label: I checked [existing issues](https://github.com/sidneyojr/watchtower/issues) and found no duplicates.
           required: true
-        - label: I have reviewed Watchtower's [documentation](https://watchtower.nickfedor.com/latest/) and confirmed compliance with documented configuration specifications.
+        - label: I have reviewed Watchtower's [documentation](https://sidneyojr.github.io/watchtower/latest/) and confirmed compliance with documented configuration specifications.
           required: true
         - label: I have restarted Docker, re-pulled the `latest` image, and confirmed that the issue persists.
           required: true
@@ -97,7 +97,7 @@ body:
       placeholder: |
         services:
           watchtower:
-            image: nickfedor/watchtower:latest
+            image: ghcr.io/sidneyojr/watchtower:latest
             restart: unless-stopped
             volumes:
               - /var/run/docker.sock:/var/run/docker.sock
@@ -114,7 +114,7 @@ body:
       placeholder: |
         docker run --rm \
           -v /var/run/docker.sock:/var/run/docker.sock \
-          nickfedor/watchtower:latest \
+          ghcr.io/sidneyojr/watchtower:latest \
           --debug \
           --interval 30 \
           --cleanup

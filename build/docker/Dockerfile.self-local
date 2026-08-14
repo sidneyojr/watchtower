@@ -30,8 +30,8 @@ FROM scratch
 
 LABEL \
     "com.centurylinklabs.watchtower"="true" \
-    "org.opencontainers.image.url"="https://watchtower.nickfedor.com" \
-    "org.opencontainers.image.documentation"="https://watchtower.nickfedor.com" \
+    "org.opencontainers.image.url"="https://github.com/sidneyojr/watchtower" \
+    "org.opencontainers.image.documentation"="https://github.com/sidneyojr/watchtower" \
     "org.opencontainers.image.source"="https://github.com/sidneyojr/watchtower" \
     "org.opencontainers.image.licenses"="Apache-2.0" \
     "org.opencontainers.image.title"="Watchtower" \
