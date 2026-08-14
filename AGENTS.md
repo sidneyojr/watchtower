@@ -48,6 +48,8 @@ Watchtower is a Go 1.26.6 app (module `github.com/sidneyojr/watchtower`) that mo
 
 ## Docs / template preview
 - Docs are mkdocs (`build/mkdocs/mkdocs.yaml`, sources in `docs/`); deps in `build/mkdocs/docs-requirements.txt`. Site publishes to `https://sidneyojr.github.io/watchtower/` from `master`.
+- Pages is enabled on the repo serving the `gh-pages` branch (legacy build). The mike deploy writes versioned subdirs (`dev/`, `latest/`, `v1.21.1/`); `mike set-default` creates the root `index.html` redirect to the first alias — without it the root 404s. Root works only when a versioned release has been published.
+- `publish-docs.yaml` triggers on: `push` to `master` touching docs (deploys `dev`), `release` published, and `workflow_dispatch` with optional `VERSION`/`ALIASES` inputs (deploys that version + alias). The `release` event does NOT fire for releases created with `GITHUB_TOKEN` (goreleaser), so `release-stable.yaml` has a `publish-docs` job that dispatches the workflow with the tag name. To (re)publish the docs for an existing release manually: `gh workflow run publish-docs.yaml --ref master -f VERSION=vX.Y.Z -f ALIASES=latest`.
 - `docs/template-preview.md` embeds `tplprev.wasm`. Regenerate with `scripts/build-tplprev.sh` (compiles `./tools/tplprev` for `GOOS=js GOARCH=wasm` and copies `wasm_exec.js` from GOROOT). Outputs are gitignored.
 - `tools/tplprev/` is split by build tags (`//go:build !wasm` vs `//go:build wasm`), so the wasm target is excluded from `go build ./...`.
 - `docs/README.md` documents the docs-site workflow (mike versioning, publish-docs.yaml).
