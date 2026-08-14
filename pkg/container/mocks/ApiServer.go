@@ -1,59 +1,88 @@
+// Package mocks provides hand-written HTTP API fixtures and Mockery-generated
+// doubles for container package tests.
 package mocks
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/onsi/ginkgo"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
 
-	t "github.com/containrrr/watchtower/pkg/types"
-
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/filters"
-	O "github.com/onsi/gomega"
+	"github.com/onsi/ginkgo/v2"
+	"github.com/onsi/gomega"
 	"github.com/onsi/gomega/ghttp"
+
+	dockerContainer "github.com/moby/moby/api/types/container"
+	dockerImage "github.com/moby/moby/api/types/image"
+	dockerClient "github.com/moby/moby/client"
+
+	"github.com/nicholas-fedor/watchtower/pkg/types"
 )
 
+// Constants for magic numbers used in mock setup.
+const (
+	handlersPerContainer = 3 // Estimated handlers per container: base, references, image
+	assertionOffset      = 2 // Call stack offset for Gomega assertions in nested calls
+)
+
+// Returns the file contents or an error if the file isn't found.
 func getMockJSONFile(relPath string) ([]byte, error) {
 	absPath, _ := filepath.Abs(relPath)
+
 	buf, err := os.ReadFile(absPath)
 	if err != nil {
-		return nil, fmt.Errorf("mock JSON file %q not found: %e", absPath, err)
+		return nil, fmt.Errorf("mock JSON file %q not found: %w", absPath, err)
 	}
+
 	return buf, nil
 }
 
-// RespondWithJSONFile handles a request by returning the contents of the supplied file
-func RespondWithJSONFile(relPath string, statusCode int, optionalHeader ...http.Header) http.HandlerFunc {
+// RespondWithJSONFile expects the file to exist at the given relative path. Otherwise it fails the test.
+func RespondWithJSONFile(
+	relPath string,
+	statusCode int,
+	optionalHeader ...http.Header,
+) http.HandlerFunc {
 	handler, err := respondWithJSONFile(relPath, statusCode, optionalHeader...)
-	O.ExpectWithOffset(1, err).ShouldNot(O.HaveOccurred())
+	gomega.ExpectWithOffset(1, err).ShouldNot(gomega.HaveOccurred())
+
 	return handler
 }
 
-func respondWithJSONFile(relPath string, statusCode int, optionalHeader ...http.Header) (http.HandlerFunc, error) {
+// Returns the handler and an error if the file can't be read.
+func respondWithJSONFile(
+	relPath string,
+	statusCode int,
+	optionalHeader ...http.Header,
+) (http.HandlerFunc, error) {
 	buf, err := getMockJSONFile(relPath)
 	if err != nil {
 		return nil, err
 	}
+
 	return ghttp.RespondWith(statusCode, buf, optionalHeader...), nil
 }
 
-// GetContainerHandlers returns the handlers serving lookups for the supplied container mock files
+// GetContainerHandlers includes handlers for the given containers, their references, and associated images.
 func GetContainerHandlers(containerRefs ...*ContainerRef) []http.HandlerFunc {
-	handlers := make([]http.HandlerFunc, 0, len(containerRefs)*3)
+	handlers := make([]http.HandlerFunc, 0, len(containerRefs)*handlersPerContainer)
+	seenImages := make(map[types.ImageID]struct{}, len(containerRefs))
+
 	for _, containerRef := range containerRefs {
 		handlers = append(handlers, getContainerFileHandler(containerRef))
-
-		// Also append any containers that the container references, if any
+		// Append handlers for referenced containers
 		for _, ref := range containerRef.references {
 			handlers = append(handlers, getContainerFileHandler(ref))
 		}
 
-		// Also append the image request since that will be called for every container
+		if _, seen := seenImages[containerRef.image.id]; seen {
+			continue
+		}
+
+		seenImages[containerRef.image.id] = struct{}{}
 		handlers = append(handlers, getImageHandler(containerRef.image.id,
 			RespondWithJSONFile(containerRef.image.getFileName(), http.StatusOK),
 		))
@@ -62,74 +91,90 @@ func GetContainerHandlers(containerRefs ...*ContainerRef) []http.HandlerFunc {
 	return handlers
 }
 
-func createFilterArgs(statuses []string) filters.Args {
-	args := filters.NewArgs()
+// Adds each status as a filter key for Docker API compatibility.
+func createFilterArgs(statuses []string) dockerClient.Filters {
+	args := make(dockerClient.Filters)
 	for _, status := range statuses {
 		args.Add("status", status)
 	}
+
 	return args
 }
 
+// Represents a standard Watchtower image.
 var defaultImage = imageRef{
-	// watchtower
-	id:   t.ImageID("sha256:4dbc5f9c07028a985e14d1393e849ea07f68804c4293050d5a641b138db72daa"),
+	id: types.ImageID(
+		"sha256:4dbc5f9c07028a985e14d1393e849ea07f68804c4293050d5a641b138db72daa",
+	), // Watchtower image ID
 	file: "default",
 }
 
+// Watchtower is a mock container fixture representing a Watchtower instance.
 var Watchtower = ContainerRef{
 	name:  "watchtower",
 	id:    "3d88e0e3543281c747d88b27e246578b65ae8964ba86c7cd7522cf84e0978134",
 	image: &defaultImage,
 }
+
+// Stopped is a mock container fixture in a stopped state.
 var Stopped = ContainerRef{
 	name:  "stopped",
 	id:    "ae8964ba86c7cd7522cf84e09781343d88e0e3543281c747d88b27e246578b65",
 	image: &defaultImage,
 }
+
+// Running is a mock container fixture in a running state with a Portainer image.
 var Running = ContainerRef{
 	name: "running",
 	id:   "b978af0b858aa8855cce46b628817d4ed58e58f2c4f66c9b9c5449134ed4c008",
 	image: &imageRef{
-		// portainer
-		id:   t.ImageID("sha256:19d07168491a3f9e2798a9bed96544e34d57ddc4757a4ac5bb199dea896c87fd"),
+		id: types.ImageID(
+			"sha256:19d07168491a3f9e2798a9bed96544e34d57ddc4757a4ac5bb199dea896c87fd",
+		), // Portainer image ID
 		file: "running",
 	},
 }
+
+// Restarting is a mock container fixture in a restarting state.
 var Restarting = ContainerRef{
 	name:  "restarting",
 	id:    "ae8964ba86c7cd7522cf84e09781343d88e0e3543281c747d88b27e246578b67",
 	image: &defaultImage,
 }
 
+// Mock container fixture supplying a network.
 var netSupplierOK = ContainerRef{
 	id:   "25e75393800b5c450a6841212a3b92ed28fa35414a586dec9f2c8a520d4910c2",
 	name: "net_supplier",
 	image: &imageRef{
-		// gluetun
-		id:   t.ImageID("sha256:c22b543d33bfdcb9992cbef23961677133cdf09da71d782468ae2517138bad51"),
+		id: types.ImageID(
+			"sha256:c22b543d33bfdcb9992cbef23961677133cdf09da71d782468ae2517138bad51",
+		), // Gluetun image ID
 		file: "net_producer",
 	},
 }
+
+// Mock container fixture for a non-existent network supplier.
 var netSupplierNotFound = ContainerRef{
 	id:        NetSupplierNotFoundID,
 	name:      netSupplierOK.name,
 	isMissing: true,
 }
 
-// NetConsumerOK is used for testing `container` networking mode
-// returns a container that consumes an existing supplier container
+// NetConsumerOK is a mock container fixture consuming an existing network supplier.
 var NetConsumerOK = ContainerRef{
 	id:   "1f6b79d2aff23244382026c76f4995851322bed5f9c50631620162f6f9aafbd6",
 	name: "net_consumer",
 	image: &imageRef{
-		id:   t.ImageID("sha256:904b8cb13b932e23230836850610fa45dce9eb0650d5618c2b1487c2a4f577b8"), // nginx
+		id: types.ImageID(
+			"sha256:904b8cb13b932e23230836850610fa45dce9eb0650d5618c2b1487c2a4f577b8",
+		), // Nginx image ID
 		file: "net_consumer",
 	},
 	references: []*ContainerRef{&netSupplierOK},
 }
 
-// NetConsumerInvalidSupplier is used for testing `container` networking mode
-// returns a container that references a supplying container that does not exist
+// NetConsumerInvalidSupplier is a mock container fixture referencing a non-existent network supplier.
 var NetConsumerInvalidSupplier = ContainerRef{
 	id:         NetConsumerOK.id,
 	name:       "net_consumer-missing_supplier",
@@ -137,70 +182,93 @@ var NetConsumerInvalidSupplier = ContainerRef{
 	references: []*ContainerRef{&netSupplierNotFound},
 }
 
-const NetSupplierNotFoundID = "badc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc"
-const NetSupplierContainerName = "/wt-contnet-producer-1"
+const (
+	// NetSupplierNotFoundID is the mock ID for a missing network supplier container.
+	NetSupplierNotFoundID = "badc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc1dbadc"
+	// NetSupplierContainerName is the mock Docker name for the network supplier container.
+	NetSupplierContainerName = "/wt-contnet-producer-1"
+)
 
-func getContainerFileHandler(cr *ContainerRef) http.HandlerFunc {
-
-	if cr.isMissing {
-		return containerNotFoundResponse(string(cr.id))
+// Fails the test if the file can't be retrieved. Returns a 404 handler if the container is missing.
+func getContainerFileHandler(container *ContainerRef) http.HandlerFunc {
+	if container.isMissing {
+		return containerNotFoundResponse(string(container.id))
 	}
 
-	containerFile, err := cr.getContainerFile()
+	containerFile, err := container.getContainerFile()
 	if err != nil {
 		ginkgo.Fail(fmt.Sprintf("Failed to get container mock file: %v", err))
 	}
 
 	return getContainerHandler(
-		string(cr.id),
+		string(container.id),
 		RespondWithJSONFile(containerFile, http.StatusOK),
 	)
 }
 
-func getContainerHandler(containerId string, responseHandler http.HandlerFunc) http.HandlerFunc {
+// Verifies the request matches the expected container ID and applies the response handler.
+func getContainerHandler(containerID string, responseHandler http.HandlerFunc) http.HandlerFunc {
 	return ghttp.CombineHandlers(
-		ghttp.VerifyRequest("GET", O.HaveSuffix("/containers/%v/json", containerId)),
+		ghttp.VerifyRequest("GET", gomega.HaveSuffix("/containers/%v/json", containerID)),
 		responseHandler,
 	)
 }
 
-// GetContainerHandler mocks the GET containers/{id}/json endpoint
-func GetContainerHandler(containerID string, containerInfo *types.ContainerJSON) http.HandlerFunc {
+// GetContainerHandler returns a 404 if containerInfo is nil. Otherwise it serves the provided info.
+func GetContainerHandler(
+	containerID string,
+	containerInfo *dockerContainer.InspectResponse,
+) http.HandlerFunc {
 	responseHandler := containerNotFoundResponse(containerID)
 	if containerInfo != nil {
 		responseHandler = ghttp.RespondWithJSONEncoded(http.StatusOK, containerInfo)
 	}
+
 	return getContainerHandler(containerID, responseHandler)
 }
 
-// GetImageHandler mocks the GET images/{id}/json endpoint
-func GetImageHandler(imageInfo *types.ImageInspect) http.HandlerFunc {
-	return getImageHandler(t.ImageID(imageInfo.ID), ghttp.RespondWithJSONEncoded(http.StatusOK, imageInfo))
-}
-
-// ListContainersHandler mocks the GET containers/json endpoint, filtering the returned containers based on statuses
-func ListContainersHandler(statuses ...string) http.HandlerFunc {
-	filterArgs := createFilterArgs(statuses)
-	bytes, err := filterArgs.MarshalJSON()
-	O.ExpectWithOffset(1, err).ShouldNot(O.HaveOccurred())
-	query := url.Values{
-		"filters": []string{string(bytes)},
-	}
-	return ghttp.CombineHandlers(
-		ghttp.VerifyRequest("GET", O.HaveSuffix("containers/json"), query.Encode()),
-		respondWithFilteredContainers(filterArgs),
+// GetImageHandler serves the provided image info as a JSON response.
+func GetImageHandler(imageInfo *dockerImage.InspectResponse) http.HandlerFunc {
+	return getImageHandler(
+		types.ImageID(imageInfo.ID),
+		ghttp.RespondWithJSONEncoded(http.StatusOK, imageInfo),
 	)
 }
 
-func respondWithFilteredContainers(filters filters.Args) http.HandlerFunc {
+// ListContainersHandler filters containers by the given statuses and serves the filtered list.
+func ListContainersHandler(statuses ...string) http.HandlerFunc {
+	filterArgs := createFilterArgs(statuses)
+	bytes, err := json.Marshal(filterArgs)
+	gomega.ExpectWithOffset(1, err).ShouldNot(gomega.HaveOccurred())
+
+	query := url.Values{
+		"filters": []string{string(bytes)},
+	}
+
+	return ghttp.CombineHandlers(
+		ghttp.VerifyRequest("GET", gomega.HaveSuffix("containers/json"), query.Encode()),
+		respondWithFilteredContainers(statuses),
+	)
+}
+
+// Loads mock data from containers.json and filters it according to the provided statuses.
+func respondWithFilteredContainers(statuses []string) http.HandlerFunc {
 	containersJSON, err := getMockJSONFile("./mocks/data/containers.json")
-	O.ExpectWithOffset(2, err).ShouldNot(O.HaveOccurred())
-	var filteredContainers []types.Container
-	var containers []types.Container
-	O.ExpectWithOffset(2, json.Unmarshal(containersJSON, &containers)).To(O.Succeed())
+	gomega.ExpectWithOffset(assertionOffset, err).
+		ShouldNot(gomega.HaveOccurred())
+		// Offset for nested call depth
+
+	var filteredContainers []dockerContainer.Summary
+
+	var containers []dockerContainer.Summary
+
+	gomega.ExpectWithOffset(assertionOffset, json.Unmarshal(containersJSON, &containers)).
+		To(gomega.Succeed())
+		// Offset for nested call depth
+
 	for _, v := range containers {
-		for _, key := range filters.Get("status") {
-			if v.State == key {
+		for _, status := range statuses {
+			if v.State == dockerContainer.ContainerState(status) {
 				filteredContainers = append(filteredContainers, v)
 			}
 		}
@@ -209,66 +277,79 @@ func respondWithFilteredContainers(filters filters.Args) http.HandlerFunc {
 	return ghttp.RespondWithJSONEncoded(http.StatusOK, filteredContainers)
 }
 
-func getImageHandler(imageId t.ImageID, responseHandler http.HandlerFunc) http.HandlerFunc {
+// Verifies the request matches the expected image ID and applies the response handler.
+func getImageHandler(imageID types.ImageID, responseHandler http.HandlerFunc) http.HandlerFunc {
 	return ghttp.CombineHandlers(
-		ghttp.VerifyRequest("GET", O.HaveSuffix("/images/%s/json", imageId)),
+		ghttp.VerifyRequest("GET", gomega.HaveSuffix("/images/%s/json", imageID)),
 		responseHandler,
 	)
 }
 
-// KillContainerHandler mocks the POST containers/{id}/kill endpoint
+// KillContainerHandler returns 204 if found, or 404 if not.
 func KillContainerHandler(containerID string, found FoundStatus) http.HandlerFunc {
 	responseHandler := noContentStatusResponse
 	if !found {
 		responseHandler = containerNotFoundResponse(containerID)
 	}
+
 	return ghttp.CombineHandlers(
-		ghttp.VerifyRequest("POST", O.HaveSuffix("containers/%s/kill", containerID)),
+		ghttp.VerifyRequest("POST", gomega.HaveSuffix("containers/%s/kill", containerID)),
 		responseHandler,
 	)
 }
 
-// RemoveContainerHandler mocks the DELETE containers/{id} endpoint
+// RemoveContainerHandler returns 204 if found, or 404 if not.
 func RemoveContainerHandler(containerID string, found FoundStatus) http.HandlerFunc {
 	responseHandler := noContentStatusResponse
 	if !found {
 		responseHandler = containerNotFoundResponse(containerID)
 	}
+
 	return ghttp.CombineHandlers(
-		ghttp.VerifyRequest("DELETE", O.HaveSuffix("containers/%s", containerID)),
+		ghttp.VerifyRequest("DELETE", gomega.HaveSuffix("containers/%s", containerID)),
 		responseHandler,
 	)
 }
 
+// Includes a standard "No such container" message with the ID.
 func containerNotFoundResponse(containerID string) http.HandlerFunc {
-	return ghttp.RespondWithJSONEncoded(http.StatusNotFound, struct{ message string }{message: "No such container: " + string(containerID)})
+	return ghttp.RespondWithJSONEncoded(
+		http.StatusNotFound,
+		struct{ message string }{message: "No such container: " + containerID},
+	)
 }
 
+// Mock response fixture for no-content status (204).
 var noContentStatusResponse = ghttp.RespondWith(http.StatusNoContent, nil)
 
+// FoundStatus indicates whether a mock container resource exists for a handler.
 type FoundStatus bool
 
 const (
-	Found   FoundStatus = true
+	// Found means the mock resource exists.
+	Found FoundStatus = true
+	// Missing means the mock resource does not exist.
 	Missing FoundStatus = false
 )
 
-// RemoveImageHandler mocks the DELETE images/ID endpoint, simulating removal of the given imagesWithParents
+// RemoveImageHandler simulates image removal with optional parent images. Returns 404 if not found.
 func RemoveImageHandler(imagesWithParents map[string][]string) http.HandlerFunc {
 	return ghttp.CombineHandlers(
-		ghttp.VerifyRequest("DELETE", O.MatchRegexp("/images/.*")),
+		ghttp.VerifyRequest("DELETE", gomega.MatchRegexp("/images/.*")),
 		func(w http.ResponseWriter, r *http.Request) {
 			parts := strings.Split(r.URL.Path, `/`)
-			image := parts[len(parts)-1]
 
-			if parents, found := imagesWithParents[image]; found {
-				items := []types.ImageDeleteResponseItem{
-					{Untagged: image},
-					{Deleted: image},
+			targetImage := parts[len(parts)-1]
+			parents, found := imagesWithParents[targetImage]
+			if found {
+				items := []dockerImage.DeleteResponse{
+					{Untagged: targetImage},
+					{Deleted: targetImage},
 				}
 				for _, parent := range parents {
-					items = append(items, types.ImageDeleteResponseItem{Deleted: parent})
+					items = append(items, dockerImage.DeleteResponse{Deleted: parent})
 				}
+
 				ghttp.RespondWithJSONEncoded(http.StatusOK, items)(w, r)
 			} else {
 				ghttp.RespondWithJSONEncoded(http.StatusNotFound, struct{ message string }{

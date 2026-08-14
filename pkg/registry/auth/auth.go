@@ -1,162 +1,591 @@
 package auth
 
 import (
-	"encoding/json"
+	"context"
 	"errors"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strings"
 
-	"github.com/containrrr/watchtower/pkg/registry/helpers"
-	"github.com/containrrr/watchtower/pkg/types"
-	ref "github.com/distribution/reference"
-	"github.com/sirupsen/logrus"
+	"github.com/distribution/reference"
+	"github.com/rs/zerolog"
+	"github.com/spf13/viper"
+
+	"github.com/nicholas-fedor/watchtower/internal/meta"
+	"github.com/nicholas-fedor/watchtower/pkg/types"
 )
 
-// ChallengeHeader is the HTTP Header containing challenge instructions
-const ChallengeHeader = "WWW-Authenticate"
+// Errors for auth operations.
+var (
+	errFailedCreateChallengeRequest  = errors.New("failed to create challenge request")
+	errFailedExecuteChallengeRequest = errors.New("failed to execute challenge request")
+	errNoCredentials                 = errors.New("no credentials available")
+	errUnsupportedChallenge          = errors.New("unsupported challenge type from registry")
+	errUnexpectedStatus              = errors.New("unexpected status with empty WWW-Authenticate header")
+	errCrossOriginRedirect           = errors.New("cross-origin redirect not allowed for basic auth")
+)
 
-// GetToken fetches a token for the registry hosting the provided image
-func GetToken(container types.Container, registryAuth string) (string, error) {
-	normalizedRef, err := ref.ParseNormalizedNamed(container.ImageName())
-	if err != nil {
-		return "", err
+// TokenResult holds the result of a token acquisition operation.
+type TokenResult struct {
+	// Token is the authentication token (for example "Basic ..." or "Bearer ...").
+	Token string
+	// ChallengeHost is the challenge host (for example "ghcr.io"), empty if not applicable.
+	ChallengeHost string
+	// Redirected is true if the challenge request was redirected.
+	Redirected bool
+	// RedirectHost is the final host after redirects, empty if not redirected.
+	RedirectHost string
+}
+
+// challengeResponse holds parsed data from a challenge HTTP response.
+type challengeResponse struct {
+	// statusCode is the HTTP status code from the challenge response.
+	statusCode int
+	// wwwAuthHeader is the WWW-Authenticate header value.
+	wwwAuthHeader string
+	// redirected reports whether the request was redirected.
+	redirected bool
+	// redirectHost is the final host after redirects, empty if not redirected.
+	redirectHost string
+}
+
+// resolveChallengeScheme determines the HTTP scheme for registry requests.
+//
+// Parameters:
+//   - log: Logger for scheme selection diagnostics.
+//   - host: The registry host.
+//
+// Returns:
+//   - string: The resolved scheme ("http" or "https").
+func resolveChallengeScheme(log *zerolog.Logger, host string) string {
+	scheme := "https"
+	if viper.GetBool("WATCHTOWER_REGISTRY_TLS_SKIP") {
+		scheme = "http"
+
+		log.Debug().
+			Str("host", host).
+			Msg("Using HTTP scheme due to WATCHTOWER_REGISTRY_TLS_SKIP")
 	}
 
-	URL := GetChallengeURL(normalizedRef)
-	logrus.WithField("URL", URL.String()).Debug("Built challenge URL")
+	return scheme
+}
 
-	var req *http.Request
-	if req, err = GetChallengeRequest(URL); err != nil {
-		return "", err
+// resolveEndpointHost extracts the host and scheme from an endpoint override.
+//
+// Parameters:
+//   - endpoint: Optional registry host override, possibly with scheme.
+//   - canonical: The canonical host to use when endpoint parsing fails.
+//   - scheme: Default scheme to use when endpoint has no explicit scheme.
+//
+// Returns:
+//   - string: The resolved host.
+//   - string: The resolved scheme.
+func resolveEndpointHost(endpoint, canonical, scheme string) (string, string) {
+	if endpoint == "" {
+		return canonical, "https"
 	}
 
-	client := &http.Client{}
-	var res *http.Response
-	if res, err = client.Do(req); err != nil {
-		return "", err
-	}
-	defer res.Body.Close()
-	v := res.Header.Get(ChallengeHeader)
+	endpointURL, err := url.Parse(endpoint)
+	if err == nil && endpointURL.Host != "" {
+		host := endpointURL.Host
 
-	logrus.WithFields(logrus.Fields{
-		"status": res.Status,
-		"header": v,
-	}).Debug("Got response to challenge request")
-
-	challenge := strings.ToLower(v)
-	if strings.HasPrefix(challenge, "basic") {
-		if registryAuth == "" {
-			return "", fmt.Errorf("no credentials available")
+		s := endpointURL.Scheme
+		if s == "" {
+			s = scheme
 		}
 
-		return fmt.Sprintf("Basic %s", registryAuth), nil
-	}
-	if strings.HasPrefix(challenge, "bearer") {
-		return GetBearerHeader(challenge, normalizedRef, registryAuth)
+		return host, s
 	}
 
-	return "", errors.New("unsupported challenge type from registry")
+	// If parsing fails, use the endpoint as a bare host.
+	return endpoint, scheme
 }
 
-// GetChallengeRequest creates a request for getting challenge instructions
-func GetChallengeRequest(URL url.URL) (*http.Request, error) {
-	req, err := http.NewRequest("GET", URL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Accept", "*/*")
-	req.Header.Set("User-Agent", "Watchtower (Docker)")
-	return req, nil
-}
+// GetChallengeURL generates a challenge URL for accessing an image's registry.
+//
+// When endpoint is non-empty, it is used as the registry host for the challenge URL instead
+// of the canonical registry host. The endpoint may include a scheme (for example
+// "https://mirror.example.com") or be a bare hostname.
+//
+// Parameters:
+//   - log: Logger for diagnostics.
+//   - imageRef: Normalized image reference.
+//   - endpoint: Optional registry host override (for example a mirror address). Empty uses the canonical host.
+//
+// Returns:
+//   - url.URL: Generated challenge URL.
+func GetChallengeURL(log *zerolog.Logger, imageRef reference.Named, endpoint string) url.URL {
+	host, _ := GetRegistryAddress(log, imageRef.Name())
 
-// GetBearerHeader tries to fetch a bearer token from the registry based on the challenge instructions
-func GetBearerHeader(challenge string, imageRef ref.Named, registryAuth string) (string, error) {
-	client := http.Client{}
-	authURL, err := GetAuthURL(challenge, imageRef)
+	scheme := resolveChallengeScheme(log, host)
 
-	if err != nil {
-		return "", err
-	}
-
-	var r *http.Request
-	if r, err = http.NewRequest("GET", authURL.String(), nil); err != nil {
-		return "", err
-	}
-
-	if registryAuth != "" {
-		logrus.Debug("Credentials found.")
-		// CREDENTIAL: Uncomment to log registry credentials
-		// logrus.Tracef("Credentials: %v", registryAuth)
-		r.Header.Add("Authorization", fmt.Sprintf("Basic %s", registryAuth))
-	} else {
-		logrus.Debug("No credentials found.")
+	endpointHost, endpointScheme := resolveEndpointHost(endpoint, host, scheme)
+	if endpoint != "" {
+		host = endpointHost
+		scheme = endpointScheme
 	}
 
-	var authResponse *http.Response
-	if authResponse, err = client.Do(r); err != nil {
-		return "", err
-	}
-
-	body, _ := io.ReadAll(authResponse.Body)
-	tokenResponse := &types.TokenResponse{}
-
-	err = json.Unmarshal(body, tokenResponse)
-	if err != nil {
-		return "", err
-	}
-
-	return fmt.Sprintf("Bearer %s", tokenResponse.Token), nil
-}
-
-// GetAuthURL from the instructions in the challenge
-func GetAuthURL(challenge string, imageRef ref.Named) (*url.URL, error) {
-	loweredChallenge := strings.ToLower(challenge)
-	raw := strings.TrimPrefix(loweredChallenge, "bearer")
-
-	pairs := strings.Split(raw, ",")
-	values := make(map[string]string, len(pairs))
-
-	for _, pair := range pairs {
-		trimmed := strings.Trim(pair, " ")
-		if key, val, ok := strings.Cut(trimmed, "="); ok {
-			values[key] = strings.Trim(val, `"`)
-		}
-	}
-	logrus.WithFields(logrus.Fields{
-		"realm":   values["realm"],
-		"service": values["service"],
-	}).Debug("Checking challenge header content")
-	if values["realm"] == "" || values["service"] == "" {
-
-		return nil, fmt.Errorf("challenge header did not include all values needed to construct an auth url")
-	}
-
-	authURL, _ := url.Parse(values["realm"])
-	q := authURL.Query()
-	q.Add("service", values["service"])
-
-	scopeImage := ref.Path(imageRef)
-
-	scope := fmt.Sprintf("repository:%s:pull", scopeImage)
-	logrus.WithFields(logrus.Fields{"scope": scope, "image": imageRef.Name()}).Debug("Setting scope for auth token")
-	q.Add("scope", scope)
-
-	authURL.RawQuery = q.Encode()
-	return authURL, nil
-}
-
-// GetChallengeURL returns the URL to check auth requirements
-// for access to a given image
-func GetChallengeURL(imageRef ref.Named) url.URL {
-	host, _ := helpers.GetRegistryAddress(imageRef.Name())
-
-	URL := url.URL{
-		Scheme: "https",
+	challengeURL := url.URL{
+		Scheme: scheme,
 		Host:   host,
 		Path:   "/v2/",
 	}
-	return URL
+	log.Debug().
+		Str("image", imageRef.Name()).
+		Str("url", challengeURL.String()).
+		Msg("Generated challenge URL")
+
+	return challengeURL
+}
+
+// GetChallengeRequest creates a request for retrieving challenge instructions.
+//
+// Parameters:
+//   - log: Logger for diagnostics.
+//   - ctx: Context for request lifecycle control.
+//   - challengeURL: URL for the challenge request.
+//
+// Returns:
+//   - *http.Request: Constructed request if successful.
+//   - error: Non-nil if creation fails, nil on success.
+func GetChallengeRequest(log *zerolog.Logger, ctx context.Context, challengeURL url.URL) (*http.Request, error) {
+	// Create a GET request with context for cancellation and timeout.
+	request, err := http.NewRequestWithContext(
+		ctx,
+		http.MethodGet,
+		challengeURL.String(),
+		nil,
+	)
+	if err != nil {
+		log.Debug().
+			Err(err).
+			Str("url", challengeURL.String()).
+			Msg("Failed to create challenge request")
+
+		return nil, fmt.Errorf("%w: %w", errFailedCreateChallengeRequest, err)
+	}
+
+	// Set headers for compatibility and identification.
+	request.Header.Set("Accept", "*/*")
+	request.Header.Set("User-Agent", meta.UserAgent)
+
+	log.Debug().
+		Str("url", challengeURL.String()).
+		Msg("Created challenge request")
+
+	return request, nil
+}
+
+// handleSuccessfulChallenge returns a TokenResult indicating no authentication is required.
+//
+// Parameters:
+//   - redirected: Whether the challenge request was redirected.
+//   - redirectHost: The final host after redirects.
+//
+// Returns:
+//   - TokenResult: Result with empty token and no challenge host.
+func handleSuccessfulChallenge(redirected bool, redirectHost string) TokenResult {
+	return TokenResult{
+		Redirected:    redirected,
+		RedirectHost:  redirectHost,
+		ChallengeHost: "",
+		Token:         "",
+	}
+}
+
+// handleBasicAuthChallenge returns a TokenResult with Basic authentication.
+//
+// Parameters:
+//   - log: Contextual logger (typically scoped with image and related fields).
+//   - registryAuth: Base64-encoded auth string.
+//   - redirected: Whether the challenge request was redirected.
+//   - redirectHost: The final host after redirects.
+//   - originalHost: The original registry host the challenge request was sent to.
+//   - originalScheme: Scheme of the original challenge request.
+//   - redirectScheme: Scheme of the final redirect destination.
+//
+// Returns:
+//   - TokenResult: Result with Basic auth token.
+//   - error: Non-nil if no credentials are provided or a cross-origin redirect is detected.
+func handleBasicAuthChallenge(
+	log *zerolog.Logger,
+	registryAuth string,
+	redirected bool,
+	redirectHost string,
+	originalHost string,
+	originalScheme string,
+	redirectScheme string,
+) (TokenResult, error) {
+	if registryAuth == "" {
+		log.Debug().Msg("No credentials provided for Basic auth")
+
+		return TokenResult{}, fmt.Errorf("%w: basic auth required", errNoCredentials)
+	}
+
+	// Reject Basic auth when the challenge follows a cross-origin redirect to prevent
+	// credential forwarding to an unintended host.
+	if redirected &&
+		redirectHost != "" &&
+		originalHost != "" &&
+		!strings.EqualFold(redirectHost, originalHost) {
+		log.Debug().
+			Str("original_host", originalHost).
+			Str("redirect_host", redirectHost).
+			Msg("Cross-origin redirect detected. Rejecting Basic auth challenge")
+
+		redirectURL := (&url.URL{Scheme: redirectScheme, Host: redirectHost}).String()
+		originalURL := (&url.URL{Scheme: originalScheme, Host: originalHost}).String()
+
+		return TokenResult{}, fmt.Errorf("%w: %s -> %s", errCrossOriginRedirect, originalURL, redirectURL)
+	}
+
+	// Reject Basic auth when the challenge redirects from HTTPS to HTTP to prevent
+	// credential exposure over an unencrypted connection.
+	if redirected && originalScheme == "https" && redirectScheme == "http" {
+		log.Debug().
+			Str("original_scheme", originalScheme).
+			Str("redirect_scheme", redirectScheme).
+			Msg("HTTPS to HTTP downgrade detected. Rejecting Basic auth challenge")
+
+		redirectURL := (&url.URL{Scheme: redirectScheme, Host: redirectHost}).String()
+		originalURL := (&url.URL{Scheme: originalScheme, Host: originalHost}).String()
+
+		return TokenResult{}, fmt.Errorf("%w: %s -> %s", errCrossOriginRedirect, originalURL, redirectURL)
+	}
+
+	log.Debug().Msg("Using Basic auth")
+
+	return TokenResult{
+		Token:         "Basic " + registryAuth,
+		ChallengeHost: "",
+		Redirected:    redirected,
+		RedirectHost:  redirectHost,
+	}, nil
+}
+
+// handleUnsupportedChallenge returns an error for unsupported challenge types.
+//
+// Parameters:
+//   - log: Contextual logger.
+//   - challenge: The unsupported challenge type.
+//
+// Returns:
+//   - TokenResult: Empty result.
+//   - error: Non-nil describing the unsupported challenge.
+func handleUnsupportedChallenge(log *zerolog.Logger, challenge string) (TokenResult, error) {
+	log.Error().
+		Str("challenge", challenge).
+		Msg("Unsupported challenge type from registry")
+
+	return TokenResult{}, fmt.Errorf("%w: %s", errUnsupportedChallenge, challenge)
+}
+
+// processChallengeResponse interprets the challenge HTTP response and routes to the appropriate auth handler.
+//
+// Parameters:
+//   - log: Contextual logger.
+//   - ctx: Context for request lifecycle control.
+//   - container: Container with image info.
+//   - registryAuth: Base64-encoded auth string.
+//   - client: Client for HTTP requests.
+//   - redirected: Whether the challenge request was redirected.
+//   - redirectHost: The final host after redirects.
+//   - originalHost: The original registry host the challenge request was sent to.
+//   - originalScheme: The scheme used for the original challenge request.
+//   - redirectScheme: The scheme used for the final redirect destination.
+//   - response: Parsed challenge response data.
+//
+// Returns:
+//   - TokenResult: Authentication result containing token and redirect info.
+//   - error: Non-nil if operation fails, nil on success.
+func processChallengeResponse(
+	log *zerolog.Logger,
+	ctx context.Context,
+	container types.Container,
+	registryAuth string,
+	client Client,
+	redirected bool,
+	redirectHost string,
+	originalHost string,
+	originalScheme string,
+	redirectScheme string,
+	response challengeResponse,
+) (TokenResult, error) {
+	// Handle 200 OK response (no auth required).
+	if response.statusCode == http.StatusOK {
+		log.Debug().
+			Str("url", response.wwwAuthHeader).
+			Msg("No authentication required (200 OK)")
+
+		return handleSuccessfulChallenge(redirected, redirectHost), nil
+	}
+
+	// If the header is empty, return an authentication error for 401 responses.
+	if response.wwwAuthHeader == "" {
+		if response.statusCode == http.StatusUnauthorized {
+			return TokenResult{}, fmt.Errorf("%w: no credentials available", errNoCredentials)
+		}
+
+		return TokenResult{}, fmt.Errorf(
+			"%w: status %d",
+			errUnexpectedStatus,
+			response.statusCode,
+		)
+	}
+
+	// Normalize challenge for comparison.
+	challenge := strings.ToLower(strings.TrimSpace(response.wwwAuthHeader))
+	log.Debug().
+		Str("challenge", challenge).
+		Msg("Processing challenge type")
+
+	// Handle Basic auth if specified.
+	if strings.HasPrefix(challenge, "basic") {
+		return handleBasicAuthChallenge(
+			log,
+			registryAuth,
+			redirected,
+			redirectHost,
+			originalHost,
+			originalScheme,
+			redirectScheme,
+		)
+	}
+
+	// Handle Bearer auth.
+	if strings.HasPrefix(challenge, "bearer") {
+		return handleBearerAuth(
+			log,
+			ctx,
+			response.wwwAuthHeader,
+			container,
+			registryAuth,
+			client,
+			redirected,
+			redirectHost,
+		)
+	}
+
+	return handleUnsupportedChallenge(log, challenge)
+}
+
+// handleBearerAuth handles the Bearer authentication challenge.
+//
+// Parameters:
+//   - log: Contextual logger.
+//   - ctx: Context for request lifecycle control.
+//   - wwwAuthHeader: The WWW-Authenticate header value.
+//   - container: Container with image info.
+//   - registryAuth: Base64-encoded auth string.
+//   - client: Client for HTTP requests.
+//   - redirected: Whether the challenge request was redirected.
+//   - redirectHost: The final host after redirects.
+//
+// Returns:
+//   - TokenResult: Authentication result containing token and redirect info.
+//   - error: Non-nil if operation fails, nil on success.
+func handleBearerAuth(
+	log *zerolog.Logger,
+	ctx context.Context,
+	wwwAuthHeader string,
+	container types.Container,
+	registryAuth string,
+	client Client,
+	redirected bool,
+	redirectHost string,
+) (TokenResult, error) {
+	log.Debug().Msg("Entering Bearer auth path")
+
+	normalizedRef, err := reference.ParseNormalizedNamed(container.ImageName())
+	if err != nil {
+		log.Debug().
+			Err(err).
+			Msg("Failed to parse image name")
+
+		return TokenResult{}, fmt.Errorf("%w: %w", errFailedParseImageName, err)
+	}
+
+	authURL, err := GetAuthURL(
+		log,
+		strings.ToLower(wwwAuthHeader),
+		normalizedRef,
+		registryAuth,
+	)
+	if err != nil {
+		log.Debug().
+			Err(err).
+			Msg("Failed to construct bearer auth URL")
+
+		return TokenResult{}, fmt.Errorf("%w: %w", errFailedConstructBearerAuthURL, err)
+	}
+
+	challengeHost := authURL.Host
+	if challengeHost != "" {
+		log.Debug().
+			Str("challenge_host", challengeHost).
+			Msg("Extracted challenge host")
+	}
+
+	token, err := GetBearerToken(
+		log,
+		ctx,
+		wwwAuthHeader,
+		normalizedRef,
+		registryAuth,
+		client,
+	)
+	if err != nil {
+		log.Debug().
+			Err(err).
+			Msg("Failed to get bearer token")
+
+		return TokenResult{}, fmt.Errorf("%w: %w", errFailedDecodeResponse, err)
+	}
+
+	if token == "" {
+		log.Debug().Msg("Empty bearer token received")
+
+		return TokenResult{}, fmt.Errorf(
+			"%w: empty token in response",
+			errFailedDecodeResponse,
+		)
+	}
+
+	log.Debug().
+		Bool("token_present", token != "").
+		Str("challenge_host", challengeHost).
+		Msg("Returning Bearer token and challenge host")
+
+	return TokenResult{
+		Token:         token,
+		ChallengeHost: challengeHost,
+		Redirected:    redirected,
+		RedirectHost:  redirectHost,
+	}, nil
+}
+
+// GetToken fetches a token and the challenge host for the registry hosting the provided image.
+//
+// When endpoint is non-empty, it is used as the registry host for the challenge URL
+// instead of the canonical registry host. This enables digest checks against configured
+// Docker registry mirrors.
+//
+// Parameters:
+//   - log: Process logger.
+//   - ctx: Context for request lifecycle control.
+//   - container: Container with image info.
+//   - registryAuth: Base64-encoded auth string.
+//   - client: Client for HTTP requests.
+//   - endpoint: Optional registry host override (for example a mirror address). Empty uses the canonical host.
+//
+// Returns:
+//   - TokenResult: Authentication result containing token, challenge host, and redirect info.
+//   - error: Non-nil if operation fails, nil on success.
+func GetToken(
+	log *zerolog.Logger,
+	ctx context.Context,
+	container types.Container,
+	registryAuth string,
+	client Client,
+	endpoint string,
+) (TokenResult, error) {
+	// Scope all subsequent logs in this call with the image name.
+	clog := log.With().Str("image", container.ImageName()).Logger()
+
+	// Parse image name into a normalized reference.
+	normalizedRef, err := reference.ParseNormalizedNamed(container.ImageName())
+	if err != nil {
+		clog.Debug().
+			Err(err).
+			Msg("Failed to parse image name")
+
+		return TokenResult{}, fmt.Errorf("%w: %w", errFailedParseImageName, err)
+	}
+
+	// Generate the challenge URL, using the endpoint override if provided.
+	challengeURL := GetChallengeURL(&clog, normalizedRef, endpoint)
+	clog.Debug().
+		Str("url", challengeURL.String()).
+		Msg("Constructed challenge URL")
+
+	// Build and execute the challenge request.
+	request, err := GetChallengeRequest(&clog, ctx, challengeURL)
+	if err != nil {
+		clog.Debug().
+			Err(err).
+			Msg("Failed to create challenge request")
+
+		return TokenResult{}, fmt.Errorf("%w: %w", errFailedCreateChallengeRequest, err)
+	}
+
+	response, err := client.Do(request)
+	if err != nil {
+		clog.Debug().
+			Err(err).
+			Str("url", challengeURL.String()).
+			Msg("Failed to execute challenge request")
+
+		return TokenResult{}, fmt.Errorf("%w: %w", errFailedExecuteChallengeRequest, err)
+	}
+	defer response.Body.Close()
+
+	// Detect if the request was redirected by comparing the complete final URL.
+	redirected := response.Request.URL.String() != challengeURL.String()
+
+	// Capture the final host after redirects for use by callers.
+	var (
+		redirectHost   string
+		redirectScheme string
+	)
+
+	if redirected {
+		redirectHost = response.Request.URL.Host
+		redirectScheme = response.Request.URL.Scheme
+
+		clog.Debug().
+			Str("redirect_host", redirectHost).
+			Msg("Challenge request was redirected to different URL")
+	}
+
+	// Extract the challenge header.
+	wwwAuthHeader := response.Header.Get(ChallengeHeader)
+	// Log endpoint in sanitized form (host only) to avoid leaking credentials.
+	sanitizedEndpoint := endpoint
+	if endpoint != "" {
+		sanitizedEndpoint = "<redacted>"
+
+		u, parseErr := url.Parse(endpoint)
+		if parseErr == nil && u.Host != "" {
+			sanitizedEndpoint = u.Host
+		}
+	}
+
+	clog.Debug().
+		Str("status", response.Status).
+		Str("header", wwwAuthHeader).
+		Str("mirrors", sanitizedEndpoint).
+		Msg("Received challenge response")
+
+	parsedResponse := challengeResponse{
+		statusCode:    response.StatusCode,
+		wwwAuthHeader: wwwAuthHeader,
+		redirected:    redirected,
+		redirectHost:  redirectHost,
+	}
+
+	// Route the challenge response to the appropriate auth handler.
+	return processChallengeResponse(
+		&clog,
+		ctx,
+		container,
+		registryAuth,
+		client,
+		redirected,
+		redirectHost,
+		challengeURL.Host,
+		challengeURL.Scheme,
+		redirectScheme,
+		parsedResponse,
+	)
 }

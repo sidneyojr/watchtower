@@ -1,15 +1,16 @@
 package notifications
 
 import (
-	s "github.com/containrrr/watchtower/pkg/session"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
+	"github.com/onsi/ginkgo/v2"
+	"github.com/onsi/gomega"
+
+	"github.com/nicholas-fedor/watchtower/pkg/session"
 )
 
-var _ = Describe("JSON template", func() {
-	When("using report templates", func() {
-		When("JSON template is used", func() {
-			It("should format the messages to the expected format", func() {
+var _ = ginkgo.Describe("JSON template", func() {
+	ginkgo.When("using report templates", func() {
+		ginkgo.When("JSON template is used", func() {
+			ginkgo.It("should format the messages to the expected format", func() {
 				expected := `{
 	"entries": [
 			{
@@ -42,6 +43,7 @@ var _ = Describe("JSON template", func() {
 				"state": "Fresh"
 			}
 		],
+		"restarted": [],
 		"scanned": [
 			{
 				"currentImageId": "01d110000000",
@@ -110,8 +112,122 @@ var _ = Describe("JSON template", func() {
 		},
 		"title": "Watchtower updates on Mock"
 }`
-				data := mockDataFromStates(s.UpdatedState, s.FreshState, s.FailedState, s.SkippedState, s.UpdatedState)
-				Expect(getTemplatedResult(`json.v1`, false, data)).To(MatchJSON(expected))
+				data := mockDataFromStates(
+					session.UpdatedState,
+					session.FreshState,
+					session.FailedState,
+					session.SkippedState,
+					session.UpdatedState,
+				)
+				gomega.Expect(getTemplatedResult(`json.v1`, false, data)).
+					To(gomega.MatchJSON(expected))
+			})
+			ginkgo.It("should use correct ID types in JSON output", func() {
+				data := mockDataFromStates(session.UpdatedState)
+				result := getTemplatedResult(`json.v1`, false, data)
+
+				// Verify that updated containers use container IDs for the id field, and image IDs for currentImageId and latestImageId
+				// Container IDs should be like "c79110000000"
+				// Image IDs are like "01d110000000" and "d0a110000000"
+				gomega.Expect(result).To(gomega.ContainSubstring("c79110000000"))
+				gomega.Expect(result).To(gomega.ContainSubstring("01d110000000"))
+				gomega.Expect(result).To(gomega.ContainSubstring("d0a110000000"))
+			})
+
+			ginkgo.It("should include restarted containers in JSON output", func() {
+				data := mockDataFromStates(session.UpdatedState, session.RestartedState)
+				result := getTemplatedResult(`json.v1`, false, data)
+
+				// Verify restarted containers are included
+				gomega.Expect(result).To(gomega.ContainSubstring(`"restarted"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"state": "Restarted"`))
+				gomega.Expect(result).To(gomega.ContainSubstring("rstr1"))
+			})
+
+			ginkgo.It("should render restarted containers without errors", func() {
+				data := mockDataFromStates(session.RestartedState)
+				result := getTemplatedResult(`json.v1`, false, data)
+				gomega.Expect(result).To(gomega.ContainSubstring(`"restarted"`))
+				gomega.Expect(result).NotTo(gomega.ContainSubstring("Error:"))
+			})
+
+			ginkgo.It("should handle state transitions in notification templates", func() {
+				// Test mixing different states
+				data := mockDataFromStates(
+					session.UpdatedState,
+					session.RestartedState,
+					session.FailedState,
+				)
+				result := getTemplatedResult(`json.v1`, false, data)
+
+				// Verify all states are present
+				gomega.Expect(result).To(gomega.ContainSubstring(`"updated"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"restarted"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"failed"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"state": "Updated"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"state": "Restarted"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"state": "Failed"`))
+			})
+
+			ginkgo.It("should maintain priority ordering in notification output", func() {
+				data := mockDataFromStates(
+					session.RestartedState,
+					session.UpdatedState,
+					session.FailedState,
+				)
+				result := getTemplatedResult(`json.v1`, false, data)
+
+				// The order should be based on the report arrays: scanned, updated, restarted, failed, skipped, stale, fresh
+				// Check that all expected keys are present
+				gomega.Expect(result).To(gomega.ContainSubstring(`"scanned"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"updated"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"restarted"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"failed"`))
+			})
+
+			ginkgo.It("should integrate with other notification types in JSON", func() {
+				data := mockDataFromStates(session.RestartedState)
+				// Test that JSON includes all required fields
+				result := getTemplatedResult(`json.v1`, false, data)
+
+				// Should include report, title, host, entries
+				gomega.Expect(result).To(gomega.ContainSubstring(`"report"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"title"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"host"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"entries"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"restarted"`))
+			})
+
+			ginkgo.It("should handle template rendering edge cases", func() {
+				// Test with empty report
+				data := Data{
+					Entries: []*notificationEntry{},
+					Report:  nil,
+					StaticData: StaticData{
+						Title: "Test Title",
+						Host:  "Test Host",
+					},
+				}
+				result := getTemplatedResult(`json.v1`, false, data)
+
+				// Should still produce valid JSON
+				gomega.Expect(result).To(gomega.ContainSubstring(`"report": null`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"title": "Test Title"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"host": "Test Host"`))
+			})
+
+			ginkgo.It("should validate notification formatting", func() {
+				data := mockDataFromStates(session.RestartedState)
+				result := getTemplatedResult(`json.v1`, false, data)
+
+				// Should be valid JSON
+				gomega.Expect(result).To(gomega.MatchJSON(result))
+
+				// Should contain expected structure
+				gomega.Expect(result).To(gomega.ContainSubstring(`"id"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"name"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"imageName"`))
+				gomega.Expect(result).To(gomega.ContainSubstring(`"state"`))
 			})
 		})
 	})

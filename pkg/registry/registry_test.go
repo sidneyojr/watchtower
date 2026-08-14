@@ -1,43 +1,66 @@
-package registry_test
+package registry
 
 import (
-	"github.com/containrrr/watchtower/internal/actions/mocks"
-	unit "github.com/containrrr/watchtower/pkg/registry"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
+	"testing"
 
-	"time"
+	"github.com/stretchr/testify/assert"
+
+	mockTypes "github.com/nicholas-fedor/watchtower/pkg/types/mocks"
 )
 
-var _ = Describe("Registry", func() {
-	Describe("WarnOnAPIConsumption", func() {
-		When("Given a container with an image from ghcr.io", func() {
-			It("should want to warn", func() {
-				Expect(testContainerWithImage("ghcr.io/containrrr/watchtower")).To(BeTrue())
-			})
-		})
-		When("Given a container with an image implicitly from dockerhub", func() {
-			It("should want to warn", func() {
-				Expect(testContainerWithImage("docker:latest")).To(BeTrue())
-			})
-		})
-		When("Given a container with an image explicitly from dockerhub", func() {
-			It("should want to warn", func() {
-				Expect(testContainerWithImage("index.docker.io/docker:latest")).To(BeTrue())
-				Expect(testContainerWithImage("docker.io/docker:latest")).To(BeTrue())
-			})
-		})
-		When("Given a container with an image from some other registry", func() {
-			It("should not want to warn", func() {
-				Expect(testContainerWithImage("docker.fsf.org/docker:latest")).To(BeFalse())
-				Expect(testContainerWithImage("altavista.com/docker:latest")).To(BeFalse())
-				Expect(testContainerWithImage("gitlab.com/docker:latest")).To(BeFalse())
-			})
-		})
-	})
-})
+// TestWarnOnAPIConsumption verifies that WarnOnAPIConsumption returns true for
+// registries that support HEAD requests (Docker Hub, GHCR) and false otherwise.
+func TestWarnOnAPIConsumption(t *testing.T) {
+	tests := []struct {
+		name      string
+		imageName string
+		want      bool
+	}{
+		{
+			name:      "ghcr.io image",
+			imageName: "ghcr.io/nicholas-fedor/watchtower",
+			want:      true,
+		},
+		{
+			name:      "implicit docker hub image",
+			imageName: "docker:latest",
+			want:      true,
+		},
+		{
+			name:      "explicit index.docker.io image",
+			imageName: "index.docker.io/docker:latest",
+			want:      true,
+		},
+		{
+			name:      "explicit docker.io image",
+			imageName: "docker.io/docker:latest",
+			want:      true,
+		},
+		{
+			name:      "other registry fsf.org",
+			imageName: "docker.fsf.org/docker:latest",
+			want:      false,
+		},
+		{
+			name:      "other registry altavista.com",
+			imageName: "altavista.com/docker:latest",
+			want:      false,
+		},
+		{
+			name:      "other registry gitlab.com",
+			imageName: "gitlab.com/docker:latest",
+			want:      false,
+		},
+	}
 
-func testContainerWithImage(imageName string) bool {
-	container := mocks.CreateMockContainer("", "", imageName, time.Now())
-	return unit.WarnOnAPIConsumption(container)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			container := mockTypes.NewMockContainer(t)
+			container.EXPECT().Name().Return("test-container").Maybe()
+			container.EXPECT().ImageName().Return(tt.imageName)
+
+			got := WarnOnAPIConsumption(testLog(), container)
+			assert.Equal(t, tt.want, got)
+		})
+	}
 }
