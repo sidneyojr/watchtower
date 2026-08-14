@@ -9,6 +9,14 @@ Watchtower is a Go 1.26.6 app (module `github.com/sidneyojr/watchtower`) that mo
 - Releases: tag on `master` (`v*`) triggers `release-stable.yaml` → goreleaser publishes multi-arch images to `ghcr.io/sidneyojr/watchtower` with tags `latest`, `<major>`, `<major>.<minor>`, `<major>.<minor>.<patch>` (the exact image tag has NO `v` prefix). Remember to sync `develop` after tagging.
 - `gh` may resolve the wrong repo when both `origin` and `upstream` remotes exist — run `gh repo set-default sidneyojr/watchtower`. Push over HTTPS fails without credentials; `origin` uses SSH.
 
+## Fork-specific changes
+This fork diverges from upstream `nicholas-fedor/watchtower` in these intentional ways. Do NOT regress them:
+- **Image-name inspect fallback** (`pkg/container/container_source.go`, commit `e133b641`): when inspecting a container's image by ID fails (`No such image`), fall back to inspecting the configured image name. Rootless Docker with BuildKit removes the previous image when a tag is rebuilt even while a container still runs from it, so the ID-based inspect fails and watchtower would otherwise skip the update.
+- **Lifecycle hooks gated on `IsStale()`** (`internal/actions/update.go`, commit `bebff44b`): pre/post-update hooks run ONLY for containers with a new image (`IsStale`), not for linked-only restarts (which restart without a new image). This restores the original documented gate removed by upstream PR #908; `scripts/lifecycle-tests.sh` case 3 depends on it.
+- **`update-go-docs.yaml` pins `go-version: "1.26.6"`** (commit `93347bab`): the `go-proxy-pull-action` default `go-version: 1.26` takes precedence over `go-version-file`, so the refresh would fail with an older toolchain. Do not switch back to `go-version-file`.
+- **`release-stable.yaml` dispatches `publish-docs.yaml`** with the tag (commit `17b081f0`): the `release` event does NOT fire for releases created with `GITHUB_TOKEN` (goreleaser), so the docs workflow never ran on release. The `publish-docs` job dispatches it with `VERSION=<tag>` and `ALIASES=latest`.
+- **`publish-docs.yaml` calls `mike set-default`** (commit `c5ef59db`): `mike deploy` writes versioned subdirs but not the root `index.html` redirect; without `set-default` the docs root 404s.
+
 ## Layout
 - `cmd/` — cobra CLI. Entry: `main.go` → `cmd.Execute()`. The whole app flow (flag wiring, scheduler, HTTP API, update loop) is in `cmd/root.go` (`PreRun`/`Run`); `cmd/notify-upgrade.go` is a subcommand.
 - `internal/actions/` — core update orchestration (`Update`, `CheckForSanity`, `CheckForMultipleWatchtowerInstances`). The heart of the tool.
