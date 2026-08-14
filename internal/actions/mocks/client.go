@@ -39,6 +39,7 @@ type TestData struct {
 	LastRenameTarget             string                                // Last new name passed to RenameContainer.
 	RenameTargets                []string                              // Ordered list of rename targets.
 	UpdateContainerCount         atomic.Int32                          // Number of times UpdateContainer was called.
+	ExecuteCommandCount          atomic.Int32                          // Number of times ExecuteCommand was called.
 	SetNoRestartPolicyCount      atomic.Int32                          // Number of times SetNoRestartPolicy was called.
 	IsContainerStaleCount        atomic.Int32                          // Number of times IsContainerStale was called.
 	WaitForContainerHealthyCount atomic.Int32                          // Number of times WaitForContainerHealthy was called.
@@ -460,6 +461,8 @@ func (client MockClient) ExecuteCommand(
 	if err := client.checkContextCancellation(ctx); err != nil {
 		return false, err
 	}
+
+	client.TestData.ExecuteCommandCount.Add(1)
 
 	switch command {
 	case "/PreUpdateReturn0.sh":

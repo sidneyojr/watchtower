@@ -242,6 +242,70 @@ var _ = ginkgo.Describe("the update action", func() {
 				gomega.Expect(containers[1].ToRestart()).To(gomega.BeTrue())
 			})
 
+			ginkgo.It("should not execute lifecycle hooks for linked-only restarts", func() {
+				provider := mockActions.CreateMockContainerWithConfig(
+					"test-container-provider",
+					"/test-container-provider",
+					"fake-image2:latest",
+					true,
+					false,
+					time.Now(),
+					&dockerContainer.Config{
+						Labels: map[string]string{
+							"com.centurylinklabs.watchtower.lifecycle.pre-update": "/PreUpdateReturn0.sh",
+						},
+						ExposedPorts: dockerNetwork.PortSet{},
+					})
+
+				provider.SetStale(true)
+
+				consumer := mockActions.CreateMockContainerWithConfig(
+					"test-container-consumer",
+					"/test-container-consumer",
+					"fake-image3:latest",
+					true,
+					false,
+					time.Now(),
+					&dockerContainer.Config{
+						Labels: map[string]string{
+							"com.centurylinklabs.watchtower.depends-on":           "test-container-provider",
+							"com.centurylinklabs.watchtower.lifecycle.pre-update": "/PreUpdateReturn0.sh",
+						},
+						ExposedPorts: dockerNetwork.PortSet{},
+					})
+
+				client := mockActions.CreateMockClient(
+					&mockActions.TestData{
+						Containers: []types.Container{
+							provider,
+							consumer,
+						},
+					},
+					false,
+					false,
+				)
+				client.TestData.Staleness = map[string]bool{
+					"test-container-provider": true,
+					"test-container-consumer": false,
+				}
+				report, cleanupImageInfos, err := actions.Update(testLogger(),
+					context.Background(),
+					client,
+					types.UpdateParams{
+						Cleanup:        true,
+						LifecycleHooks: true,
+						CPUCopyMode:    "auto",
+					},
+				)
+				gomega.Expect(err).NotTo(gomega.HaveOccurred())
+				gomega.Expect(report.Updated()).To(gomega.HaveLen(1))
+				gomega.Expect(report.Restarted()).To(gomega.HaveLen(1))
+				// Only the stale provider runs pre-update; the linked-only consumer must not.
+				gomega.Expect(client.TestData.ExecuteCommandCount.Load()).
+					To(gomega.Equal(int32(1)))
+				gomega.Expect(cleanupImageInfos).To(gomega.HaveLen(1))
+			})
+
 			ginkgo.It(
 				"should propagate restart in Docker Compose with service name mismatch",
 				func() {

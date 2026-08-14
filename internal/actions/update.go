@@ -1709,8 +1709,9 @@ func stopStaleContainer(log *zerolog.Logger, ctx context.Context,
 		}
 	}
 
-	// Execute pre-update lifecycle hooks if enabled, checking for skip conditions.
-	if config.LifecycleHooks {
+	// Execute pre-update lifecycle hooks for updated (stale) containers if enabled.
+	// Linked-only restarts (no new image) must not trigger lifecycle hooks.
+	if config.LifecycleHooks && container.IsStale() {
 		skipUpdate, err := lifecycle.ExecutePreUpdateCommand(log,
 			ctx,
 			client,
@@ -2201,8 +2202,9 @@ func restartStaleContainer(log *zerolog.Logger, ctx context.Context,
 			Str("new_id", newContainerID.ShortID()).
 			Msg("Started new container")
 
-		// Run post-update lifecycle hooks for restarting containers if enabled.
-		if sourceContainer.ToRestart() && config.LifecycleHooks {
+		// Run post-update lifecycle hooks for updated (stale) containers if enabled.
+		// Linked-only restarts (no new image) must not trigger lifecycle hooks.
+		if sourceContainer.IsStale() && config.LifecycleHooks {
 			log.Debug().
 				Fields(fields).
 				Msg("Executing post-update command")
