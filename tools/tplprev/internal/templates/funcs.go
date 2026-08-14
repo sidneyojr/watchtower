@@ -8,10 +8,9 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/sidneyojr/tplprev/internal/report"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
-
-	"github.com/sidneyojr/tplprev/internal/report"
 )
 
 // Funcs defines a set of utility functions for use in notification templates.
